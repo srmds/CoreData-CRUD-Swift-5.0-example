@@ -48,7 +48,11 @@ The [EventManager](https://github.com/srmds/CoreData-CRUD-Swift-iOS-example/blob
 
 Currently it exposes the following functions:
 
+**Create**
+
 * Creates a new Managed object and persists to datastore.
+
+**Read**
 
 * Retrieves all event items stored in the persistence layer.
 
@@ -56,8 +60,16 @@ Currently it exposes the following functions:
 
 * Retrieves all event items stored in the persistence layer and sort it by Date.
 
+**Update**
+
+TBD
+
+**Delete**
+
 * Delete all items of Entity: Event, from persistence layer.
 
 	
+## TODO
 
+Get a better understanding of relationships, no pun intended, both in real-life and in Core Data.
 
