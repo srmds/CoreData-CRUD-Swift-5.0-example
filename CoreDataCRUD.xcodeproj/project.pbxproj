@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		C359224D1B2B3CFE0067289C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359224C1B2B3CFE0067289C /* AppDelegate.swift */; };
 		C35922501B2B3CFE0067289C /* CoreDataCRUD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C359224E1B2B3CFE0067289C /* CoreDataCRUD.xcdatamodeld */; };
-		C35922521B2B3CFE0067289C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922511B2B3CFE0067289C /* ViewController.swift */; };
+		C35922521B2B3CFE0067289C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922511B2B3CFE0067289C /* MainViewController.swift */; };
 		C35922551B2B3CFE0067289C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35922531B2B3CFE0067289C /* Main.storyboard */; };
 		C35922571B2B3CFE0067289C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C35922561B2B3CFE0067289C /* Images.xcassets */; };
 		C359225A1B2B3CFE0067289C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C35922581B2B3CFE0067289C /* LaunchScreen.xib */; };
 		C35922661B2B3CFE0067289C /* CoreDataCRUDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922651B2B3CFE0067289C /* CoreDataCRUDTests.swift */; };
+		C35922731B2B3D390067289C /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922721B2B3D390067289C /* EventManager.swift */; };
+		C35922751B2B3E120067289C /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922741B2B3E120067289C /* Event.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,13 +33,15 @@
 		C359224B1B2B3CFE0067289C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C359224C1B2B3CFE0067289C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C359224F1B2B3CFE0067289C /* CoreDataCRUD.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataCRUD.xcdatamodel; sourceTree = "<group>"; };
-		C35922511B2B3CFE0067289C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C35922511B2B3CFE0067289C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C35922541B2B3CFE0067289C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C35922561B2B3CFE0067289C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C35922591B2B3CFE0067289C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C359225F1B2B3CFE0067289C /* CoreDataCRUDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreDataCRUDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C35922641B2B3CFE0067289C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C35922651B2B3CFE0067289C /* CoreDataCRUDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataCRUDTests.swift; sourceTree = "<group>"; };
+		C35922721B2B3D390067289C /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
+		C35922741B2B3E120067289C /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +83,10 @@
 		C35922491B2B3CFE0067289C /* CoreDataCRUD */ = {
 			isa = PBXGroup;
 			children = (
+				C35922711B2B3D1A0067289C /* EntityManagers */,
+				C35922701B2B3D110067289C /* Models */,
+				C359226F1B2B3D0A0067289C /* ViewControllers */,
 				C359224C1B2B3CFE0067289C /* AppDelegate.swift */,
-				C35922511B2B3CFE0067289C /* ViewController.swift */,
 				C35922531B2B3CFE0067289C /* Main.storyboard */,
 				C35922561B2B3CFE0067289C /* Images.xcassets */,
 				C35922581B2B3CFE0067289C /* LaunchScreen.xib */,
@@ -113,6 +119,30 @@
 				C35922641B2B3CFE0067289C /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C359226F1B2B3D0A0067289C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C35922511B2B3CFE0067289C /* MainViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C35922701B2B3D110067289C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C35922741B2B3E120067289C /* Event.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		C35922711B2B3D1A0067289C /* EntityManagers */ = {
+			isa = PBXGroup;
+			children = (
+				C35922721B2B3D390067289C /* EventManager.swift */,
+			);
+			name = EntityManagers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,9 +245,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C35922521B2B3CFE0067289C /* ViewController.swift in Sources */,
+				C35922521B2B3CFE0067289C /* MainViewController.swift in Sources */,
 				C35922501B2B3CFE0067289C /* CoreDataCRUD.xcdatamodeld in Sources */,
+				C35922731B2B3D390067289C /* EventManager.swift in Sources */,
 				C359224D1B2B3CFE0067289C /* AppDelegate.swift in Sources */,
+				C35922751B2B3E120067289C /* Event.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +378,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				INFOPLIST_FILE = CoreDataCRUD/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -356,6 +389,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				INFOPLIST_FILE = CoreDataCRUD/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

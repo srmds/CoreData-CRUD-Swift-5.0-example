@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14D136" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Event" representedClassName="Event" syncable="YES">
+        <attribute name="attendees" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fb_url" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="ticket_url" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="eventId"/>
+                <index value="date"/>
+                <index value="title"/>
+                <index value="venue"/>
+                <index value="city"/>
+                <index value="country"/>
+            </compoundIndex>
+        </compoundIndexes>
+    </entity>
+    <elements>
+        <element name="Event" positionX="-63" positionY="-18" width="128" height="180"/>
+    </elements>
 </model>
