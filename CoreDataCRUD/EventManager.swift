@@ -16,12 +16,13 @@ enum EventEntityAttributes : String {
     city       = "city",
     country    = "country",
     attendees  = "attendees",
-    entityName = "Event",
     fb_url      = "fb_url",
     ticket_url = "ticket_url"
     
     static let getAll = [eventId, title, date, venue, city, country, attendees, fb_url,ticket_url]
 }
+
+let eventNamespace = "Event"
 
 /**
     A  manager that allows CRUD operations on the persistence store
@@ -45,10 +46,8 @@ class EventManager {
     func saveNewItem(eventDetails: Dictionary<String, NSObject>) -> Bool {
         
         //Reference to Event entity
-        let entity = NSEntityDescription.entityForName(
-            EventEntityAttributes.entityName.rawValue,
-            inManagedObjectContext:context
-        )
+        let entity = NSEntityDescription.entityForName(eventNamespace,
+                        inManagedObjectContext:context)
         
         //Create new Object of Event entity
         let eventItem = Event(entity: entity!,
@@ -68,7 +67,6 @@ class EventManager {
         var error: NSError? = nil
         var succeeded = !context.save(&error)
         
-        
         print("Saved:\n'\(eventItem)'\n\nto datastore on: \(eventItem.date)")
         
         return succeeded
@@ -83,16 +81,13 @@ class EventManager {
     func retrieveAllItems() -> Array<Event> {
         
         // Create request on Event entity
-        let fetchRequest = NSFetchRequest(
-            entityName: EventEntityAttributes.entityName.rawValue
-        )
+        let fetchRequest = NSFetchRequest(entityName: eventNamespace)
         
         //Execute Fetch request returns result as array or
         //if failed returns error obj.
         var error: NSError? = nil
         let fetchedResults =
         context.executeFetchRequest(fetchRequest, error: &error)
-        
         
         return fetchedResults! as! Array<Event>
     }
@@ -106,9 +101,7 @@ class EventManager {
     func retrieveById(eventId: NSString) -> Array<Event> {
         
         // Create request on Event entity
-        let fetchRequest = NSFetchRequest(entityName:
-            EventEntityAttributes.entityName.rawValue
-        )
+        let fetchRequest = NSFetchRequest(entityName:eventNamespace)
         fetchRequest.returnsObjectsAsFaults = false;
         
         //Add a predicate to filter by eventId
@@ -134,9 +127,7 @@ class EventManager {
     func retrieveItemsSortedByDate() -> Array<Event> {
         
         // Create request on Event entity
-        let fetchRequest = NSFetchRequest(
-            entityName: EventEntityAttributes.entityName.rawValue
-        )
+        let fetchRequest = NSFetchRequest(entityName: eventNamespace)
         
         //Create sort descriptor to sort retrieved Events by Date, ascending
         let sortDescriptor
