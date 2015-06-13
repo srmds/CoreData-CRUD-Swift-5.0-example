@@ -5,21 +5,26 @@ A (very simple) example project that exposes the usage of Core Data to create En
 
 ## The objective
 
-for this project is to learn (for now mostly myself ;D )  two things:
+for this project is to learn (for now mostly myself ;D ) to:
 
-- Learning the Apple Swift language
-- Learning to use Core Data to create Entities and to persist Entities to a SQLite datastore.
+- use Core Data to create Entities and to persist Entities to a SQLite datastore.
 
-## Contribution
+## Contributions
 
 Do you have questions or want to help? Enhancements and/or fixes and suggestions are welcome! Just drop a line via gitter of create issues and/or pull requests.
 
 
-## Apple Swift Version
+## Versions
+
+### Swift
 
 For this project the Apple Swift `version 1.2` is used. To check which version of swift is installed, via terminal:
 
 	$  xcrun swift --version
+
+### Xcode	
+
+This project is build with Xcode `version 6.3.2`.
 
 ## Model
 
@@ -39,8 +44,8 @@ The [Event](https://github.com/srmds/CoreData-CRUD-Swift-iOS-example/blob/master
 	    @NSManaged var eventId: String
 	
 	}
-The AnyObjects type is this example are [non-standard persistent attributes](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreData/Articles/cdNSAttributes.html) just attributes that are not support directly in Core Data.
-The AnyObject, as the name suggests can therefore be for example an `Array` or `NSURL` or any other object type.
+	
+The AnyObject type in this example are [non-standard persistent attributes](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreData/Articles/cdNSAttributes.html) just attributes that are not support directly in Core Data. The AnyObject, as the name suggests, can therefore be for example an: `Array` or `NSURL`, or any other object type.
 
 ## Entity Manager 
  
