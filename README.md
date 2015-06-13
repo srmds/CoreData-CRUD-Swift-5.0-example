@@ -9,6 +9,13 @@ for this project is to learn (for now mostly myself ;D ) to:
 
 - use Core Data to create Entities and to persist Entities to a SQLite datastore.
 
+- help others understand and use Core Data with simple, yet concrete examples, on the usage of Core Data and persistent
+  store.
+  
+Note that this example project is non-exhaustive and since i'm still learning (more) about the Core Data framework,
+any progress on my part will be reflected in this project as updates to it. 
+
+
 ## Contributions
 
 Do you have questions or want to help? Enhancements and/or fixes and suggestions are welcome! Just drop a line via gitter of create issues and/or pull requests.
@@ -25,6 +32,16 @@ For this project the Apple Swift `version 1.2` is used. To check which version o
 ### Xcode	
 
 This project is build with Xcode `version 6.3.2`.
+
+## Overview /utilities
+
+In this project the usage of pragmas will help you through the code exploration. For example:
+
+Open up Xcode, and open the project, and go to the `EventManager.swift` file.
+Then click on `^ 6`, thus `control + 6`, this will open up an overview of several CRUD methods used.
+And click on the method of interest, to see it's implementation.
+
+![](http://i.imgur.com/IItWYVW.png)
 
 ## Model
 
