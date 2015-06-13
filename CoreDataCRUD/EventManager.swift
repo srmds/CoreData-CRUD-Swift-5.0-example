@@ -19,16 +19,27 @@ enum EventEntityAttributes : String {
     fb_url      = "fb_url",
     ticket_url = "ticket_url"
     
-    static let getAll = [eventId, title, date, venue, city, country, attendees, fb_url,ticket_url]
+    static let getAll = [
+        eventId,
+        title,
+        date,
+        venue,
+        city,
+        country,
+        attendees,
+        fb_url,
+        ticket_url
+    ]
 }
 
-let eventNamespace = "Event"
-
 /**
-    A  manager that allows CRUD operations on the persistence store
+    A manager that allows CRUD operations on the persistence store
     with an Event entity.
 */
 class EventManager {
+    
+    //Name of the Event entity
+    let eventNamespace = "Event"
     
     var context: NSManagedObjectContext
     
@@ -36,6 +47,8 @@ class EventManager {
     init(context: NSManagedObjectContext){
         self.context = context
     }
+    
+    // MARK: Create
     
     /**
         Creates a new Managed object and persists to datastore.
@@ -72,7 +85,8 @@ class EventManager {
         return succeeded
     }
     
-    
+    // MARK: Read
+
     /**
         Retrieves all event items stored in the persistence layer.
     
@@ -143,6 +157,60 @@ class EventManager {
         
         return fetchedResults! as! Array<Event>
     }
+    
+    // MARK: Update
+    
+    
+    /**
+        Update all events (batch update) attendees list.
+    
+        Since privacy is always a concern to take into account, 
+        anonymise the attendees list for every event.
+
+        :returns: bool check whether batch update of event attendees was
+                  successfull.
+    */
+    func updateAllEventAttendees() -> Bool {
+        
+        //Reference to Event entity
+        let entity = NSEntityDescription.entityForName(eventNamespace,
+            inManagedObjectContext:context)
+        
+        // Create a fetch request for the entity Person
+        let fetchRequest = NSFetchRequest(entityName: eventNamespace)
+
+        // Execute the fetch request
+        var error : NSError?
+        let fetchedResults =
+        context.executeFetchRequest(fetchRequest, error: &error)
+        
+        if let events = fetchedResults {
+            if error == nil {
+                for event in events {
+                    //get count of current attendees list
+                    var currCount = (event as! Event).attendees.count
+                    
+                    //Create an anonymised list of attendees 
+                    //with count of current attendees list
+                    var anonymisedList = [String](count: currCount, repeatedValue: "anon")
+                    
+                    //Update current attendees list with anonymised list, shallow copy.
+                    (event as! Event).attendees = anonymisedList
+                }
+                
+                // Save the updated managed objects into the store
+                if !self.context.save(&error) {
+                    print("Error updating all event attendees: \(error)")
+                    abort()
+                }
+            }
+        }
+        
+        return true
+    }
+    
+    
+    // MARK: Delete
     
     /**
         Delete all items of Entity: Event, from persistence layer.

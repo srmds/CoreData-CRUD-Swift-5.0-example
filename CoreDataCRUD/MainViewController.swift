@@ -5,9 +5,11 @@
 //
 
 import UIKit
-
+/**
+    Main Viewcontroller, outputs Event Manager logs to 
+    view.
+*/
 class MainViewController: UIViewController {
-    
     
     @IBOutlet weak var outputLogTextView: UITextView!
     
@@ -31,7 +33,9 @@ class MainViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    //Utilizes the EventController to demonstrate simple CRUD operations
+    /**
+        Utilizes the EventController to demonstrate simple CRUD operations.
+    */
     private func doCRUD() {
         
         //Create data that is persisted to datastore
@@ -56,13 +60,26 @@ class MainViewController: UIViewController {
         var retrievedItemsSortedByDate = eventManager.retrieveItemsSortedByDate()
         outputText = outputText + "\n\nRetrieved Items sorted by Date:\n \(eventManager.printEventList(retrievedItemsSortedByDate))"
         outputLogTextView.text = outputText
+        
+        //Update all stored (batch update) events attendees list
+        eventManager.updateAllEventAttendees()
+        //Retrieve all Items of an entity type after batch update
+        retrievedItems = eventManager.retrieveAllItems()
+        outputText = outputText + "Retrieved items count \(retrievedItems.count)\nResults after batch update:\n\(eventManager.printEventList(retrievedItems))"
+        println(outputText)
 
+        
         //Delete all stored items in persistence layer
         var success = eventManager.deleteAllItems()
         outputText = outputText + "\n\nDeleted all event items, succeeded: \(success)"
         outputLogTextView.text = outputText
     }
     
+    /**
+        Creates test data by creating new Event objects and assigning 
+        property values and calling the managed object layer to persist
+        to the datastore.
+    */
     private func createAndPersistTestData() {
         
         //Create some Date offsets to be able to sort on

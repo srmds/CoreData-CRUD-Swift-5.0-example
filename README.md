@@ -67,7 +67,7 @@ Currently it exposes the following functions:
 
 **Update**
 
-TBD
+*  Update all events (batch update) attendees list.
 
 **Delete**
 

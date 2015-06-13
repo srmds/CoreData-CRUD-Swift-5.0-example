@@ -1,9 +1,7 @@
 //
 //  Event.swift
 //  CoreDataCRUD
-//
-//  Created by c0d3r on 12/06/15.
-//  Copyright (c) 2015 io pandacode. All rights reserved.
+//  Written by Steven R.
 //
 
 import Foundation
