@@ -18,22 +18,15 @@ enum EventsError: ErrorType {
 
 class MainViewController: UIViewController {
     
-    @IBOutlet weak var outputLogTextView: UITextView!
-    
-    //Implicitly unwrapped reference to the Managed Object Context Layer
-    let context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    //Output textview for logs
+    @IBOutlet  var outputLogTextView: UITextView!
     
     //Implicitly unwrapped placeholder for the Controller
     var eventAPI: EventAPI!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //Initialize and reference to Controller, pass in managedObjectContext
-        //via the EventController constructor
         self.eventAPI = EventAPI.sharedInstance
-
-       doCRUD()
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,49 +36,60 @@ class MainViewController: UIViewController {
     /**
         Utilizes the EventController to demonstrate simple CRUD operations.
     */
-    private func doCRUD() {
-        
-        var outputText :String!
 
-        //Create
-        
-        //Creates some Event entities and persists to datastore
-        eventAPI.createAndPersistTestData()
-        
-        //Read
-        
-        //Retrieve all Items of an entity type
-        var retrievedItems = eventAPI.getAll()
+    //Creates some Event entities and persists to datastore
+    @IBAction func createTestDataTapped(sender: UIButton) {
+        if eventAPI.createAndPersistTestData() {
+            var outputText :String!
+            outputText = "Successfully created test items. Click get all events to retrieve them."
+            print(outputText)
+            self.outputLogTextView.text = outputText
+        }
+    }
+    
+    //Retrieve all Items of an entity type
+    @IBAction func getAllTapped(sender: UIButton) {
+        var outputText :String!
+        let retrievedItems = eventAPI.getAll()
         outputText = "Retrieved items count \(retrievedItems.count)\nResults:\n\(eventAPI.printList(retrievedItems))"
         print(outputText)
         self.outputLogTextView.text = outputText
-        
-        //Retrieve a single event found by its eventId
+    }
+    
+    //Retrieve events sorted by Date
+    @IBAction func getAllSortedTapped(sender: AnyObject) {
+        var outputText :String!
+        let retrievedItemsSortedByDate = eventAPI.getSortedByDate()
+        outputText = "Retrieved Items sorted by Date:\n \(eventAPI.printList(retrievedItemsSortedByDate))"
+        outputLogTextView.text = outputText
+    }
+    
+    //Retrieve a single event found by its eventId
+    @IBAction func getByIdTapped(sender: UIButton) {
+        var outputText :String!
+        let retrievedItems = eventAPI.getAll()
         let uuidOfItemToFind = retrievedItems[0].eventId
         let retrievedEventItem = eventAPI.getById(uuidOfItemToFind)
-        outputText = outputText + "\n\nRetrieved Items found by it's Id:\n \(eventAPI.printList(retrievedEventItem))"
+        outputText = "Retrieved Items found by it's Id:\n \(eventAPI.printList(retrievedEventItem))"
         print(outputText)
-        self.outputLogTextView.text = outputText
-
-        //Retrieve events sorted by Date
-        let retrievedItemsSortedByDate = eventAPI.getSortedByDate()
-        outputText = outputText + "\n\nRetrieved Items sorted by Date:\n \(eventAPI.printList(retrievedItemsSortedByDate))"
         outputLogTextView.text = outputText
-        
-        //Update
-        
-        //Update all stored (batch update) events attendees list
+    }
+    
+    //Update all stored (batch update) events attendees list
+    @IBAction func updateAllTapped(sender: UIButton) {
+        var outputText :String!
         eventAPI.updateAllEventAttendees()
-        //Retrieve all Items of an entity type after batch update
-        retrievedItems = eventAPI.getAll()
-        outputText = outputText + "Retrieved items count \(retrievedItems.count)\nResults after batch update:\n\(eventAPI.printList(retrievedItems))"
+        let retrievedItems = eventAPI.getAll()
+        outputText = "Retrieved items count \(retrievedItems.count)\nResults after batch update:\n\(eventAPI.printList(retrievedItems))"
         print(outputText)
-        
-        //Delete
-        
-        //Delete all stored items in persistence layer
+        outputLogTextView.text = outputText
+    }
+    
+    //Delete all stored items in persistence layer
+    @IBAction func deleteAllTapped(sender: UIButton) {
+        var outputText :String!
         let success = eventAPI.deleteAll()
-        outputText = outputText + "\n\nDeleted all event items, succeeded: \(success)"
+        outputText = "\n\nDeleted all event items, succeeded: \(success)"
         outputLogTextView.text = outputText
     }
     

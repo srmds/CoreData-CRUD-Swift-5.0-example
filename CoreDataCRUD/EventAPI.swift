@@ -40,7 +40,7 @@ class EventAPI {
         property values and calling the managed object layer to persist
         to the datastore.
     */
-    func createAndPersistTestData() {
+    func createAndPersistTestData() -> Bool {
         
         //Create some Date offsets to be able to sort on
         let today = NSDate()
@@ -90,6 +90,8 @@ class EventAPI {
         
         success = saveEvent(eventDetailsItem2)
         print("Test object 2 creation succeeded: \(success)\n\n")
+        
+        return success
     }
 
     /**
