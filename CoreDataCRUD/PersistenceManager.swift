@@ -6,40 +6,11 @@
 import UIKit
 import CoreData
 
-//Enum for Event Entity member fields
-enum EventEntityAttributes : String {
-    case
-    eventId    = "eventId",
-    title      = "title",
-    date       = "date",
-    venue      = "venue",
-    city       = "city",
-    country    = "country",
-    attendees  = "attendees",
-    fb_url      = "fb_url",
-    ticket_url = "ticket_url"
-    
-    static let getAll = [
-        eventId,
-        title,
-        date,
-        venue,
-        city,
-        country,
-        attendees,
-        fb_url,
-        ticket_url
-    ]
-}
-
 /**
     A manager that allows CRUD operations on the persistence store
     with an Event entity.
 */
 class PersistenceManager {
-    
-    //Name of the Event entity
-    private let eventNamespace = "Event"
     
     private var context: NSManagedObjectContext
     
@@ -58,7 +29,7 @@ class PersistenceManager {
     func saveNewItem(eventDetails: Dictionary<String, NSObject>) -> Bool {
         
         //Reference to Event entity
-        let entity = NSEntityDescription.entityForName(eventNamespace,
+        let entity = NSEntityDescription.entityForName(Constants.eventNamespace,
             inManagedObjectContext:context)
         
         //Create new Object of Event entity
@@ -67,7 +38,7 @@ class PersistenceManager {
         
         //Assign field values
         for (key, value) in eventDetails {
-            for attribute in EventEntityAttributes.getAll {
+            for attribute in Constants.EventAttributes.getAll {
                 if (key == attribute.rawValue) {
                         eventItem.setValue(value, forKey: key)
                 }
@@ -94,7 +65,7 @@ class PersistenceManager {
     func retrieveAllItems() -> Array<Event> {
         
         // Create request on Event entity
-        let fetchRequest = NSFetchRequest(entityName: eventNamespace)
+        let fetchRequest = NSFetchRequest(entityName: Constants.eventNamespace)
         
         //Execute Fetch request returns result as array.
         var fetchedResults:Array<Event> = Array<Event>()
@@ -116,11 +87,12 @@ class PersistenceManager {
     func retrieveById(eventId: NSString) -> Array<Event> {
         
         // Create request on Event entity
-        let fetchRequest = NSFetchRequest(entityName:eventNamespace)
+        let fetchRequest = NSFetchRequest(entityName: Constants.eventNamespace)
         fetchRequest.returnsObjectsAsFaults = false;
         
         //Add a predicate to filter by eventId
-        let findByIdPredicate = NSPredicate(format: "eventId = %@", eventId)
+        let findByIdPredicate =
+            NSPredicate(format: "\(Constants.EventAttributes.eventId.rawValue) = %@", eventId)
         fetchRequest.predicate = findByIdPredicate
         
         //Execute Fetch request returns result as array or
@@ -145,10 +117,10 @@ class PersistenceManager {
     func retrieveItemsSortedByDate() -> Array<Event> {
         
         // Create request on Event entity
-        let fetchRequest = NSFetchRequest(entityName: eventNamespace)
+        let fetchRequest = NSFetchRequest(entityName: Constants.eventNamespace)
         
         //Create sort descriptor to sort retrieved Events by Date, descending
-        let sortDescriptor = NSSortDescriptor(key: EventEntityAttributes.date.rawValue,
+        let sortDescriptor = NSSortDescriptor(key: Constants.EventAttributes.date.rawValue,
             ascending: false)
         let sortDescriptors = [sortDescriptor]
         fetchRequest.sortDescriptors = sortDescriptors
@@ -167,7 +139,6 @@ class PersistenceManager {
     
     // MARK: Update
     
-    
     /**
         Update all events (batch update) attendees list.
     
@@ -181,7 +152,7 @@ class PersistenceManager {
         
         
         // Create a fetch request for the entity Person
-        let fetchRequest = NSFetchRequest(entityName: eventNamespace)
+        let fetchRequest = NSFetchRequest(entityName: Constants.eventNamespace)
         
         // Execute the fetch request
         let fetchedResults: Array<Event>
@@ -209,6 +180,34 @@ class PersistenceManager {
         return succes
     }
     
+    /**
+        Update event item for specific keys.
+    
+        :returns: bool check whether update of event item key values successfull.
+    */
+    func updateEventItemDetails(eventItemToUpdate: Event, newEventItemDetails: Dictionary<String, NSObject>) -> Bool {
+        
+        //Assign field values
+        for (key, value) in newEventItemDetails {
+            for attribute in Constants.EventAttributes.getAll {
+                if (key == attribute.rawValue) {
+                    eventItemToUpdate.setValue(value, forKey: key)
+                }
+            }
+        }
+        
+        //Persist new Event to database (via Managed Object Context Layer.
+        var succes = false
+        do {
+            try context.save()
+            succes = true
+        } catch let fetchError as NSError {
+            print("updateEventItemDetails error: \(fetchError.localizedDescription)")
+            succes = false
+        }
+        
+        return succes
+    }
     
     // MARK: Delete
     
@@ -255,7 +254,7 @@ class PersistenceManager {
             counter++
             
             outputStr += "\n{\n"
-            for attribute in EventEntityAttributes.getAll {
+            for attribute in Constants.EventAttributes.getAll {
                 if(event.valueForKey(attribute.rawValue) != nil) {
                     outputStr +=
                     "\(attribute.rawValue): \(event.valueForKey(attribute.rawValue))"

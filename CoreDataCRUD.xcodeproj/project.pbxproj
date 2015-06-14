@@ -20,6 +20,7 @@
 		C392FC841B2DB8770055D481 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FC831B2DB8770055D481 /* EventTableViewCell.swift */; };
 		C392FC861B2DBA840055D481 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FC851B2DBA840055D481 /* EventTableViewController.swift */; };
 		C392FC881B2DE1130055D481 /* EventItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FC871B2DE1130055D481 /* EventItemViewController.swift */; };
+		C392FC8B1B2E05600055D481 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C392FC8A1B2E05600055D481 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		C392FC831B2DB8770055D481 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		C392FC851B2DBA840055D481 /* EventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
 		C392FC871B2DE1130055D481 /* EventItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventItemViewController.swift; sourceTree = "<group>"; };
+		C392FC8A1B2E05600055D481 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				C392FC7F1B2DB74A0055D481 /* HTTPClient.swift */,
+				C392FC8A1B2E05600055D481 /* Constants.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				C35922501B2B3CFE0067289C /* CoreDataCRUD.xcdatamodeld in Sources */,
 				C35922731B2B3D390067289C /* PersistenceManager.swift in Sources */,
 				C392FC801B2DB74A0055D481 /* HTTPClient.swift in Sources */,
+				C392FC8B1B2E05600055D481 /* Constants.swift in Sources */,
 				C37EC6751B2D0AF400B14CDC /* EventAPI.swift in Sources */,
 				C359224D1B2B3CFE0067289C /* AppDelegate.swift in Sources */,
 				C392FC881B2DE1130055D481 /* EventItemViewController.swift in Sources */,

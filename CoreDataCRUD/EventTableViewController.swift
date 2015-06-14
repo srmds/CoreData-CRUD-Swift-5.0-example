@@ -9,8 +9,9 @@ import UIKit
 class EventTableViewController: UITableViewController {
 
     var eventList:Array<Event> = []
+    var selectedEventItem : Event!
     
-    //Implicitly unwrapped placeholder for the Controller
+    //placeholder for event endpoint
     var eventAPI: EventAPI!
 
     override func viewDidLoad() {
@@ -22,9 +23,9 @@ class EventTableViewController: UITableViewController {
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
-        if var runCount:Int = defaults.integerForKey("runCount") {
+        if var runCount:Int = defaults.integerForKey(Constants.UserDefaults.RunCount) {
             if(runCount == 0){
-                print("First time app run!")
+                print("First time app run, therefore creating some test data...")
                 if eventAPI.createAndPersistTestData() {
                     var outputText :String!
                     outputText = "Successfully created test items."
@@ -35,13 +36,18 @@ class EventTableViewController: UITableViewController {
             runCount = runCount+1
             print("current runCount: \(runCount)")
             
-            defaults.setObject(runCount, forKey:"runCount")
+            defaults.setObject(runCount, forKey:Constants.UserDefaults.RunCount)
         }
         
         eventList = eventAPI.getAll()
+        
+        //use GCD to get updates for the data, make asynchronous call
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.tableView.reloadData()
+        })
 
     }
-        
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -49,13 +55,12 @@ class EventTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return eventList.count
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let eventCell = tableView.dequeueReusableCellWithIdentifier("eventItemCell", forIndexPath: indexPath) as! EventTableViewCell
+        let eventCell =
+            tableView.dequeueReusableCellWithIdentifier(Constants.CellIds.EventTableCell, forIndexPath: indexPath) as! EventTableViewCell
 
         let eventItem = eventList[indexPath.row]
         
@@ -73,5 +78,18 @@ class EventTableViewController: UITableViewController {
             
         return DateInFormat
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    }
+    
+    // MARK: - Navigation
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
+        if segue.identifier == Constants.SegueIds.showEventItem {
+            let destination = segue.destinationViewController as? EventItemViewController
+            destination!.selectedEventItem = eventList[self.tableView.indexPathForSelectedRow!.row] as Event
+        }
+    }
+    
 }

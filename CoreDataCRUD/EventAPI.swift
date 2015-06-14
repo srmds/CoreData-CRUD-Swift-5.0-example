@@ -5,15 +5,13 @@
 //
 
 import UIKit
-
+import Foundation
 /**
     Endpoint class to be exposed to the view controllers, to communicate 
     with the retrieval and storage layer.
 */
 class EventAPI {
     
-    //Name of the Event entity
-    private let eventNamespace = "Event"
     
     //Manager that does the actual CRUD on the persistence layer
     private let persistenceManager: PersistenceManager
@@ -58,48 +56,47 @@ class EventAPI {
         
         //Create a Dictionary, key - values with event details
         let eventDetailsItem1 = [
-            "eventId": NSUUID().UUIDString,
-            "title": "Galaxy gathering of the coolest",
-            "date":  today,
-            "venue": "The Milkyway",
-            "city": "Nebula Town",
-            "country" : "Blackhole",
-            "attendees":["Yoda",
+            "\(Constants.EventAttributes.eventId.rawValue)": NSUUID().UUIDString,
+            "\(Constants.EventAttributes.title.rawValue)": "Galaxy gathering of the coolest",
+            "\(Constants.EventAttributes.date.rawValue)":  today,
+            "\(Constants.EventAttributes.venue.rawValue)": "The Milkyway",
+            "\(Constants.EventAttributes.city.rawValue)": "Nebula Town",
+            "\(Constants.EventAttributes.country.rawValue)" : "Blackhole",
+            "\(Constants.EventAttributes.attendees.rawValue)":["Yoda",
                 "HAL 9000",
                 "Gizmo",
                 "Optimus Prime",
                 "Marvin the Paranoid Android",
                 "ET",
                 "Bender"],
-            "fb_url": "https://www.facebook.com/events/111789708883460/",
-            "ticket_url": "http://en.wikipedia.org/wiki/Pi"
+            "\(Constants.EventAttributes.fb_url.rawValue)": "https://www.facebook.com/events/111789708883460/",
+            "\(Constants.EventAttributes.ticket_url.rawValue)": "http://en.wikipedia.org/wiki/Pi"
         ]
         
         let eventDetailsItem2 = [
-            "eventId": NSUUID().UUIDString,
-            "title": "King Shiloh Soundsystem",
-            "date":  tomorrow,
-            "venue": "Tivoli Vredenburg",
-            "city" :"Utrecht",
-            "country": "Netherlands",
-            "attendees":["Foo","Bar","Tweety"],
-            "fb_url": "https://www.facebook.com/events/1558804814366111/",
-            "ticket_url": "https://www.facebook.com/LooneyTunes"
+            "\(Constants.EventAttributes.eventId.rawValue)": NSUUID().UUIDString,
+            "\(Constants.EventAttributes.title.rawValue)": "King Shiloh Soundsystem",
+            "\(Constants.EventAttributes.date.rawValue)":  tomorrow,
+            "\(Constants.EventAttributes.venue.rawValue)": "Tivoli Vredenburg",
+            "\(Constants.EventAttributes.city.rawValue)" :"Utrecht",
+            "\(Constants.EventAttributes.country.rawValue)": "Netherlands",
+            "\(Constants.EventAttributes.attendees.rawValue)":["Foo","Bar","Tweety"],
+            "\(Constants.EventAttributes.fb_url.rawValue)": "https://www.facebook.com/events/1558804814366111/",
+            "\(Constants.EventAttributes.ticket_url.rawValue)": "https://www.facebook.com/LooneyTunes"
         ]
         
         let eventDetailsItem3 = [
-            "eventId": NSUUID().UUIDString,
-            "title": "Festifest 2015",
-            "date":  relativetime,
-            "venue": "NDSM-werf",
-            "city" :"Amsterdam",
-            "country": "Netherlands",
-            "attendees":["Narcissus","Frodo","Esscher","Lothar Collatz"],
-            "fb_url": "https://www.facebook.com/events/340083322848962/",
-            "ticket_url": "https://shop.ticketscript.com/channel/web2/start-order/rid/BL84CC4C/language/en"
+            "\(Constants.EventAttributes.eventId.rawValue)": NSUUID().UUIDString,
+            "\(Constants.EventAttributes.title.rawValue)": "Festifest 2015",
+            "\(Constants.EventAttributes.date.rawValue)":  relativetime,
+            "\(Constants.EventAttributes.venue.rawValue)": "NDSM-werf",
+            "\(Constants.EventAttributes.city.rawValue)" :"Amsterdam",
+            "\(Constants.EventAttributes.country.rawValue)": "Netherlands",
+            "\(Constants.EventAttributes.attendees.rawValue)":["Narcissus","Frodo","Esscher","Lothar Collatz"],
+            "\(Constants.EventAttributes.fb_url.rawValue)": "https://www.facebook.com/events/340083322848962/",
+            "\(Constants.EventAttributes.ticket_url.rawValue)": "https://shop.ticketscript.com/channel/web2/start-order/rid/BL84CC4C/language/en"
         ]
 
-        
         //Create and store eventItems
         var success:Bool
         
@@ -171,6 +168,15 @@ class EventAPI {
     */
     func updateAllEventAttendees() -> Bool {
         return persistenceManager.updateAllEventAttendees()
+    }
+    
+    /**
+        Update event item for specific keys.
+    
+        :returns: bool check whether update of event item key values successfull.
+    */
+    func updateEvent(eventToUpdate: Event, updateDetails: Dictionary<String,NSObject>) -> Bool {
+        return persistenceManager.updateEventItemDetails(eventToUpdate, newEventItemDetails: updateDetails)
     }
     
     
