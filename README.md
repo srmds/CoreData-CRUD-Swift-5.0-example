@@ -3,7 +3,7 @@
 
 Swift 2.0 - A (very simple) example project that exposes the usage of CoreData to create entities and to persist to a SQLite Datastore
 
-![screenshotOverview](http://i.imgur.com/3tPKLUd.png)
+![screenshotOverview](http://i.imgur.com/zPV4hKW.png)
 ## The objective
 
 for this project is to learn (for now mostly myself ;D ) to:
