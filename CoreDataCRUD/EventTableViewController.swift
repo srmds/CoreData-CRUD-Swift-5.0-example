@@ -15,16 +15,8 @@ class EventTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.eventAPI = EventAPI.sharedInstance
-        
-        if eventAPI.createAndPersistTestData() {
-            var outputText :String!
-            outputText = "Successfully created test items. Click get all events to retrieve them."
-            print(outputText)
-        }
     }
 
-    
     override func viewWillAppear(animated: Bool) {
         self.eventAPI = EventAPI.sharedInstance
         
