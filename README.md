@@ -87,7 +87,7 @@ Currently it exposes the following functions:
 
 **Update**
 
-*  Update all events (batch update) attendees list.
+*  Update Event entity attribute values
 
 **Delete**
 
@@ -96,5 +96,9 @@ Currently it exposes the following functions:
 	
 ## TODO
 
-Get a better understanding of relationships, no pun intended, both in real-life and in Core Data.
+- Get a better understanding of relationships, no pun intended, both in real-life and in Core Data.
+
+- Retrieve JSON data from REST API and persist incoming response to SQLite datastore (removes creating test data locally, just make actual call to the external (own) Event API endpoint).
+
+- Make step by step guide from scratch to working prototype.
 
