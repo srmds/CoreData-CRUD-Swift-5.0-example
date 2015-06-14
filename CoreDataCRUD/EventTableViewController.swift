@@ -20,13 +20,25 @@ class EventTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         self.eventAPI = EventAPI.sharedInstance
         
-        if eventAPI.createAndPersistTestData() {
-            var outputText :String!
-            outputText = "Successfully created test items. Click get all events to retrieve them."
-            print(outputText)
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        if var runCount:Int = defaults.integerForKey("runCount") {
+            if(runCount == 0){
+                print("First time app run!")
+                if eventAPI.createAndPersistTestData() {
+                    var outputText :String!
+                    outputText = "Successfully created test items."
+                    print(outputText)
+                }
+            }
             
-            eventList = eventAPI.getAll()
+            runCount = runCount+1
+            print("current runCount: \(runCount)")
+            
+            defaults.setObject(runCount, forKey:"runCount")
         }
+        
+        eventList = eventAPI.getAll()
 
     }
         
