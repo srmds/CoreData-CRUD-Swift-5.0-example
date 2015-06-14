@@ -32,6 +32,15 @@ class EventItemViewController: UIViewController {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
+    @IBAction func clearButtonTapped(sender: AnyObject) {
+        let defaultValue = "Live long and prosper 🖖🏾"
+        eventTitleLabel.text = defaultValue
+        eventVenueLabel.text = defaultValue
+        eventCityLabel.text = defaultValue
+        eventCountryLabel.text = defaultValue
+        eventFBURLLabel.text = defaultValue
+        eventTicketURL.text = defaultValue
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
     }

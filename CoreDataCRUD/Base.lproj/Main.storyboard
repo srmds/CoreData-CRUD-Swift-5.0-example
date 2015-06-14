@@ -74,7 +74,7 @@
             </objects>
             <point key="canvasLocation" x="1211.5" y="266.5"/>
         </scene>
-        <!--Event item-->
+        <!--Edit Event-->
         <scene sceneID="w4R-Yh-i1d">
             <objects>
                 <viewController id="p1u-GK-JQ6" customClass="EventItemViewController" customModule="CoreDataCRUD" customModuleProvider="target" sceneMemberID="viewController">
@@ -127,6 +127,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="63l-Fz-Tha">
                                 <rect key="frame" x="137" y="592" width="99" height="44"/>
                                 <state key="normal" title="Clear"/>
+                                <connections>
+                                    <action selector="clearButtonTapped:" destination="p1u-GK-JQ6" eventType="touchUpInside" id="efM-RN-K7c"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Links" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O7g-vy-Qa4">
                                 <rect key="frame" x="26" y="433" width="40" height="21"/>
@@ -154,7 +157,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Event item" id="RzH-Ka-rVa">
+                    <navigationItem key="navigationItem" title="Edit Event" id="RzH-Ka-rVa">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="rBc-7K-HXA">
                             <connections>
                                 <action selector="eventSaveButtonTapped:" destination="p1u-GK-JQ6" id="R2f-Y4-LBd"/>
