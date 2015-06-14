@@ -1,0 +1,340 @@
+//
+//  CoreDataCRUD
+//  EventController.swift
+//  Written by Steven R.
+//
+import UIKit
+import CoreData
+
+//Enum for Event Entity member fields
+enum EventEntityAttributes : String {
+    case
+    eventId    = "eventId",
+    title      = "title",
+    date       = "date",
+    venue      = "venue",
+    city       = "city",
+    country    = "country",
+    attendees  = "attendees",
+    fb_url      = "fb_url",
+    ticket_url = "ticket_url"
+    
+    static let getAll = [
+        eventId,
+        title,
+        date,
+        venue,
+        city,
+        country,
+        attendees,
+        fb_url,
+        ticket_url
+    ]
+}
+
+/**
+A manager that allows CRUD operations on the persistence store
+with an Event entity.
+*/
+class PersistenceManager {
+    
+    //Name of the Event entity
+    private let eventNamespace = "Event"
+    
+    private var context: NSManagedObjectContext
+    
+    init(context: NSManagedObjectContext) {
+        self.context = context
+        createAndPersistTestData()
+    }
+    
+    /**
+        Creates test data by creating new Event objects and assigning
+        property values and calling the managed object layer to persist
+        to the datastore.
+    */
+    func createAndPersistTestData() {
+        
+        //Create some Date offsets to be able to sort on
+        let today = NSDate()
+        let tomorrow: NSDate = NSCalendar.currentCalendar().dateByAddingUnit(
+            .Day,
+            value: 1,
+            toDate: today,
+            options: NSCalendarOptions(rawValue: 0))!
+        
+        //Create a Dictionary, key - values with event details
+        let eventDetailsItem1 = [
+            "eventId": NSUUID().UUIDString,
+            "title": "Galaxy gathering of the coolest",
+            "date":  today,
+            "venue": "The Milkyway",
+            "city": "Nebula Town",
+            "country" : "Blackhole",
+            "attendees":["Yoda",
+                "HAL 9000",
+                "Gizmo",
+                "Optimus Prime",
+                "Marvin the Paranoid Android",
+                "ET",
+                "Bender"],
+            "fb_url": "https://www.facebook.com/events/111789708883460/",
+            "ticket_url": "http://en.wikipedia.org/wiki/Pi"
+        ]
+        
+        let eventDetailsItem2 = [
+            "eventId": NSUUID().UUIDString,
+            "title": "King Shiloh Soundsystem",
+            "date":  tomorrow,
+            //should properly be seperated in: venue, city and country keys
+            "venue": "Tivoli Vredenburg",
+            "city" :"Utrecht",
+            "country": "Netherlands",
+            "attendees":["Foo","Bar","Tweety"],
+            "fb_url": "https://www.facebook.com/events/1558804814366111/",
+            "ticket_url": "https://www.facebook.com/LooneyTunes"
+        ]
+        
+        //Create and store eventItems
+        var success = false
+        
+        success = saveNewItem(eventDetailsItem1)
+        print(" succeeded: \(success)\n\n", appendNewline: false)
+        
+        success = saveNewItem(eventDetailsItem2)
+        print(" succeeded: \(success)\n\n", appendNewline: false)
+    }
+    
+    
+    // MARK: Create
+    
+    /**
+        Creates a new Managed object and persists to datastore.
+    
+        :param: eventDetails Dictionary<String, NSObject> containing
+        eventDetails.
+    */
+    func saveNewItem(eventDetails: Dictionary<String, NSObject>) -> Bool {
+        
+        //Reference to Event entity
+        let entity = NSEntityDescription.entityForName(eventNamespace,
+            inManagedObjectContext:context)
+        
+        //Create new Object of Event entity
+        let eventItem = Event(entity: entity!,
+            insertIntoManagedObjectContext: context)
+        
+        //Assign field values,this enforces an implicit check to only set
+        //(non nil) values for existing keys
+        for (key, value) in eventDetails {
+            for attribute in EventEntityAttributes.getAll {
+                if(key == attribute.rawValue){
+                    eventItem.setValue(value, forKey: key)
+                }
+            }
+        }
+        
+        //Persist new Event to database (via Managed Object Context Layer.
+        do {
+            try context.save()
+            return true
+        } catch let fetchError as NSError {
+            print("saveNewItem error: \(fetchError.localizedDescription)")
+            return false
+        }
+    }
+    
+    // MARK: Read
+    
+    /**
+        Retrieves all event items stored in the persistence layer.
+    
+        :returns:  Array<Event> with found events in datastore
+    */
+    func retrieveAllItems() -> Array<Event> {
+        
+        // Create request on Event entity
+        let fetchRequest = NSFetchRequest(entityName: eventNamespace)
+        
+        //Execute Fetch request returns result as array.
+        var fetchedResults:Array<Event> = Array<Event>()
+        
+        do {
+            fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
+            return fetchedResults
+        } catch let fetchError as NSError {
+            print("retrieveAllItems error: \(fetchError.localizedDescription)")
+            return fetchedResults
+        }
+    }
+    
+    /**
+        Retrieve an event found by it's stored id.
+    
+        :param: eventId of item to retrieve
+        :returns: event item or nil if event is not found
+    */
+    func retrieveById(eventId: NSString) -> Array<Event> {
+        
+        // Create request on Event entity
+        let fetchRequest = NSFetchRequest(entityName:eventNamespace)
+        fetchRequest.returnsObjectsAsFaults = false;
+        
+        //Add a predicate to filter by eventId
+        let findByIdPredicate = NSPredicate(format: "eventId = %@", eventId)
+        fetchRequest.predicate = findByIdPredicate
+        
+        //Execute Fetch request returns result as array or
+        var fetchedResults: Array<Event>
+        
+        do {
+            fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
+        } catch let fetchError as NSError {
+            print("retrieveById error: \(fetchError.localizedDescription)")
+            fetchedResults = Array<Event>()
+        }
+        
+        return fetchedResults
+    }
+    
+    /**
+        Retrieves all event items stored in the persistence layer
+        and sort it by Date.
+    
+        :returns: Array<Event> with found events in datastore based on
+                  sort descriptor, in this case Date.
+    */
+    func retrieveItemsSortedByDate() -> Array<Event> {
+        
+        // Create request on Event entity
+        let fetchRequest = NSFetchRequest(entityName: eventNamespace)
+        
+        //Create sort descriptor to sort retrieved Events by Date, ascending
+        let sortDescriptor = NSSortDescriptor(key: EventEntityAttributes.date.rawValue,
+            ascending: false)
+        
+        let sortDescriptors = [sortDescriptor]
+        fetchRequest.sortDescriptors = sortDescriptors
+        
+        var fetchedResults: Array<Event>
+        
+        do {
+            fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
+        } catch let fetchError as NSError {
+            print("retrieveItemsSortedByDate error: \(fetchError.localizedDescription)")
+            fetchedResults = Array<Event>()
+        }
+        
+        return fetchedResults
+    }
+    
+    // MARK: Update
+    
+    
+    /**
+        Update all events (batch update) attendees list.
+    
+        Since privacy is always a concern to take into account,
+        anonymise the attendees list for every event.
+    
+        :returns: bool check whether batch update of event attendees was
+                  successfull.
+    */
+    func updateAllEventAttendees() -> Bool {
+        
+        
+        // Create a fetch request for the entity Person
+        let fetchRequest = NSFetchRequest(entityName: eventNamespace)
+        
+        // Execute the fetch request
+        let fetchedResults: Array<Event>
+        
+        var succes = false
+        do {
+            fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
+            
+            for event in fetchedResults {
+                //get count of current attendees list
+                let currCount = (event as Event).attendees.count
+                
+                //Create an anonymised list of attendees
+                //with count of current attendees list
+                let anonymisedList = [String](count: currCount, repeatedValue: "anon")
+                
+                //Update current attendees list with anonymised list, shallow copy.
+                (event as Event).attendees = anonymisedList
+            }
+            
+            succes = true
+        } catch let fetchError as NSError {
+            print("updateAllEventAttendees error: \(fetchError.localizedDescription)")
+            succes = false
+        }
+        
+        return succes
+    }
+    
+    
+    // MARK: Delete
+    
+    /**
+        Delete all items of Entity: Event, from persistence layer.
+    
+        :returns: bool check whether no items are stored anymore
+    */
+    func deleteAllItems()  -> Bool {
+        
+        //Persist deletion
+        var success = false
+        
+        do {
+            let retrievedItems = retrieveAllItems()
+            
+            //Delete all event items from persistance layer
+            for item in retrievedItems {
+                context.deleteObject(item)
+            }
+            
+            //Persist deletion to datastore
+            try context.save()
+            success = true
+        } catch let fetchError as NSError {
+            print("retrieveItemsSortedByDate error: \(fetchError.localizedDescription)")
+            success = false
+        }
+        
+        return success
+    }
+    
+    /**
+        Returns a String representation of retrieved event items in passed list.
+    
+        :param: List of Event items
+        :returns: String representation of passed in list
+    */
+    func printEventList(eventList: Array<Event>) -> String {
+        
+        var outputStr = "<("
+        var counter = 0
+        
+        for event: Event in eventList {
+            counter++
+            
+            outputStr += "\n{\n"
+            for attribute in EventEntityAttributes.getAll {
+                if(event.valueForKey(attribute.rawValue) != nil) {
+                    outputStr +=
+                    "\(attribute.rawValue): \(event.valueForKey(attribute.rawValue))"
+                }
+            }
+            
+            if counter < eventList.count{
+                outputStr += "\n}, "
+            } else {
+                outputStr += "\n}"
+            }
+        }
+        
+        return outputStr + ")>\n"
+    }
+}

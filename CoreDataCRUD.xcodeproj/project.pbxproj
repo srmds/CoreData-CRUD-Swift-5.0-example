@@ -14,8 +14,9 @@
 		C35922571B2B3CFE0067289C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C35922561B2B3CFE0067289C /* Images.xcassets */; };
 		C359225A1B2B3CFE0067289C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C35922581B2B3CFE0067289C /* LaunchScreen.xib */; };
 		C35922661B2B3CFE0067289C /* CoreDataCRUDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922651B2B3CFE0067289C /* CoreDataCRUDTests.swift */; };
-		C35922731B2B3D390067289C /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922721B2B3D390067289C /* EventManager.swift */; };
+		C35922731B2B3D390067289C /* PeristenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922721B2B3D390067289C /* PeristenceManager.swift */; };
 		C35922751B2B3E120067289C /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922741B2B3E120067289C /* Event.swift */; };
+		C37EC6751B2D0AF400B14CDC /* EventAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37EC6741B2D0AF400B14CDC /* EventAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +41,9 @@
 		C359225F1B2B3CFE0067289C /* CoreDataCRUDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreDataCRUDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C35922641B2B3CFE0067289C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C35922651B2B3CFE0067289C /* CoreDataCRUDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataCRUDTests.swift; sourceTree = "<group>"; };
-		C35922721B2B3D390067289C /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
+		C35922721B2B3D390067289C /* PeristenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeristenceManager.swift; sourceTree = "<group>"; };
 		C35922741B2B3E120067289C /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		C37EC6741B2D0AF400B14CDC /* EventAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +85,7 @@
 		C35922491B2B3CFE0067289C /* CoreDataCRUD */ = {
 			isa = PBXGroup;
 			children = (
-				C35922711B2B3D1A0067289C /* EntityManagers */,
+				C35922711B2B3D1A0067289C /* EntityAPI */,
 				C35922701B2B3D110067289C /* Models */,
 				C359226F1B2B3D0A0067289C /* ViewControllers */,
 				C359224C1B2B3CFE0067289C /* AppDelegate.swift */,
@@ -137,12 +139,13 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		C35922711B2B3D1A0067289C /* EntityManagers */ = {
+		C35922711B2B3D1A0067289C /* EntityAPI */ = {
 			isa = PBXGroup;
 			children = (
-				C35922721B2B3D390067289C /* EventManager.swift */,
+				C35922721B2B3D390067289C /* PeristenceManager.swift */,
+				C37EC6741B2D0AF400B14CDC /* EventAPI.swift */,
 			);
-			name = EntityManagers;
+			name = EntityAPI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,7 +192,8 @@
 		C359223F1B2B3CFE0067289C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "io pandacode";
 				TargetAttributes = {
 					C35922461B2B3CFE0067289C = {
@@ -247,7 +251,8 @@
 			files = (
 				C35922521B2B3CFE0067289C /* MainViewController.swift in Sources */,
 				C35922501B2B3CFE0067289C /* CoreDataCRUD.xcdatamodeld in Sources */,
-				C35922731B2B3D390067289C /* EventManager.swift in Sources */,
+				C35922731B2B3D390067289C /* PeristenceManager.swift in Sources */,
+				C37EC6751B2D0AF400B14CDC /* EventAPI.swift in Sources */,
 				C359224D1B2B3CFE0067289C /* AppDelegate.swift in Sources */,
 				C35922751B2B3E120067289C /* Event.swift in Sources */,
 			);
@@ -312,6 +317,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -380,7 +386,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				INFOPLIST_FILE = CoreDataCRUD/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -391,7 +399,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				INFOPLIST_FILE = CoreDataCRUD/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -410,6 +420,7 @@
 				);
 				INFOPLIST_FILE = CoreDataCRUDTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoreDataCRUD.app/CoreDataCRUD";
 			};
@@ -425,6 +436,7 @@
 				);
 				INFOPLIST_FILE = CoreDataCRUDTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoreDataCRUD.app/CoreDataCRUD";
 			};
@@ -449,6 +461,7 @@
 				C359226B1B2B3CFE0067289C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C359226C1B2B3CFE0067289C /* Build configuration list for PBXNativeTarget "CoreDataCRUDTests" */ = {
 			isa = XCConfigurationList;
@@ -457,6 +470,7 @@
 				C359226E1B2B3CFE0067289C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
