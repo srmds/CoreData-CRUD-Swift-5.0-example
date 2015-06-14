@@ -14,7 +14,7 @@
 		C35922571B2B3CFE0067289C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C35922561B2B3CFE0067289C /* Images.xcassets */; };
 		C359225A1B2B3CFE0067289C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C35922581B2B3CFE0067289C /* LaunchScreen.xib */; };
 		C35922661B2B3CFE0067289C /* CoreDataCRUDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922651B2B3CFE0067289C /* CoreDataCRUDTests.swift */; };
-		C35922731B2B3D390067289C /* PeristenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922721B2B3D390067289C /* PeristenceManager.swift */; };
+		C35922731B2B3D390067289C /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922721B2B3D390067289C /* PersistenceManager.swift */; };
 		C35922751B2B3E120067289C /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35922741B2B3E120067289C /* Event.swift */; };
 		C37EC6751B2D0AF400B14CDC /* EventAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37EC6741B2D0AF400B14CDC /* EventAPI.swift */; };
 /* End PBXBuildFile section */
@@ -41,7 +41,7 @@
 		C359225F1B2B3CFE0067289C /* CoreDataCRUDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreDataCRUDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C35922641B2B3CFE0067289C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C35922651B2B3CFE0067289C /* CoreDataCRUDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataCRUDTests.swift; sourceTree = "<group>"; };
-		C35922721B2B3D390067289C /* PeristenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeristenceManager.swift; sourceTree = "<group>"; };
+		C35922721B2B3D390067289C /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		C35922741B2B3E120067289C /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		C37EC6741B2D0AF400B14CDC /* EventAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,7 +142,7 @@
 		C35922711B2B3D1A0067289C /* EntityAPI */ = {
 			isa = PBXGroup;
 			children = (
-				C35922721B2B3D390067289C /* PeristenceManager.swift */,
+				C35922721B2B3D390067289C /* PersistenceManager.swift */,
 				C37EC6741B2D0AF400B14CDC /* EventAPI.swift */,
 			);
 			name = EntityAPI;
@@ -251,7 +251,7 @@
 			files = (
 				C35922521B2B3CFE0067289C /* MainViewController.swift in Sources */,
 				C35922501B2B3CFE0067289C /* CoreDataCRUD.xcdatamodeld in Sources */,
-				C35922731B2B3D390067289C /* PeristenceManager.swift in Sources */,
+				C35922731B2B3D390067289C /* PersistenceManager.swift in Sources */,
 				C37EC6751B2D0AF400B14CDC /* EventAPI.swift in Sources */,
 				C359224D1B2B3CFE0067289C /* AppDelegate.swift in Sources */,
 				C35922751B2B3E120067289C /* Event.swift in Sources */,
