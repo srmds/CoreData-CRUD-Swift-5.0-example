@@ -93,6 +93,8 @@ Currently it exposes the following functions:
 
 * Delete all items of Entity: Event, from persistence layer.
 
+* Delete a single item of Entity: Event, from persistence layer.
+
 	
 ## TODO
 

@@ -41,6 +41,15 @@ class EventItemViewController: UIViewController {
         eventFBURLLabel.text = defaultValue
         eventTicketURL.text = defaultValue
     }
+    
+    
+    @IBAction func deleteEventButtonTapped(sender: UIButton) {
+        if(selectedEventItem != nil){
+            eventAPI.deleteItem(selectedEventItem)
+        }
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

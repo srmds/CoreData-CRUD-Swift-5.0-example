@@ -240,6 +240,32 @@ class PersistenceManager {
     }
     
     /**
+    Delete all items of Entity: Event, from persistence layer.
+    
+    :returns: bool check whether no items are stored anymore
+    */
+    func deleteItem(eventItem: Event)  -> Bool {
+        
+        //Persist deletion
+        var success = false
+        do {
+            
+            //Delete event item from persistance layer
+            context.deleteObject(eventItem)
+            
+            //Persist deletion to datastore
+            try context.save()
+            success = true
+        } catch let fetchError as NSError {
+            print("retrieveItemsSortedByDate error: \(fetchError.localizedDescription)")
+            success = false
+        }
+        
+        return success
+    }
+
+    
+    /**
         Returns a String representation of retrieved event items in passed list.
     
         :param: List of Event items

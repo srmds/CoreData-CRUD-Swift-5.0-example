@@ -192,6 +192,15 @@ class EventAPI {
     }
     
     /**
+        Delete item of Entity: Event, from persistence layer.
+    
+        :returns: - bool check whether deletion succeeded
+    */
+
+    func deleteItem(eventItem: Event)  -> Bool {
+        return persistenceManager.deleteItem(eventItem)
+    }
+    /**
         Returns a String representation of retrieved event items in passed list.
     
         :param: - List of Event items
