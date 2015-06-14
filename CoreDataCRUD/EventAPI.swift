@@ -50,6 +50,12 @@ class EventAPI {
             toDate: today,
             options: NSCalendarOptions(rawValue: 0))!
         
+        let relativetime: NSDate = NSCalendar.currentCalendar().dateByAddingUnit(
+            .Day,
+            value: 22,
+            toDate: today,
+            options: NSCalendarOptions(rawValue: 0))!
+        
         //Create a Dictionary, key - values with event details
         let eventDetailsItem1 = [
             "eventId": NSUUID().UUIDString,
@@ -73,7 +79,6 @@ class EventAPI {
             "eventId": NSUUID().UUIDString,
             "title": "King Shiloh Soundsystem",
             "date":  tomorrow,
-            //should properly be seperated in: venue, city and country keys
             "venue": "Tivoli Vredenburg",
             "city" :"Utrecht",
             "country": "Netherlands",
@@ -81,6 +86,19 @@ class EventAPI {
             "fb_url": "https://www.facebook.com/events/1558804814366111/",
             "ticket_url": "https://www.facebook.com/LooneyTunes"
         ]
+        
+        let eventDetailsItem3 = [
+            "eventId": NSUUID().UUIDString,
+            "title": "Festifest 2015",
+            "date":  relativetime,
+            "venue": "NDSM-werf",
+            "city" :"Amsterdam",
+            "country": "Netherlands",
+            "attendees":["Narcissus","Frodo","Esscher","Lothar Collatz"],
+            "fb_url": "https://www.facebook.com/events/340083322848962/",
+            "ticket_url": "https://shop.ticketscript.com/channel/web2/start-order/rid/BL84CC4C/language/en"
+        ]
+
         
         //Create and store eventItems
         var success:Bool
@@ -90,6 +108,9 @@ class EventAPI {
         
         success = saveEvent(eventDetailsItem2)
         print("Test object 2 creation succeeded: \(success)\n\n")
+        
+        success = saveEvent(eventDetailsItem3)
+        print("Test object 3 creation succeeded: \(success)\n\n")
         
         return success
     }

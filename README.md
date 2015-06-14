@@ -3,7 +3,10 @@
 
 Swift 2.0 - A (very simple) example project that exposes the usage of CoreData to create entities and to persist to a SQLite Datastore
 
-![](http://i.imgur.com/tF3xmgm.png)
+![screenshotOverview](http://i.imgur.com/3tPKLUd.png)
+![screenshotEditableItem](http://i.imgur.com/jvycMg5.png)
+
+
 ## The objective
 
 for this project is to learn (for now mostly myself ;D ) to:
@@ -23,6 +26,10 @@ Do you have questions or want to help? Enhancements and/or fixes and suggestions
 
 
 ## Versions
+
+## iOS
+
+The version used in this project is `version 9.0`
 
 ### Swift
 
