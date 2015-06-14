@@ -21,10 +21,7 @@ struct Constants {
     struct UserDefaults {
         static let RunCount = "runCount"
     }
-    
-    //Name of the Event entity
-    static let eventNamespace = "Event"
-    
+        
     //Enum for Event Entity member fields
     enum EventAttributes : String {
         case

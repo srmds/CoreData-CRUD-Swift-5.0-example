@@ -29,7 +29,7 @@ class PersistenceManager {
     func saveNewItem(eventDetails: Dictionary<String, NSObject>) -> Bool {
         
         //Reference to Event entity
-        let entity = NSEntityDescription.entityForName(Constants.eventNamespace,
+        let entity = NSEntityDescription.entityForName(Constants.CoreDataEntities.EventEntiy,
             inManagedObjectContext:context)
         
         //Create new Object of Event entity
@@ -65,7 +65,7 @@ class PersistenceManager {
     func retrieveAllItems() -> Array<Event> {
         
         // Create request on Event entity
-        let fetchRequest = NSFetchRequest(entityName: Constants.eventNamespace)
+        let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
         
         //Execute Fetch request returns result as array.
         var fetchedResults:Array<Event> = Array<Event>()
@@ -87,7 +87,7 @@ class PersistenceManager {
     func retrieveById(eventId: NSString) -> Array<Event> {
         
         // Create request on Event entity
-        let fetchRequest = NSFetchRequest(entityName: Constants.eventNamespace)
+        let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
         fetchRequest.returnsObjectsAsFaults = false;
         
         //Add a predicate to filter by eventId
@@ -117,7 +117,7 @@ class PersistenceManager {
     func retrieveItemsSortedByDate() -> Array<Event> {
         
         // Create request on Event entity
-        let fetchRequest = NSFetchRequest(entityName: Constants.eventNamespace)
+        let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
         
         //Create sort descriptor to sort retrieved Events by Date, descending
         let sortDescriptor = NSSortDescriptor(key: Constants.EventAttributes.date.rawValue,
@@ -152,7 +152,7 @@ class PersistenceManager {
         
         
         // Create a fetch request for the entity Person
-        let fetchRequest = NSFetchRequest(entityName: Constants.eventNamespace)
+        let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
         
         // Execute the fetch request
         let fetchedResults: Array<Event>
