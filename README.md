@@ -64,7 +64,7 @@ The AnyObject type in this example are [non-standard persistent attributes](http
 
 ## Persistence Manager 
  
-The [Persistence Manager](https://github.com/srmds/CoreData-CRUD-Swift-2.0-example/blob/master/CoreDataCRUD/PeristenceManager.swift) is a manager that allows `CRUD` operations on the persistence store with an Event entity.
+The [Persistence Manager](https://github.com/srmds/CoreData-CRUD-Swift-2.0-example/blob/master/CoreDataCRUD/PersistenceManager.swift) is a manager that allows `CRUD` operations on the persistence store with an Event entity.
 
 Currently it exposes the following functions:
 
