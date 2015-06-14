@@ -35,7 +35,7 @@ This project is build with Xcode `version 7.0 beta`.
 
 In this project the usage of pragmas will help you through the code exploration. For example:
 
-Open up Xcode, and open the project, and go to the `EventManager.swift` file.
+Open up Xcode, and open the project, and open the `PersistenceManager.swift` file.
 Then click on `^ 6`, thus `control + 6`, this will open up an overview of several CRUD methods used.
 And click on the method of interest, to see it's implementation.
 
