@@ -33,8 +33,8 @@ enum EventEntityAttributes : String {
 }
 
 /**
-A manager that allows CRUD operations on the persistence store
-with an Event entity.
+    A manager that allows CRUD operations on the persistence store
+    with an Event entity.
 */
 class PersistenceManager {
     
@@ -45,66 +45,7 @@ class PersistenceManager {
     
     init(context: NSManagedObjectContext) {
         self.context = context
-        createAndPersistTestData()
     }
-    
-    /**
-        Creates test data by creating new Event objects and assigning
-        property values and calling the managed object layer to persist
-        to the datastore.
-    */
-    func createAndPersistTestData() {
-        
-        //Create some Date offsets to be able to sort on
-        let today = NSDate()
-        let tomorrow: NSDate = NSCalendar.currentCalendar().dateByAddingUnit(
-            .Day,
-            value: 1,
-            toDate: today,
-            options: NSCalendarOptions(rawValue: 0))!
-        
-        //Create a Dictionary, key - values with event details
-        let eventDetailsItem1 = [
-            "eventId": NSUUID().UUIDString,
-            "title": "Galaxy gathering of the coolest",
-            "date":  today,
-            "venue": "The Milkyway",
-            "city": "Nebula Town",
-            "country" : "Blackhole",
-            "attendees":["Yoda",
-                "HAL 9000",
-                "Gizmo",
-                "Optimus Prime",
-                "Marvin the Paranoid Android",
-                "ET",
-                "Bender"],
-            "fb_url": "https://www.facebook.com/events/111789708883460/",
-            "ticket_url": "http://en.wikipedia.org/wiki/Pi"
-        ]
-        
-        let eventDetailsItem2 = [
-            "eventId": NSUUID().UUIDString,
-            "title": "King Shiloh Soundsystem",
-            "date":  tomorrow,
-            //should properly be seperated in: venue, city and country keys
-            "venue": "Tivoli Vredenburg",
-            "city" :"Utrecht",
-            "country": "Netherlands",
-            "attendees":["Foo","Bar","Tweety"],
-            "fb_url": "https://www.facebook.com/events/1558804814366111/",
-            "ticket_url": "https://www.facebook.com/LooneyTunes"
-        ]
-        
-        //Create and store eventItems
-        var success = false
-        
-        success = saveNewItem(eventDetailsItem1)
-        print(" succeeded: \(success)\n\n", appendNewline: false)
-        
-        success = saveNewItem(eventDetailsItem2)
-        print(" succeeded: \(success)\n\n", appendNewline: false)
-    }
-    
     
     // MARK: Create
     
@@ -124,12 +65,11 @@ class PersistenceManager {
         let eventItem = Event(entity: entity!,
             insertIntoManagedObjectContext: context)
         
-        //Assign field values,this enforces an implicit check to only set
-        //(non nil) values for existing keys
+        //Assign field values
         for (key, value) in eventDetails {
             for attribute in EventEntityAttributes.getAll {
-                if(key == attribute.rawValue){
-                    eventItem.setValue(value, forKey: key)
+                if (key == attribute.rawValue) {
+                        eventItem.setValue(value, forKey: key)
                 }
             }
         }
@@ -158,7 +98,6 @@ class PersistenceManager {
         
         //Execute Fetch request returns result as array.
         var fetchedResults:Array<Event> = Array<Event>()
-        
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
             return fetchedResults
@@ -186,7 +125,6 @@ class PersistenceManager {
         
         //Execute Fetch request returns result as array or
         var fetchedResults: Array<Event>
-        
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
         } catch let fetchError as NSError {
@@ -209,15 +147,14 @@ class PersistenceManager {
         // Create request on Event entity
         let fetchRequest = NSFetchRequest(entityName: eventNamespace)
         
-        //Create sort descriptor to sort retrieved Events by Date, ascending
+        //Create sort descriptor to sort retrieved Events by Date, descending
         let sortDescriptor = NSSortDescriptor(key: EventEntityAttributes.date.rawValue,
             ascending: false)
-        
         let sortDescriptors = [sortDescriptor]
         fetchRequest.sortDescriptors = sortDescriptors
         
+        //Execute Fetch request returns result as array or
         var fetchedResults: Array<Event>
-        
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
         } catch let fetchError as NSError {
@@ -248,7 +185,6 @@ class PersistenceManager {
         
         // Execute the fetch request
         let fetchedResults: Array<Event>
-        
         var succes = false
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
@@ -264,7 +200,6 @@ class PersistenceManager {
                 //Update current attendees list with anonymised list, shallow copy.
                 (event as Event).attendees = anonymisedList
             }
-            
             succes = true
         } catch let fetchError as NSError {
             print("updateAllEventAttendees error: \(fetchError.localizedDescription)")
@@ -286,7 +221,6 @@ class PersistenceManager {
         
         //Persist deletion
         var success = false
-        
         do {
             let retrievedItems = retrieveAllItems()
             

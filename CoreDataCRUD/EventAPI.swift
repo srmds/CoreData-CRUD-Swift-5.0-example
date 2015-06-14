@@ -7,8 +7,8 @@
 import UIKit
 
 /**
-    A manager that allows CRUD operations on the persistence store
-    with an Event entity.
+    Endpoint class to be exposed to the view controllers, to communicate 
+    with the retrieval and storage layer.
 */
 class EventAPI {
     
@@ -83,13 +83,13 @@ class EventAPI {
         ]
         
         //Create and store eventItems
-        var success = false
+        var success:Bool
         
         success = saveEvent(eventDetailsItem1)
-        print(" succeeded: \(success)\n\n", appendNewline: false)
+        print("Test object 1 creation succeeded: \(success)\n\n")
         
         success = saveEvent(eventDetailsItem2)
-        print(" succeeded: \(success)\n\n", appendNewline: false)
+        print("Test object 2 creation succeeded: \(success)\n\n")
     }
 
     /**
