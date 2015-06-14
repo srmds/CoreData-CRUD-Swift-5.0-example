@@ -98,7 +98,7 @@ Currently it exposes the following functions:
 
 - Get a better understanding of relationships, no pun intended, both in real-life and in Core Data.
 
-- Retrieve JSON data from REST API and persist incoming response to SQLite datastore (removes creating test data locally, just make actual call to the external (own) Event API endpoint).
+- Retrieve JSON data from REST API and persist incoming response to SQLite datastore (removes creating test data locally, just make actual call to the external [own](https://flow-api.herokuapp.com) Event API endpoint).
 
 - Make step by step guide from scratch to working prototype.
 
