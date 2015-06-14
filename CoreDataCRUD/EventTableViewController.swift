@@ -85,10 +85,13 @@ class EventTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
+        let destination = segue.destinationViewController as? EventItemViewController
+        
         if segue.identifier == Constants.SegueIds.showEventItem {
-            let destination = segue.destinationViewController as? EventItemViewController
             destination!.selectedEventItem = eventList[self.tableView.indexPathForSelectedRow!.row] as Event
+            destination!.title = "Edit event"
+        } else {
+            destination!.title = "Add event"
         }
     }
     
