@@ -50,12 +50,6 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
 
     // MARK: - Table view data source
     
@@ -89,6 +83,10 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if resultSearchController.active {
+            resultSearchController.active = false
+        }
+        
         let destination = segue.destinationViewController as? EventItemViewController
         
         if segue.identifier == Constants.SegueIds.showEventItem {
@@ -100,6 +98,10 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     // MARK: - Table edit mode
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
