@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C3472EE71B2E861F00E7EF2B /* testTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3472EE61B2E861F00E7EF2B /* testTableViewController.swift */; };
 		C359224D1B2B3CFE0067289C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359224C1B2B3CFE0067289C /* AppDelegate.swift */; };
 		C35922501B2B3CFE0067289C /* CoreDataCRUD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C359224E1B2B3CFE0067289C /* CoreDataCRUD.xcdatamodeld */; };
 		C35922551B2B3CFE0067289C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C35922531B2B3CFE0067289C /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C3472EE61B2E861F00E7EF2B /* testTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = testTableViewController.swift; sourceTree = "<group>"; };
 		C35922471B2B3CFE0067289C /* CoreDataCRUD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataCRUD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C359224B1B2B3CFE0067289C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C359224C1B2B3CFE0067289C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				C392FC831B2DB8770055D481 /* EventTableViewCell.swift */,
 				C392FC851B2DBA840055D481 /* EventTableViewController.swift */,
 				C392FC871B2DE1130055D481 /* EventItemViewController.swift */,
+				C3472EE61B2E861F00E7EF2B /* testTableViewController.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				C392FC801B2DB74A0055D481 /* HTTPClient.swift in Sources */,
 				C392FC8B1B2E05600055D481 /* Constants.swift in Sources */,
 				C37EC6751B2D0AF400B14CDC /* EventAPI.swift in Sources */,
+				C3472EE71B2E861F00E7EF2B /* testTableViewController.swift in Sources */,
 				C359224D1B2B3CFE0067289C /* AppDelegate.swift in Sources */,
 				C392FC881B2DE1130055D481 /* EventItemViewController.swift in Sources */,
 				C35922751B2B3E120067289C /* Event.swift in Sources */,
