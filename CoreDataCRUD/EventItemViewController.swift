@@ -20,6 +20,7 @@ class EventItemViewController: UIViewController {
     @IBOutlet weak var eventCountryLabel: UITextField!
     @IBOutlet weak var eventFBURLLabel: UITextField!
     @IBOutlet weak var eventTicketURL: UITextField!
+    @IBOutlet weak var eventDatePicker: UIDatePicker!
     
     //Call endpoint save event handler, pass this event togehter with
     //populated dictionary from field values.
@@ -40,6 +41,7 @@ class EventItemViewController: UIViewController {
         eventCountryLabel.text = defaultValue
         eventFBURLLabel.text = defaultValue
         eventTicketURL.text = defaultValue
+        eventDatePicker.date = NSDate()
     }
     
     
@@ -64,6 +66,7 @@ class EventItemViewController: UIViewController {
             eventCountryLabel.text = selectedEventItem.country
             eventFBURLLabel.text = selectedEventItem.fb_url as? String
             eventTicketURL.text = selectedEventItem.ticket_url as? String
+            eventDatePicker.date = selectedEventItem.date
         }
        
     }
@@ -83,6 +86,8 @@ class EventItemViewController: UIViewController {
         fieldDetails[Constants.EventAttributes.country.rawValue] = eventCountryLabel.text
         fieldDetails[Constants.EventAttributes.fb_url.rawValue] = eventFBURLLabel.text
         fieldDetails[Constants.EventAttributes.ticket_url.rawValue] = eventTicketURL.text
+        fieldDetails[Constants.EventAttributes.date.rawValue] =
+            eventDatePicker.date
         
         return fieldDetails
     }

@@ -150,10 +150,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="9PP-m4-YOw">
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="9PP-m4-YOw">
                                 <rect key="frame" x="26" y="95" width="320" height="88"/>
                                 <date key="date" timeIntervalSinceReferenceDate="455992109.89736402">
                                     <!--2015-06-14 16:28:29 +0000-->
+                                </date>
+                                <date key="minimumDate" timeIntervalSinceReferenceDate="441802800">
+                                    <!--2015-01-01 11:00:00 +0000-->
                                 </date>
                             </datePicker>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="City" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q81-HP-BTZ">
@@ -224,6 +227,7 @@
                     <connections>
                         <outlet property="eventCityLabel" destination="q81-HP-BTZ" id="me2-Dp-S7t"/>
                         <outlet property="eventCountryLabel" destination="Wn7-yu-AI2" id="SX9-L0-kGn"/>
+                        <outlet property="eventDatePicker" destination="9PP-m4-YOw" id="rgG-Xd-A4g"/>
                         <outlet property="eventFBURLLabel" destination="iF0-kS-w2h" id="wOr-SR-ClY"/>
                         <outlet property="eventTicketURL" destination="1Cq-si-NSW" id="FtP-rX-MhY"/>
                         <outlet property="eventTitleLabel" destination="zef-F5-Ku6" id="fHt-pV-6sT"/>
