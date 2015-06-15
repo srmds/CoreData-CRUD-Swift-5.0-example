@@ -23,6 +23,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     
     override func viewWillAppear(animated: Bool) {
         self.eventAPI = EventAPI.sharedInstance
+        self.tableView.setContentOffset(CGPointMake(0, 44),animated: true)
 
         let defaults = NSUserDefaults.standardUserDefaults()
         
