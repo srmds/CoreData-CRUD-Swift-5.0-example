@@ -6,7 +6,7 @@
 
 import UIKit
 
-class EventItemViewController: UIViewController {
+class EventItemViewController: UIViewController,UITextFieldDelegate {
 
     //placeholder for event endpoint
     private var eventAPI: EventAPI!
@@ -14,16 +14,38 @@ class EventItemViewController: UIViewController {
     //Reference to selected event to pass to details view
     internal var selectedEventItem:Event!
     
-    @IBOutlet weak var eventTitleLabel: UITextField!
-    @IBOutlet weak var eventVenueLabel: UITextField!
-    @IBOutlet weak var eventCityLabel: UITextField!
-    @IBOutlet weak var eventCountryLabel: UITextField!
-    @IBOutlet weak var eventFBURLLabel: UITextField!
-    @IBOutlet weak var eventTicketURL: UITextField!
+    @IBOutlet weak var eventTitleLabel: UITextField!{ didSet { eventTitleLabel.delegate = self } }
+    @IBOutlet weak var eventVenueLabel: UITextField!{ didSet { eventVenueLabel.delegate = self } }
+    @IBOutlet weak var eventCityLabel: UITextField!{ didSet { eventCityLabel.delegate = self } }
+    @IBOutlet weak var eventCountryLabel: UITextField!{ didSet { eventCountryLabel.delegate = self } }
+    @IBOutlet weak var eventFBURLLabel: UITextField!{ didSet { eventFBURLLabel.delegate = self } }
+    @IBOutlet weak var eventTicketURL: UITextField!{ didSet { eventTicketURL.delegate = self } }
     @IBOutlet weak var eventDatePicker: UIDatePicker!
+    @IBOutlet weak var scrollViewContainer: UIScrollView!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
     
-    //Call endpoint save event handler, pass this event together with
-    //populated dictionary from field values.
+    override func viewWillAppear(animated: Bool) {
+        self.eventAPI = EventAPI.sharedInstance
+        
+        if(self.selectedEventItem != nil){
+            setFieldValues()
+        }
+       
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    // MARK Actions
+    
+    /**
+    Call endpoint save event handler, pass this event together with
+    populated dictionary from field values.
+    */
     @IBAction func eventSaveButtonTapped(sender: UIBarButtonItem) {
         if(selectedEventItem != nil){
             eventAPI.updateEvent(selectedEventItem, updateDetails:getFieldValues())
@@ -32,9 +54,11 @@ class EventItemViewController: UIViewController {
         }
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
-    
+    /**
+    Set all fields text to a predefined default value.
+    */
     @IBAction func clearButtonTapped(sender: AnyObject) {
-        let defaultValue = "Live long and prosper 🖖🏾"
+        let defaultValue = "Live long and prosper 🖖🏾" // need change to empty String ;p
         eventTitleLabel.text = defaultValue
         eventVenueLabel.text = defaultValue
         eventCityLabel.text = defaultValue
@@ -44,7 +68,9 @@ class EventItemViewController: UIViewController {
         eventDatePicker.date = NSDate()
     }
     
-    
+    /**
+    Delete event item from datastore.
+    */
     @IBAction func deleteEventButtonTapped(sender: UIButton) {
         if(selectedEventItem != nil){
             eventAPI.deleteItem(selectedEventItem)
@@ -52,30 +78,38 @@ class EventItemViewController: UIViewController {
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    // MARK: Textfield delegates
     
-    override func viewWillAppear(animated: Bool) {
-        self.eventAPI = EventAPI.sharedInstance
-        
-        if(self.selectedEventItem != nil){
-            eventTitleLabel.text = selectedEventItem.title
-            eventVenueLabel.text = selectedEventItem.venue
-            eventCityLabel.text = selectedEventItem.city
-            eventCountryLabel.text = selectedEventItem.country
-            eventFBURLLabel.text = selectedEventItem.fb_url as? String
-            eventTicketURL.text = selectedEventItem.ticket_url as? String
-            eventDatePicker.date = selectedEventItem.date
-        }
-       
-    }
+    func textFieldDidEndEditing(textField: UITextField) {
+        scrollViewContainer.setContentOffset(CGPointZero, animated: true)
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    }
+    func textFieldDidBeginEditing(textField: UITextField) {
+        scrollViewContainer.setContentOffset(CGPoint(x: scrollViewContainer.frame.origin.x, y: textField.frame.origin.y - 8), animated: true)
     }
     
-    //Populates all fields in to dictionary
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
+    }
+    
+    // MARK Utility methods
+    
+    /**
+        Set field values for passed on event item.
+    */
+    private func setFieldValues(){
+        eventTitleLabel.text = selectedEventItem.title
+        eventVenueLabel.text = selectedEventItem.venue
+        eventCityLabel.text = selectedEventItem.city
+        eventCountryLabel.text = selectedEventItem.country
+        eventFBURLLabel.text = selectedEventItem.fb_url as? String
+        eventTicketURL.text = selectedEventItem.ticket_url as? String
+        eventDatePicker.date = selectedEventItem.date
+    }
+    
+    /**
+        Populates all fields in to dictionary
+    */
     private func getFieldValues() -> Dictionary<String, NSObject> {
 
         var fieldDetails = [String: NSObject]()
@@ -91,4 +125,5 @@ class EventItemViewController: UIViewController {
         
         return fieldDetails
     }
+    
 }
