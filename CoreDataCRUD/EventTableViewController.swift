@@ -8,13 +8,11 @@ import UIKit
 
 class EventTableViewController: UITableViewController, UISearchResultsUpdating {
 
-    var eventList:Array<Event> = []
-    var filteredEventList:Array<Event> = []
-    var selectedEventItem : Event!
-    var resultSearchController:UISearchController!
-    
-    //placeholder for event endpoint
-    var eventAPI: EventAPI!
+    private var eventList:Array<Event> = []
+    private var filteredEventList:Array<Event> = []
+    private var selectedEventItem : Event!
+    private var resultSearchController:UISearchController!
+    private var eventAPI: EventAPI!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +30,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
             if(runCount == 0){
                 print("First time app run, therefore creating some test data...")
                 if eventAPI.createAndPersistTestData() {
-                    var outputText :String!
-                    outputText = "Successfully created test items."
-                    print(outputText)
+                    print("Successfully created test items.")
                 }
             }
             

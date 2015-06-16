@@ -9,10 +9,10 @@ import UIKit
 class EventItemViewController: UIViewController {
 
     //placeholder for event endpoint
-    var eventAPI: EventAPI!
+    private var eventAPI: EventAPI!
     
     //Reference to selected event to pass to details view
-    var selectedEventItem:Event!
+    internal var selectedEventItem:Event!
     
     @IBOutlet weak var eventTitleLabel: UITextField!
     @IBOutlet weak var eventVenueLabel: UITextField!
@@ -22,7 +22,7 @@ class EventItemViewController: UIViewController {
     @IBOutlet weak var eventTicketURL: UITextField!
     @IBOutlet weak var eventDatePicker: UIDatePicker!
     
-    //Call endpoint save event handler, pass this event togehter with
+    //Call endpoint save event handler, pass this event together with
     //populated dictionary from field values.
     @IBAction func eventSaveButtonTapped(sender: UIBarButtonItem) {
         if(selectedEventItem != nil){

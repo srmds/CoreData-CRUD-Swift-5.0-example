@@ -26,7 +26,7 @@ class PersistenceManager {
         :param: eventDetails Dictionary<String, NSObject> containing
         eventDetails.
     */
-    func saveNewItem(eventDetails: Dictionary<String, NSObject>) -> Bool {
+   internal func saveNewItem(eventDetails: Dictionary<String, NSObject>) -> Bool {
         
         //Reference to Event entity
         let entity = NSEntityDescription.entityForName(Constants.CoreDataEntities.EventEntiy,
@@ -62,7 +62,7 @@ class PersistenceManager {
     
         :returns:  Array<Event> with found events in datastore
     */
-    func retrieveAllItems() -> Array<Event> {
+    internal func retrieveAllItems() -> Array<Event> {
         
         // Create request on Event entity
         let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
@@ -84,7 +84,7 @@ class PersistenceManager {
         :param: eventId of item to retrieve
         :returns: event item or nil if event is not found
     */
-    func retrieveById(eventId: NSString) -> Array<Event> {
+    internal func retrieveById(eventId: NSString) -> Array<Event> {
         
         // Create request on Event entity
         let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
@@ -114,7 +114,7 @@ class PersistenceManager {
         :returns: Array<Event> with found events in datastore based on
                   sort descriptor, in this case Date.
     */
-    func retrieveItemsSortedByDate() -> Array<Event> {
+    internal func retrieveItemsSortedByDate() -> Array<Event> {
         
         // Create request on Event entity
         let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
@@ -148,7 +148,7 @@ class PersistenceManager {
         :returns: bool check whether batch update of event attendees was
                   successfull.
     */
-    func updateAllEventAttendees() -> Bool {
+    internal func updateAllEventAttendees() -> Bool {
         
         
         // Create a fetch request for the entity Person
@@ -185,7 +185,7 @@ class PersistenceManager {
     
         :returns: bool check whether update of event item key values successfull.
     */
-    func updateEventItemDetails(eventItemToUpdate: Event, newEventItemDetails: Dictionary<String, NSObject>) -> Bool {
+    internal func updateEventItemDetails(eventItemToUpdate: Event, newEventItemDetails: Dictionary<String, NSObject>) -> Bool {
         
         //Assign field values
         for (key, value) in newEventItemDetails {
@@ -216,7 +216,7 @@ class PersistenceManager {
     
         :returns: bool check whether no items are stored anymore
     */
-    func deleteAllItems()  -> Bool {
+    internal func deleteAllItems()  -> Bool {
         
         //Persist deletion
         var success = false
@@ -244,7 +244,7 @@ class PersistenceManager {
     
     :returns: bool check whether no items are stored anymore
     */
-    func deleteItem(eventItem: Event)  -> Bool {
+    internal func deleteItem(eventItem: Event)  -> Bool {
         
         //Persist deletion
         var success = false
@@ -271,7 +271,7 @@ class PersistenceManager {
         :param: List of Event items
         :returns: String representation of passed in list
     */
-    func printEventList(eventList: Array<Event>) -> String {
+    internal func printEventList(eventList: Array<Event>) -> String {
         
         var outputStr = "<("
         var counter = 0
