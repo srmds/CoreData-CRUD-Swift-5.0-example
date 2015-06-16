@@ -50,7 +50,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Sk7-8V-YLU">
-                                            <rect key="frame" x="565" y="151" width="10" height="15"/>
+                                            <rect key="frame" x="572" y="151" width="10" height="15"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="8bg-oq-B85"/>
                                                 <constraint firstAttribute="width" constant="10" id="k3Q-bI-S7U"/>
@@ -68,7 +68,7 @@
                                         <constraint firstItem="NI7-7j-THV" firstAttribute="top" secondItem="Wgk-7s-1fN" secondAttribute="bottom" constant="8" symbolic="YES" id="VqU-rh-YgG"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="glC-Aa-3GU" secondAttribute="bottom" constant="13" id="Xug-G4-LIl"/>
                                         <constraint firstItem="0D9-el-HRz" firstAttribute="top" secondItem="Wgk-7s-1fN" secondAttribute="bottom" constant="18" id="Z8N-vd-lo6"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Sk7-8V-YLU" secondAttribute="trailing" constant="17" id="cil-5v-k7R"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Sk7-8V-YLU" secondAttribute="trailing" constant="10" id="cil-5v-k7R"/>
                                         <constraint firstAttribute="trailing" secondItem="Wgk-7s-1fN" secondAttribute="trailing" id="j3q-cE-8Yz"/>
                                         <constraint firstItem="Wgk-7s-1fN" firstAttribute="top" secondItem="Yuw-kz-yZP" secondAttribute="top" id="jpp-cR-gL8"/>
                                         <constraint firstItem="NI7-7j-THV" firstAttribute="leading" secondItem="Yuw-kz-yZP" secondAttribute="leadingMargin" constant="-4" id="rZK-vn-rgL"/>
