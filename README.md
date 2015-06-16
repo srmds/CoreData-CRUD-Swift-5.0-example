@@ -110,7 +110,11 @@ Currently it exposes the following functions:
 
 The `Persistency Manager` can be seen as the communicator to the persistent store coordinator.
 
+### More info 
 More Core Data basics can be found [here](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreData/Articles/cdBasics.html#//apple_ref/doc/uid/TP40001650-TP1)
+
+A great tutorial on Design patterns can be found [here.](http://www.raywenderlich.com/86477/introducing-ios-design-patterns-in-swift-part-1)
+Note, that the pattern used in this project is inspired by these tutorials, with special remark on the facade design pattern.
 
 ## TODO
 
