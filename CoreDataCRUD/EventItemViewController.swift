@@ -50,7 +50,14 @@ class EventItemViewController: UIViewController,UITextFieldDelegate {
         if(selectedEventItem != nil){
             eventAPI.updateEvent(selectedEventItem, updateDetails:getFieldValues())
         } else {
-            eventAPI.saveEvent(getFieldValues())
+            //Input details
+            var newDetails = getFieldValues()
+            
+            //Generate UUID, add it to dictionary
+            newDetails[Constants.EventAttributes.eventId.rawValue] =  NSUUID().UUIDString
+            
+            eventAPI.saveEvent(newDetails)
+
         }
         self.navigationController?.popToRootViewControllerAnimated(true)
     }

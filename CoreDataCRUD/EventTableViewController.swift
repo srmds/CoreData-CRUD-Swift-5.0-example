@@ -89,7 +89,18 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         let destination = segue.destinationViewController as? EventItemViewController
         
         if segue.identifier == Constants.SegueIds.showEventItem {
-            destination!.selectedEventItem = eventList[self.tableView.indexPathForSelectedRow!.row] as Event
+            /*
+                Two options to pass selected Event to destination:
+                
+                1) Object passing since eventList contains Event objects:
+                destination!.selectedEventItem = eventList[self.tableView.indexPathForSelectedRow!.row] as Event
+                
+                2) Utilize EventAPI, find Event by Id:
+                destination!.selectedEventItem = eventAPI.getById(selectedEventItem.eventId)[0]
+            */
+            let selectedEventItem = eventList[self.tableView.indexPathForSelectedRow!.row] as Event
+            destination!.selectedEventItem = eventAPI.getById(selectedEventItem.eventId)[0] //option 2
+            
             destination!.title = "Edit event"
         } else {
             destination!.title = "Add event"
