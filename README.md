@@ -67,9 +67,21 @@ The [Event](https://github.com/srmds/CoreData-CRUD-Swift-iOS-example/blob/master
 	
 The AnyObject type in this example are [non-standard persistent attributes](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreData/Articles/cdNSAttributes.html) attributes that are not support directly in Core Data. The AnyObject, as the name suggests, can therefore be for example an: `Array` or `NSURL`, or any other object type.
 
-## Persistence Manager 
+
+## Event API & Persistence Manager
  
-The [Persistence Manager](https://github.com/srmds/CoreData-CRUD-Swift-2.0-example/blob/master/CoreDataCRUD/PersistenceManager.swift) is a manager that allows `CRUD` operations on the persistence store with an Event entity.
+### Event API
+
+The [Event API](https://github.com/srmds/CoreData-CRUD-Swift-2.0-example/blob/master/CoreDataCRUD/EventAPI.swift)
+is the interface where a view controller directly communicates to. The Event API exposes several methods to a View controller. The Persistency Managers implementation is completely hidden from the view controllers, thus therefore
+every request needs to go through the Event API. This intermediate step makes it a lot easier to
+maintain and extend the implementation of the Persistence Manager, since not every method implemented in the Persistence Manager will be needed to be exposed / accessible to externals. For this reason The Event API serves as a interface to do requests to. Every request to get Events/ Update Events / Delete Events will be done through the Event API which will eventually delegated to the Persistence Manager.
+
+The `Event API` can be seen as a library of available functions on Event retrieval, editing and storage. 
+
+### Persistence Manager
+
+The [Persistence Manager](https://github.com/srmds/CoreData-CRUD-Swift-2.0-example/blob/master/CoreDataCRUD/PersistenceManager.swift) is a manager that allows the actual `CRUD` operations on the persistence store with an Event entity.
 
 Currently it exposes the following functions:
 
@@ -95,7 +107,11 @@ Currently it exposes the following functions:
 
 * Delete a single Event item stored, from persistence layer.
 
-	
+
+The `Persistency Manager` can be seen as the communicator to the persistent store coordinator.
+
+More Core Data basics can be found [here](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreData/Articles/cdBasics.html#//apple_ref/doc/uid/TP40001650-TP1)
+
 ## TODO
 
 - Get a better understanding of relationships, no pun intended, both in real-life and in Core Data.
