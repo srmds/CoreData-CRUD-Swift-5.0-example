@@ -82,8 +82,8 @@ class EventItemViewController: UIViewController,UITextFieldDelegate {
     
     func textFieldDidEndEditing(textField: UITextField) {
         scrollViewContainer.setContentOffset(CGPointZero, animated: true)
-
     }
+    
     func textFieldDidBeginEditing(textField: UITextField) {
         scrollViewContainer.setContentOffset(CGPoint(x: scrollViewContainer.frame.origin.x, y: textField.frame.origin.y - 8), animated: true)
     }

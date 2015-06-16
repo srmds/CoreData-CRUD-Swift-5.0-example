@@ -29,7 +29,7 @@ class PersistenceManager {
         :param: eventDetails Dictionary<String, NSObject> containing
         eventDetails.
     */
-   internal func saveNewItem(eventDetails: Dictionary<String, NSObject>) -> Bool {
+   func saveNewItem(eventDetails: Dictionary<String, NSObject>) -> Bool {
         
         //Reference to Event entity
         let entity = NSEntityDescription.entityForName(Constants.CoreDataEntities.EventEntiy,
@@ -68,7 +68,7 @@ class PersistenceManager {
     
         :returns:  Array<Event> with found events in datastore
     */
-    internal func retrieveAllItems() -> Array<Event> {
+    func retrieveAllItems() -> Array<Event> {
         
         // Create request on Event entity
         let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
@@ -91,7 +91,7 @@ class PersistenceManager {
         :param: eventId of item to retrieve
         :returns: event item or nil if event is not found
     */
-    internal func retrieveById(eventId: NSString) -> Array<Event> {
+    func retrieveById(eventId: NSString) -> Array<Event> {
         
         // Create request on Event entity
         let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
@@ -121,7 +121,7 @@ class PersistenceManager {
         :returns: Array<Event> with found events in datastore based on
                   sort descriptor, in this case Date.
     */
-    internal func retrieveItemsSortedByDate() -> Array<Event> {
+    func retrieveItemsSortedByDate() -> Array<Event> {
         
         // Create request on Event entity
         let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
@@ -155,8 +155,7 @@ class PersistenceManager {
         :returns: bool check whether batch update of event attendees was
                   successfull.
     */
-    internal func updateAllEventAttendees() -> Bool {
-        
+    func updateAllEventAttendees() -> Bool {
         
         // Create a fetch request for the entity Person
         let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
@@ -192,7 +191,7 @@ class PersistenceManager {
     
         :returns: bool check whether update of event item key values successfull.
     */
-    internal func updateEventItemDetails(eventItemToUpdate: Event, newEventItemDetails: Dictionary<String, NSObject>) -> Bool {
+    func updateEventItemDetails(eventItemToUpdate: Event, newEventItemDetails: Dictionary<String, NSObject>) -> Bool {
         
         //Assign field values
         for (key, value) in newEventItemDetails {
@@ -223,7 +222,7 @@ class PersistenceManager {
     
         :returns: bool check whether no items are stored anymore
     */
-    internal func deleteAllItems()  -> Bool {
+    func deleteAllItems()  -> Bool {
         
         //Persist deletion
         var success:Bool
@@ -251,7 +250,7 @@ class PersistenceManager {
     
     :returns: bool check whether no items are stored anymore
     */
-    internal func deleteItem(eventItem: Event)  -> Bool {
+    func deleteItem(eventItem: Event)  -> Bool {
         
         //Persist deletion
         var success:Bool
@@ -277,7 +276,7 @@ class PersistenceManager {
         :param: List of Event items
         :returns: String representation of passed in list
     */
-    internal func printEventList(eventList: Array<Event>) -> String {
+    func printEventList(eventList: Array<Event>) -> String {
         
         var outputStr = "<("
         var counter = 0

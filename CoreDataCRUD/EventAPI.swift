@@ -40,7 +40,7 @@ class EventAPI {
         property values and calling the managed object layer to persist
         to the datastore.
     */
-    internal func createAndPersistTestData() -> Bool {
+    func createAndPersistTestData() -> Bool {
         
         //Create some Date offsets to be able to sort on
         let today = NSDate()
@@ -120,7 +120,7 @@ class EventAPI {
         :param: - eventDetails Dictionary<String, NSObject> containing
                   eventDetails.
     */
-    internal func saveEvent(eventDetails: Dictionary<String, NSObject>) -> Bool {
+    func saveEvent(eventDetails: Dictionary<String, NSObject>) -> Bool {
        return  persistenceManager.saveNewItem(eventDetails)
     }
     
@@ -131,7 +131,7 @@ class EventAPI {
     
         :returns: - Array<Event> with found events in datastore
     */
-    internal func getAll() -> Array<Event> {
+    func getAll() -> Array<Event> {
         return  persistenceManager.retrieveAllItems()
     }
     
@@ -141,7 +141,7 @@ class EventAPI {
         :param: - eventId of item to retrieve
         :returns: - event item or nil if event is not found
     */
-    internal func getById(eventId: NSString) -> Array<Event> {
+    func getById(eventId: NSString) -> Array<Event> {
         return persistenceManager.retrieveById(eventId)
     }
     
@@ -152,7 +152,7 @@ class EventAPI {
         :returns:  - Array<Event> with found events in datastore based on
                      sort descriptor, in this case Date.
     */
-    internal func getSortedByDate() -> Array<Event> {
+    func getSortedByDate() -> Array<Event> {
         return persistenceManager.retrieveItemsSortedByDate()
     }
     
@@ -168,7 +168,7 @@ class EventAPI {
         :returns: - bool check whether batch update of event attendees was
                     successfull.
     */
-    internal func updateAllEventAttendees() -> Bool {
+    func updateAllEventAttendees() -> Bool {
         return persistenceManager.updateAllEventAttendees()
     }
     
@@ -177,7 +177,7 @@ class EventAPI {
     
         :returns: bool check whether update of event item key values successfull.
     */
-    internal func updateEvent(eventToUpdate: Event, updateDetails: Dictionary<String,NSObject>) -> Bool {
+    func updateEvent(eventToUpdate: Event, updateDetails: Dictionary<String,NSObject>) -> Bool {
         return persistenceManager.updateEventItemDetails(eventToUpdate, newEventItemDetails: updateDetails)
     }
     
@@ -189,7 +189,7 @@ class EventAPI {
     
         :returns: - bool check whether no items are stored anymore
     */
-    internal func deleteAll()  -> Bool {
+    func deleteAll()  -> Bool {
         return persistenceManager.deleteAllItems()
     }
     
@@ -198,7 +198,7 @@ class EventAPI {
     
         :returns: - bool check whether deletion succeeded
     */
-    internal func deleteItem(eventItem: Event)  -> Bool {
+    func deleteItem(eventItem: Event)  -> Bool {
         return persistenceManager.deleteItem(eventItem)
     }
     
@@ -208,7 +208,7 @@ class EventAPI {
         :param: - List of Event items
         :returns: - String representation of passed in list
     */
-    internal func printList(eventList: Array<Event>) -> String {
+    func printList(eventList: Array<Event>) -> String {
         return persistenceManager.printEventList(eventList)
     }
 }
