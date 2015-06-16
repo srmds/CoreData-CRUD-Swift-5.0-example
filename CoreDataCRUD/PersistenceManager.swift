@@ -45,14 +45,17 @@ class PersistenceManager {
             }
         }
         
-        //Persist new Event to database (via Managed Object Context Layer.
+        //Persist new Event to datastore (via Managed Object Context Layer).
+        var success:Bool
         do {
             try context.save()
-            return true
+            success = true
         } catch let fetchError as NSError {
             print("saveNewItem error: \(fetchError.localizedDescription)")
-            return false
+            success = false
         }
+    
+        return success
     }
     
     // MARK: Read
@@ -71,11 +74,12 @@ class PersistenceManager {
         var fetchedResults:Array<Event> = Array<Event>()
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
-            return fetchedResults
+            
         } catch let fetchError as NSError {
             print("retrieveAllItems error: \(fetchError.localizedDescription)")
-            return fetchedResults
         }
+        
+        return fetchedResults
     }
     
     /**
@@ -156,7 +160,7 @@ class PersistenceManager {
         
         // Execute the fetch request
         let fetchedResults: Array<Event>
-        var succes = false
+        var success:Bool
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
             
@@ -171,13 +175,13 @@ class PersistenceManager {
                 //Update current attendees list with anonymised list, shallow copy.
                 (event as Event).attendees = anonymisedList
             }
-            succes = true
+            success = true
         } catch let fetchError as NSError {
             print("updateAllEventAttendees error: \(fetchError.localizedDescription)")
-            succes = false
+            success = false
         }
         
-        return succes
+        return success
     }
     
     /**
@@ -196,17 +200,17 @@ class PersistenceManager {
             }
         }
         
-        //Persist new Event to database (via Managed Object Context Layer.
-        var succes = false
+        //Persist new Event to datastore (via Managed Object Context Layer).
+        var success:Bool
         do {
             try context.save()
-            succes = true
+            success = true
         } catch let fetchError as NSError {
             print("updateEventItemDetails error: \(fetchError.localizedDescription)")
-            succes = false
+            success = false
         }
         
-        return succes
+        return success
     }
     
     // MARK: Delete
@@ -219,7 +223,7 @@ class PersistenceManager {
     internal func deleteAllItems()  -> Bool {
         
         //Persist deletion
-        var success = false
+        var success:Bool
         do {
             let retrievedItems = retrieveAllItems()
             
@@ -247,9 +251,8 @@ class PersistenceManager {
     internal func deleteItem(eventItem: Event)  -> Bool {
         
         //Persist deletion
-        var success = false
+        var success:Bool
         do {
-            
             //Delete event item from persistance layer
             context.deleteObject(eventItem)
             

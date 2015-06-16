@@ -41,6 +41,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         }
         
         self.eventList = eventAPI.getAll()
+        self.title = String(format: "Upcoming events (%i)",eventList.count)
         refreshTableData()
     }
     
@@ -108,6 +109,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
             eventList.removeAtIndex(indexPath.row)
             // Delete the row from the data source
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            self.title = String(format: "Upcoming events (%i)",eventList.count)
         }
     }
     
