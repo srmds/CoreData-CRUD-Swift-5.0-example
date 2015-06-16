@@ -8,7 +8,7 @@ import Foundation
 
 
 class HTTPClient {
-
+    
     func getRequest(url: String) -> (AnyObject) {
         return NSData()
     }

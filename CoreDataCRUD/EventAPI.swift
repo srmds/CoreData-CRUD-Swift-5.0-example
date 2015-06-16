@@ -9,8 +9,8 @@
 import UIKit
 import Foundation
 /**
-    Endpoint class to be exposed to the view controllers, to communicate 
-    with the retrieval and storage layer.
+Endpoint class to be exposed to the view controllers, to communicate
+with the retrieval and storage layer.
 */
 class EventAPI {
     
@@ -23,7 +23,7 @@ class EventAPI {
         struct Singleton {
             static let instance = EventAPI()
         }
-      
+        
         return Singleton.instance
     }
     
@@ -34,11 +34,11 @@ class EventAPI {
     }
     
     // MARK: Create
-
+    
     /**
-        Creates test data by creating new Event objects and assigning
-        property values and calling the managed object layer to persist
-        to the datastore.
+    Creates test data by creating new Event objects and assigning
+    property values and calling the managed object layer to persist
+    to the datastore.
     */
     func createAndPersistTestData() -> Bool {
         
@@ -98,7 +98,7 @@ class EventAPI {
             "\(Constants.EventAttributes.fb_url.rawValue)": "https://www.facebook.com/events/340083322848962/",
             "\(Constants.EventAttributes.ticket_url.rawValue)": "https://shop.ticketscript.com/channel/web2/start-order/rid/BL84CC4C/language/en"
         ]
-
+        
         //Create and store eventItems
         var success:Bool
         
@@ -113,44 +113,44 @@ class EventAPI {
         
         return success
     }
-
-    /**
-        Creates a new Managed object and persists to datastore.
     
-        :param: - eventDetails Dictionary<String, NSObject> containing
-                  eventDetails.
+    /**
+    Creates a new Managed object and persists to datastore.
+    
+    :param: - eventDetails Dictionary<String, NSObject> containing
+    eventDetails.
     */
     func saveEvent(eventDetails: Dictionary<String, NSObject>) -> Bool {
-       return  persistenceManager.saveNewItem(eventDetails)
+        return  persistenceManager.saveNewItem(eventDetails)
     }
     
     // MARK: Read
     
     /**
-        Retrieves all event items stored in the persistence layer.
+    Retrieves all event items stored in the persistence layer.
     
-        :returns: - Array<Event> with found events in datastore
+    :returns: - Array<Event> with found events in datastore
     */
     func getAll() -> Array<Event> {
         return  persistenceManager.retrieveAllItems()
     }
     
     /**
-        Retrieve an event found by it's stored id.
+    Retrieve an event found by it's stored id.
     
-        :param: - eventId of item to retrieve
-        :returns: - event item or nil if event is not found
+    :param: - eventId of item to retrieve
+    :returns: - event item or nil if event is not found
     */
     func getById(eventId: NSString) -> Array<Event> {
         return persistenceManager.retrieveById(eventId)
     }
     
     /**
-        Retrieves all event items stored in the persistence layer
-        and sort it by Date.
+    Retrieves all event items stored in the persistence layer
+    and sort it by Date.
     
-        :returns:  - Array<Event> with found events in datastore based on
-                     sort descriptor, in this case Date.
+    :returns:  - Array<Event> with found events in datastore based on
+    sort descriptor, in this case Date.
     */
     func getSortedByDate() -> Array<Event> {
         return persistenceManager.retrieveItemsSortedByDate()
@@ -160,22 +160,22 @@ class EventAPI {
     
     
     /**
-        Update all events (batch update) attendees list.
+    Update all events (batch update) attendees list.
     
-        Since privacy is always a concern to take into account,
-        anonymise the attendees list for every event.
+    Since privacy is always a concern to take into account,
+    anonymise the attendees list for every event.
     
-        :returns: - bool check whether batch update of event attendees was
-                    successfull.
+    :returns: - bool check whether batch update of event attendees was
+    successfull.
     */
     func updateAllEventAttendees() -> Bool {
         return persistenceManager.updateAllEventAttendees()
     }
     
     /**
-        Update event item for specific keys.
+    Update event item for specific keys.
     
-        :returns: bool check whether update of event item key values successfull.
+    :returns: bool check whether update of event item key values successfull.
     */
     func updateEvent(eventToUpdate: Event, updateDetails: Dictionary<String,NSObject>) -> Bool {
         return persistenceManager.updateEventItemDetails(eventToUpdate, newEventItemDetails: updateDetails)
@@ -185,28 +185,28 @@ class EventAPI {
     // MARK: Delete
     
     /**
-        Delete all items of Entity: Event, from persistence layer.
+    Delete all items of Entity: Event, from persistence layer.
     
-        :returns: - bool check whether no items are stored anymore
+    :returns: - bool check whether no items are stored anymore
     */
     func deleteAll()  -> Bool {
         return persistenceManager.deleteAllItems()
     }
     
     /**
-        Delete item of Entity: Event, from persistence layer.
+    Delete item of Entity: Event, from persistence layer.
     
-        :returns: - bool check whether deletion succeeded
+    :returns: - bool check whether deletion succeeded
     */
     func deleteItem(eventItem: Event)  -> Bool {
         return persistenceManager.deleteItem(eventItem)
     }
     
     /**
-        Returns a String representation of retrieved event items in passed list.
+    Returns a String representation of retrieved event items in passed list.
     
-        :param: - List of Event items
-        :returns: - String representation of passed in list
+    :param: - List of Event items
+    :returns: - String representation of passed in list
     */
     func printList(eventList: Array<Event>) -> String {
         return persistenceManager.printEventList(eventList)
