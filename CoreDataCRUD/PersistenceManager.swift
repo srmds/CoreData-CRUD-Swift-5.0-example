@@ -3,6 +3,10 @@
 //  EventController.swift
 //  Written by Steven R.
 //
+
+//Please read this section to get a better understanding of the Event API and the Persistence Manager:
+//https://github.com/srmds/CoreData-CRUD-Swift-2.0-example/blob/master/README.md#event-api--persistence-manager
+
 import UIKit
 import CoreData
 
