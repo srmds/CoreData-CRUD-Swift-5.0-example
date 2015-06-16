@@ -47,5 +47,9 @@ struct Constants {
             ticket_url
         ]
     }
+    
+    struct EventCovers {
+        static let getAll = ["eventImageSecond"]
+    }
 
 }

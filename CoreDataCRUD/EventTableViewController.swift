@@ -74,6 +74,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         eventCell.eventDateLabel.text = getFormattedDate(eventItem.date)
         eventCell.eventTitleLabel.text = eventItem.title
         eventCell.eventLocationLabel.text = "\(eventItem.venue) - \(eventItem.city)"
+        eventCell.eventImageView.image = getEventImage(indexPath)
         
         return eventCell
     }
@@ -180,6 +181,19 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         let DateInFormat = dateFormatter.stringFromDate(date)
             
         return DateInFormat
+    }
+    
+    /**
+        Retrieve image from remote or cache.
+    */
+    private func getEventImage(indexPath: NSIndexPath) -> UIImage {
+        //TODO
+        
+        //Check if local image is cached, if not use GCD to download and display it.
+        //Use indexPath as reference to cell to be updated.
+        
+        //For now load from image assets locally.
+        return UIImage(named: Constants.EventCovers.getAll[0])!
     }
     
 }
