@@ -3,7 +3,7 @@
 
 Swift 2.0 - A (very simple) example project that exposes the usage of CoreData to create entities and to persist to a SQLite Datastore
 
-![screenshotOverview](http://i.imgur.com/p2Fx6Sv.jpg)
+![screenshotOverview](http://i.imgur.com/9JNDFyl.jpg)
 ## The objective
 
 for this project is to learn (for now mostly myself ;D ) to:
@@ -75,25 +75,25 @@ Currently it exposes the following functions:
 
 **Create**
 
-* Creates a new Managed object and persists to datastore.
+* Creates a new Managed object (Event) and persists to datastore.
 
 **Read**
 
-* Retrieves all event items stored in the persistence layer.
+* Retrieves all Event items, stored in the persistence layer.
 
-* Retrieve an event found by it's stored id.
+* Retrieve an Event, found by it's stored id.
 
-* Retrieves all event items stored in the persistence layer and sort it by Date.
+* Retrieves all Event items, stored in the persistence layer and sort it by Date.
 
 **Update**
 
-*  Update Event entity attribute values
+*  Update Event attribute values
 
 **Delete**
 
-* Delete all items of Entity: Event, from persistence layer.
+* Delete all Event items stored, from persistence layer.
 
-* Delete a single item of Entity: Event, from persistence layer.
+* Delete a single Event item stored, from persistence layer.
 
 	
 ## TODO
