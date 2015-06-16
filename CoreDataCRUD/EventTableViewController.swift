@@ -82,9 +82,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if resultSearchController.active {
-            resultSearchController.active = false
-        }
+   
         
         let destination = segue.destinationViewController as? EventItemViewController
         
@@ -98,7 +96,16 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
                 2) Utilize EventAPI, find Event by Id:
                 destination!.selectedEventItem = eventAPI.getById(selectedEventItem.eventId)[0]
             */
-            let selectedEventItem = eventList[self.tableView.indexPathForSelectedRow!.row] as Event
+            
+            let selectedEventItem: Event!
+            
+            if resultSearchController.active {
+                selectedEventItem = filteredEventList[self.tableView.indexPathForSelectedRow!.row] as Event
+                resultSearchController.active = false
+            } else {
+                selectedEventItem = eventList[self.tableView.indexPathForSelectedRow!.row] as Event
+            }
+            
             destination!.selectedEventItem = eventAPI.getById(selectedEventItem.eventId)[0] //option 2
             
             destination!.title = "Edit event"
