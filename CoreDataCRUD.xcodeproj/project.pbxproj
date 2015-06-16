@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C359AA741B30E51E005A3203 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AA731B30E51E005A3203 /* AppDelegate.swift */; };
-		C359AA761B30E51E005A3203 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AA751B30E51E005A3203 /* ViewController.swift */; };
 		C359AA791B30E51E005A3203 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C359AA771B30E51E005A3203 /* Main.storyboard */; };
 		C359AA7C1B30E51E005A3203 /* CoreDataCRUD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C359AA7A1B30E51E005A3203 /* CoreDataCRUD.xcdatamodeld */; };
 		C359AA7E1B30E51E005A3203 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C359AA7D1B30E51E005A3203 /* Assets.xcassets */; };
@@ -45,7 +44,6 @@
 /* Begin PBXFileReference section */
 		C359AA701B30E51E005A3203 /* CoreDataCRUD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataCRUD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C359AA731B30E51E005A3203 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C359AA751B30E51E005A3203 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C359AA781B30E51E005A3203 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C359AA7B1B30E51E005A3203 /* CoreDataCRUD.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataCRUD.xcdatamodel; sourceTree = "<group>"; };
 		C359AA7D1B30E51E005A3203 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -120,7 +118,6 @@
 				C359AAA61B30E53C005A3203 /* Models */,
 				C359AAA71B30E542005A3203 /* ViewControllers */,
 				C359AA731B30E51E005A3203 /* AppDelegate.swift */,
-				C359AA751B30E51E005A3203 /* ViewController.swift */,
 				C359AA771B30E51E005A3203 /* Main.storyboard */,
 				C359AA7D1B30E51E005A3203 /* Assets.xcassets */,
 				C359AA7F1B30E51E005A3203 /* LaunchScreen.storyboard */,
@@ -328,7 +325,6 @@
 				C359AACA1B30E91D005A3203 /* Event.swift in Sources */,
 				C359AAB01B30E589005A3203 /* EventAPI.swift in Sources */,
 				C359AAAC1B30E56C005A3203 /* PersistenceManager.swift in Sources */,
-				C359AA761B30E51E005A3203 /* ViewController.swift in Sources */,
 				C359AAAA1B30E561005A3203 /* HTTPClient.swift in Sources */,
 				C359AA741B30E51E005A3203 /* AppDelegate.swift in Sources */,
 				C359AAB61B30E5C3005A3203 /* EventItemViewController.swift in Sources */,
@@ -559,6 +555,7 @@
 				C359AA9D1B30E51E005A3203 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C359AA9E1B30E51E005A3203 /* Build configuration list for PBXNativeTarget "CoreDataCRUDTests" */ = {
 			isa = XCConfigurationList;
@@ -567,6 +564,7 @@
 				C359AAA01B30E51E005A3203 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C359AAA11B30E51E005A3203 /* Build configuration list for PBXNativeTarget "CoreDataCRUDUITests" */ = {
 			isa = XCConfigurationList;
@@ -575,6 +573,7 @@
 				C359AAA31B30E51E005A3203 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
