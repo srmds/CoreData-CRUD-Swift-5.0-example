@@ -10,15 +10,15 @@ import CoreData
 @objc(Event)
 
 class Event: NSManagedObject {
-
-    @NSManaged var title: String
-    @NSManaged var date: NSDate
-    @NSManaged var venue: String
+    
+    @NSManaged var attendees: AnyObject
     @NSManaged var city: String
     @NSManaged var country: String
-    @NSManaged var attendees: AnyObject
+    @NSManaged var venue: String
+    @NSManaged var eventId: String
+    @NSManaged var date: NSDate
     @NSManaged var fb_url: AnyObject
     @NSManaged var ticket_url: AnyObject
-    @NSManaged var eventId: String
+    @NSManaged var title: String
 
 }

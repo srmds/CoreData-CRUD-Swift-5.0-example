@@ -21,7 +21,7 @@ struct Constants {
     struct UserDefaults {
         static let RunCount = "runCount"
     }
-        
+    
     //Enum for Event Entity member fields
     enum EventAttributes : String {
         case
@@ -51,5 +51,5 @@ struct Constants {
     struct EventCovers {
         static let getAll = ["eventImageSecond"]
     }
-
+    
 }

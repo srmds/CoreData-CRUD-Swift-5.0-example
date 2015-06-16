@@ -7,13 +7,13 @@
 import UIKit
 
 class EventTableViewController: UITableViewController, UISearchResultsUpdating {
-
+    
     private var eventList:Array<Event> = []
     private var filteredEventList:Array<Event> = []
     private var selectedEventItem : Event!
     private var resultSearchController:UISearchController!
     private var eventAPI: EventAPI!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initResultSearchController()
@@ -22,7 +22,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     override func viewWillAppear(animated: Bool) {
         self.eventAPI = EventAPI.sharedInstance
         self.tableView.setContentOffset(CGPointMake(0, 44),animated: true)
-
+        
         let defaults = NSUserDefaults.standardUserDefaults()
         
         //Store a finger to runCount, not that complex, nothing to worry about.
@@ -48,7 +48,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     // MARK: - Table view data source
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,11 +58,11 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         
         return eventList.count
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let eventCell =
-            tableView.dequeueReusableCellWithIdentifier(Constants.CellIds.EventTableCell, forIndexPath: indexPath) as! EventTableViewCell
-
+        tableView.dequeueReusableCellWithIdentifier(Constants.CellIds.EventTableCell, forIndexPath: indexPath) as! EventTableViewCell
+        
         let eventItem:Event!
         
         if resultSearchController.active {
@@ -82,19 +82,19 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     // MARK: - Navigation
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-   
+        
         
         let destination = segue.destinationViewController as? EventItemViewController
         
         if segue.identifier == Constants.SegueIds.showEventItem {
             /*
-                Two options to pass selected Event to destination:
-                
-                1) Object passing since eventList contains Event objects:
-                destination!.selectedEventItem = eventList[self.tableView.indexPathForSelectedRow!.row] as Event
-                
-                2) Utilize EventAPI, find Event by Id:
-                destination!.selectedEventItem = eventAPI.getById(selectedEventItem.eventId)[0]
+            Two options to pass selected Event to destination:
+            
+            1) Object passing since eventList contains Event objects:
+            destination!.selectedEventItem = eventList[self.tableView.indexPathForSelectedRow!.row] as Event
+            
+            2) Utilize EventAPI, find Event by Id:
+            destination!.selectedEventItem = eventAPI.getById(selectedEventItem.eventId)[0]
             */
             
             let selectedEventItem: Event!
@@ -135,7 +135,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     // MARK: - Search
     
     /**
-        Calls the filter function to filter results by searchbar input
+    Calls the filter function to filter results by searchbar input
     */
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         filterEventListContent(searchController.searchBar.text!)
@@ -145,7 +145,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     // MARK - Utility functions
     
     /**
-        Create a searchbar, bind it to tableview header
+    Create a searchbar, bind it to tableview header
     */
     private func initResultSearchController() {
         resultSearchController = UISearchController(searchResultsController: nil)
@@ -157,9 +157,9 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     /**
-        Create filter predicates to filter events on title, venue, city, data
+    Create filter predicates to filter events on title, venue, city, data
     
-        :params: term to search
+    :params: term to search
     */
     private func filterEventListContent(searchTerm: String) {
         //Clean up filtered list
@@ -173,7 +173,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         predicates.append(NSPredicate(format: "\(Constants.EventAttributes.city.rawValue)  contains[c] %@", searchTerm.lowercaseString))
         
         //TODO add datePredicate
-
+        
         //Create compounded OR perdicate
         let compoundPredicate = NSCompoundPredicate.orPredicateWithSubpredicates(predicates)
         
@@ -182,7 +182,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     /**
-        use GCD to get updates for the data, make asynchronous call
+    use GCD to get updates for the data, make asynchronous call
     */
     private func refreshTableData(){
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -191,18 +191,18 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     /**
-        Get a date as formatted String
+    Get a date as formatted String
     */
     private func getFormattedDate(date: NSDate) -> String {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd-MM\nyyyy"
         let DateInFormat = dateFormatter.stringFromDate(date)
-            
+        
         return DateInFormat
     }
     
     /**
-        Retrieve image from remote or cache.
+    Retrieve image from remote or cache.
     */
     private func getEventImage(indexPath: NSIndexPath) -> UIImage {
         //TODO

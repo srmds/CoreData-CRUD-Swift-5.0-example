@@ -7,7 +7,7 @@
 import UIKit
 
 class EventItemViewController: UIViewController,UITextFieldDelegate {
-
+    
     //placeholder for event endpoint
     private var eventAPI: EventAPI!
     
@@ -22,7 +22,7 @@ class EventItemViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var eventTicketURL: UITextField!{ didSet { eventTicketURL.delegate = self } }
     @IBOutlet weak var eventDatePicker: UIDatePicker!
     @IBOutlet weak var scrollViewContainer: UIScrollView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -33,9 +33,9 @@ class EventItemViewController: UIViewController,UITextFieldDelegate {
         if(self.selectedEventItem != nil){
             setFieldValues()
         }
-       
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -57,7 +57,7 @@ class EventItemViewController: UIViewController,UITextFieldDelegate {
             newDetails[Constants.EventAttributes.eventId.rawValue] =  NSUUID().UUIDString
             
             eventAPI.saveEvent(newDetails)
-
+            
         }
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
@@ -102,7 +102,7 @@ class EventItemViewController: UIViewController,UITextFieldDelegate {
     // MARK Utility methods
     
     /**
-        Set field values for passed on event item.
+    Set field values for passed on event item.
     */
     private func setFieldValues(){
         eventTitleLabel.text = selectedEventItem.title
@@ -115,10 +115,10 @@ class EventItemViewController: UIViewController,UITextFieldDelegate {
     }
     
     /**
-        Populates all fields in to dictionary
+    Populates all fields in to dictionary
     */
     private func getFieldValues() -> Dictionary<String, NSObject> {
-
+        
         var fieldDetails = [String: NSObject]()
         fieldDetails[Constants.EventAttributes.title.rawValue] = eventTitleLabel.text
         fieldDetails[Constants.EventAttributes.date.rawValue] = NSDate()
