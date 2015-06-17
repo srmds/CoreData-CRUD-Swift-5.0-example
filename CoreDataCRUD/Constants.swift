@@ -8,11 +8,13 @@ struct Constants {
     
     struct CellIds {
         static let EventTableCell = "eventItemCell"
+        static let AttendeesTableCell = "attendeesItemCell"
     }
     
     struct SegueIds {
         static let showEventItem = "showEventItemSegue"
         static let editEventItem = "editEventItemSegue"
+        static let showBatchActions = "showBatchActionsSegue"
     }
     
     struct CoreDataEntities {
