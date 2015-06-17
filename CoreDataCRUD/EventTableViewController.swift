@@ -22,24 +22,6 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     override func viewWillAppear(animated: Bool) {
         self.eventAPI = EventAPI.sharedInstance
         self.tableView.setContentOffset(CGPointMake(0, 44),animated: true)
-        
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
-        //Store a finger to runCount, not that complex, nothing to worry about.
-        if var runCount:Int = defaults.integerForKey(Constants.UserDefaults.RunCount) {
-            if(runCount == 0){
-                print("First time app run, therefore creating some test data...")
-                if eventAPI.createAndPersistTestData() {
-                    print("Successfully created test items.")
-                }
-            }
-            
-            runCount = runCount+1
-            print("current runCount: \(runCount)")
-            
-            defaults.setObject(runCount, forKey:Constants.UserDefaults.RunCount)
-        }
-        
         self.eventList = eventAPI.getAll()
         self.title = String(format: "Upcoming events (%i)",eventList.count)
         refreshTableData()

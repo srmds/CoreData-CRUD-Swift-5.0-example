@@ -13,10 +13,30 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private var eventAPI: EventAPI!
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        self.eventAPI = EventAPI.sharedInstance
+        let defaults = NSUserDefaults.standardUserDefaults()
+
+        //Store a finger to runCount, not that complex, nothing to worry about.
+        if var runCount:Int = defaults.integerForKey(Constants.UserDefaults.RunCount) {
+            if(runCount == 0){
+                print("First time app run, therefore creating some test data...")
+                if eventAPI.createAndPersistTestData() {
+                    print("Successfully created test items.")
+                }
+            }
+            
+            runCount = runCount+1
+            print("current runCount: \(runCount)")
+            
+            defaults.setObject(runCount, forKey:Constants.UserDefaults.RunCount)
+        }
+
+        
         return true
     }
 
