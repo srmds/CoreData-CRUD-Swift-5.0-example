@@ -3,7 +3,7 @@
 
 Swift 2.0 - A (very simple) example project that exposes the usage of CoreData to create entities and to persist to a SQLite Datastore
 
-![screenshotOverview](http://i.imgur.com/9JNDFyl.jpg)
+![screenshotOverview](http://i.imgur.com/V0OUsC3.jpg)
 ## The objective
 
 for this project is to learn (for now mostly myself ;D ) to:
@@ -65,7 +65,7 @@ The [Event](https://github.com/srmds/CoreData-CRUD-Swift-iOS-example/blob/master
 	
 	}
 	
-The AnyObject type in this example are [non-standard persistent attributes](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreData/Articles/cdNSAttributes.html) attributes that are not support directly in Core Data. The AnyObject, as the name suggests, can therefore be for example an: `Array` or `NSURL`, or any other object type.
+The AnyObject type in this example are [non-standard persistent attributes](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreData/Articles/cdNSAttributes.html) that are not support directly in Core Data. The AnyObject, as the name suggests, can therefore be for example an: `Array` or `NSURL`, or any other object type.
 
 
 ## Event API & Persistence Manager
