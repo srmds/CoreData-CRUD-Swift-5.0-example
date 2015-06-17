@@ -64,13 +64,7 @@ class EventAPI {
             "\(Constants.EventAttributes.venue.rawValue)": "The Milkyway",
             "\(Constants.EventAttributes.city.rawValue)": "Nebula Town",
             "\(Constants.EventAttributes.country.rawValue)" : "Blackhole",
-            "\(Constants.EventAttributes.attendees.rawValue)":["Yoda",
-                "HAL 9000",
-                "Gizmo",
-                "Optimus Prime",
-                "Marvin the Paranoid Android",
-                "ET",
-                "Bender"],
+            "\(Constants.EventAttributes.attendees.rawValue)": getSemiRandomGeneratedAttendeesList(),
             "\(Constants.EventAttributes.fb_url.rawValue)": "https://www.facebook.com/events/111789708883460/",
             "\(Constants.EventAttributes.ticket_url.rawValue)": "http://en.wikipedia.org/wiki/Pi"
         ]
@@ -82,7 +76,7 @@ class EventAPI {
             "\(Constants.EventAttributes.venue.rawValue)": "Tivoli Vredenburg",
             "\(Constants.EventAttributes.city.rawValue)" :"Utrecht",
             "\(Constants.EventAttributes.country.rawValue)": "Netherlands",
-            "\(Constants.EventAttributes.attendees.rawValue)":["Foo","Bar","Tweety"],
+            "\(Constants.EventAttributes.attendees.rawValue)":getSemiRandomGeneratedAttendeesList(),
             "\(Constants.EventAttributes.fb_url.rawValue)": "https://www.facebook.com/events/1558804814366111/",
             "\(Constants.EventAttributes.ticket_url.rawValue)": "https://www.facebook.com/LooneyTunes"
         ]
@@ -94,7 +88,7 @@ class EventAPI {
             "\(Constants.EventAttributes.venue.rawValue)": "NDSM-werf",
             "\(Constants.EventAttributes.city.rawValue)" :"Amsterdam",
             "\(Constants.EventAttributes.country.rawValue)": "Netherlands",
-            "\(Constants.EventAttributes.attendees.rawValue)":["Narcissus","Frodo","Esscher","Lothar Collatz"],
+            "\(Constants.EventAttributes.attendees.rawValue)":getSemiRandomGeneratedAttendeesList(),
             "\(Constants.EventAttributes.fb_url.rawValue)": "https://www.facebook.com/events/340083322848962/",
             "\(Constants.EventAttributes.ticket_url.rawValue)": "https://shop.ticketscript.com/channel/web2/start-order/rid/BL84CC4C/language/en"
         ]
@@ -103,15 +97,56 @@ class EventAPI {
         var success:Bool
         
         success = saveEvent(eventDetailsItem1)
-        print("Test object 1 creation succeeded: \(success)\n\n")
+        //print("Test object 1 creation succeeded: \(success)\n\n")
         
         success = saveEvent(eventDetailsItem2)
-        print("Test object 2 creation succeeded: \(success)\n\n")
+        //print("Test object 2 creation succeeded: \(success)\n\n")
         
         success = saveEvent(eventDetailsItem3)
-        print("Test object 3 creation succeeded: \(success)\n\n")
+        //print("Test object 3 creation succeeded: \(success)\n\n")
         
         return success
+    }
+    
+    
+    /**
+    Generate (pseudo)random attendeeslist of (pseudo)random size and (pseudo)random attendees.
+    
+    :see: https://en.wikipedia.org/wiki/Hardware_random_number_generator 
+          for true randomness ;)
+
+    :returns: (pseudo)random generated attendeeslist
+    */
+    private func getSemiRandomGeneratedAttendeesList() -> Array<String> {
+        let optionalAttendees = [
+            "Yoda",
+            "HAL 9000",
+            "Gizmo",
+            "Optimus Prime",
+            "Marvin the Paranoid Android",
+            "ET",
+            "Bender",
+            "Narcissus",
+            "Frodo",
+            "Esscher",
+            "Lothar Collatz",
+            "Foo",
+            "Bar",
+            "Tweety"
+        ]
+        
+        var attendeesList = [String]()
+        let listSize:Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: optionalAttendees.count)))
+        
+        for _ in 0...listSize {
+            let itemIndex:Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: listSize)))
+            let item:String = optionalAttendees[itemIndex]
+            if !attendeesList.contains(item) {
+                attendeesList.append(item)
+            }
+        }
+       
+        return attendeesList
     }
     
     /**
