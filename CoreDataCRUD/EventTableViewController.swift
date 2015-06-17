@@ -109,9 +109,11 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
             destination!.selectedEventItem = eventAPI.getById(selectedEventItem.eventId)[0] //option 2
             
             destination!.title = "Edit event"
-        } else {
+        } else if segue.identifier == Constants.SegueIds.editEventItem {
             destination!.title = "Add event"
         }
+        
+        
     }
     
     // MARK: - Table edit mode

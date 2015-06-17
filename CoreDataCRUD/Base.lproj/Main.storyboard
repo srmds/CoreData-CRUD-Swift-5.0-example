@@ -5,6 +5,57 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Batch Actions-->
+        <scene sceneID="e4g-Di-9Ri">
+            <objects>
+                <viewController id="rAO-6M-dNk" customClass="BatchActionsViewController" customModule="CoreDataCRUD" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xjt-ai-Jmx"/>
+                        <viewControllerLayoutGuide type="bottom" id="HTu-gd-fSs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="u5y-Tg-Kcv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Siz-z5-ds6">
+                                <rect key="frame" x="203" y="142" width="195" height="90"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="77l-LA-okm">
+                                        <rect key="frame" x="0.0" y="0.0" width="195" height="30"/>
+                                        <state key="normal" title="Anonimize all attendees lists"/>
+                                        <connections>
+                                            <action selector="anonimizeListButtonTapped:" destination="rAO-6M-dNk" eventType="touchUpInside" id="5on-Nf-fgc"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bxZ-w9-zZh">
+                                        <rect key="frame" x="41" y="30" width="113" height="30"/>
+                                        <state key="normal" title="Delete all events"/>
+                                        <connections>
+                                            <action selector="deleteAllEventsButtonTapped:" destination="rAO-6M-dNk" eventType="touchUpInside" id="dXz-yy-0QT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkn-tR-7Hj">
+                                        <rect key="frame" x="42" y="60" width="111" height="30"/>
+                                        <state key="normal" title="Create test data"/>
+                                        <connections>
+                                            <action selector="restoreEventsButtonTapped:" destination="rAO-6M-dNk" eventType="touchUpInside" id="U5U-DE-u9K"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Siz-z5-ds6" firstAttribute="centerX" secondItem="u5y-Tg-Kcv" secondAttribute="centerX" id="2Pk-J8-Nn9"/>
+                            <constraint firstItem="Siz-z5-ds6" firstAttribute="top" secondItem="xjt-ai-Jmx" secondAttribute="bottom" constant="78" id="zDZ-JP-c1a"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Batch Actions" id="VGf-Cw-dUV"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F2n-ng-QGW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1864" y="-36"/>
+        </scene>
         <!--Upcoming events (0)-->
         <scene sceneID="2Fz-Tj-7zW">
             <objects>
@@ -92,6 +143,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Upcoming events (0)" id="vf6-Yl-QwP">
+                        <barButtonItem key="leftBarButtonItem" title="Batch" id="acL-7J-ajt">
+                            <connections>
+                                <segue destination="rAO-6M-dNk" kind="show" identifier="showBatchActionsSegue" id="guc-i5-mwV"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="EX0-Hv-SVt">
                             <connections>
                                 <segue destination="e6d-Yc-lf0" kind="show" identifier="editEventItemSegue" id="LLA-Zh-haS">
@@ -136,8 +192,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xPj-vk-fxM">
+                                <rect key="frame" x="131" y="72" width="339" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="339" id="Hgi-4w-VOq"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Event details"/>
+                                    <segment title="Attendees"/>
+                                </segments>
+                                <connections>
+                                    <action selector="switchSegmentTapped:" destination="e6d-Yc-lf0" eventType="valueChanged" id="73H-5l-ChE"/>
+                                </connections>
+                            </segmentedControl>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9SS-Al-G8l">
+                                <rect key="frame" x="0.0" y="108" width="600" height="492"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="attendeesItemCell" textLabel="kJL-Rg-sCi" style="IBUITableViewCellStyleDefault" id="m7W-3s-SEM">
+                                        <rect key="frame" x="0.0" y="22" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m7W-3s-SEM" id="KsI-yZ-0x2">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kJL-Rg-sCi">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="e6d-Yc-lf0" id="s0T-Cf-y8I"/>
+                                    <outlet property="delegate" destination="e6d-Yc-lf0" id="Gx6-Ua-7cp"/>
+                                </connections>
+                            </tableView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vjq-Mx-hbm">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="108" width="600" height="492"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Venue" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="a7w-ON-ZCP">
                                         <rect key="frame" x="23" y="183" width="554" height="30"/>
@@ -147,18 +243,6 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="qzE-Aj-xhN">
-                                        <rect key="frame" x="23" y="8" width="554" height="88"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="88" id="pzZ-kz-207"/>
-                                        </constraints>
-                                        <date key="date" timeIntervalSinceReferenceDate="455992109.89736402">
-                                            <!--2015-06-14 16:28:29 +0000-->
-                                        </date>
-                                        <date key="minimumDate" timeIntervalSinceReferenceDate="441802800">
-                                            <!--2015-01-01 11:00:00 +0000-->
-                                        </date>
-                                    </datePicker>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="City" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8y6-AL-AiZ">
                                         <rect key="frame" x="23" y="221" width="554" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -212,6 +296,18 @@
                                             <action selector="deleteEventButtonTapped:" destination="e6d-Yc-lf0" eventType="touchUpInside" id="3mq-dX-zzz"/>
                                         </connections>
                                     </button>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="qzE-Aj-xhN">
+                                        <rect key="frame" x="23" y="8" width="554" height="88"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="88" id="pzZ-kz-207"/>
+                                        </constraints>
+                                        <date key="date" timeIntervalSinceReferenceDate="455992109.89736402">
+                                            <!--2015-06-14 16:28:29 +0000-->
+                                        </date>
+                                        <date key="minimumDate" timeIntervalSinceReferenceDate="441802800">
+                                            <!--2015-01-01 11:00:00 +0000-->
+                                        </date>
+                                    </datePicker>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Y4s-6n-89m" firstAttribute="centerX" secondItem="D1l-8r-TTo" secondAttribute="centerX" constant="5.5" id="2p3-DJ-EqY"/>
@@ -239,17 +335,23 @@
                                     <constraint firstItem="a7w-ON-ZCP" firstAttribute="top" secondItem="r8s-Tj-lGb" secondAttribute="bottom" constant="34" id="jbm-e6-xSw"/>
                                     <constraint firstItem="t0k-Vp-iMh" firstAttribute="top" secondItem="Y4s-6n-89m" secondAttribute="bottom" constant="8" symbolic="YES" id="msZ-nh-eDP"/>
                                     <constraint firstItem="r8s-Tj-lGb" firstAttribute="trailing" secondItem="qzE-Aj-xhN" secondAttribute="trailing" id="rIV-iX-067"/>
-                                    <constraint firstAttribute="bottom" secondItem="Y4s-6n-89m" secondAttribute="bottom" constant="108" id="tEK-IJ-OLq"/>
+                                    <constraint firstAttribute="bottom" secondItem="Y4s-6n-89m" secondAttribute="bottom" constant="64" id="tEK-IJ-OLq"/>
                                     <constraint firstItem="D1l-8r-TTo" firstAttribute="leading" secondItem="5Ew-o6-N1F" secondAttribute="leading" id="xbK-fu-nan"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="vjq-Mx-hbm" firstAttribute="top" secondItem="sLl-tv-zEZ" secondAttribute="bottom" id="BN8-at-GOD"/>
+                            <constraint firstItem="vjq-Mx-hbm" firstAttribute="top" secondItem="sLl-tv-zEZ" secondAttribute="bottom" constant="44" id="BN8-at-GOD"/>
+                            <constraint firstItem="9SS-Al-G8l" firstAttribute="leading" secondItem="vjq-Mx-hbm" secondAttribute="leading" id="Irv-rt-xqM"/>
+                            <constraint firstItem="xPj-vk-fxM" firstAttribute="top" secondItem="sLl-tv-zEZ" secondAttribute="bottom" constant="8" symbolic="YES" id="Rbg-9e-Ovj"/>
                             <constraint firstAttribute="trailing" secondItem="vjq-Mx-hbm" secondAttribute="trailing" id="VbA-j9-0tF"/>
                             <constraint firstItem="vjq-Mx-hbm" firstAttribute="bottom" secondItem="n8c-tH-aOL" secondAttribute="top" id="Xbl-e1-Qe4"/>
+                            <constraint firstItem="9SS-Al-G8l" firstAttribute="trailing" secondItem="vjq-Mx-hbm" secondAttribute="trailing" id="aCV-CR-8dK"/>
                             <constraint firstItem="vjq-Mx-hbm" firstAttribute="leading" secondItem="ere-bS-nCk" secondAttribute="leading" id="boY-ik-Sg2"/>
+                            <constraint firstItem="9SS-Al-G8l" firstAttribute="bottom" secondItem="n8c-tH-aOL" secondAttribute="top" id="ep8-2l-XFK"/>
+                            <constraint firstItem="9SS-Al-G8l" firstAttribute="top" secondItem="vjq-Mx-hbm" secondAttribute="top" id="j65-W6-jbh"/>
+                            <constraint firstItem="xPj-vk-fxM" firstAttribute="centerX" secondItem="vjq-Mx-hbm" secondAttribute="centerX" id="rqp-cL-9Zl"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -262,6 +364,7 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="attendeesTableView" destination="9SS-Al-G8l" id="TyX-Xw-oQC"/>
                         <outlet property="eventCityLabel" destination="8y6-AL-AiZ" id="pY1-GG-ZKB"/>
                         <outlet property="eventCountryLabel" destination="D1l-8r-TTo" id="jy3-12-W2z"/>
                         <outlet property="eventDatePicker" destination="qzE-Aj-xhN" id="0LC-Xu-e4t"/>
@@ -270,11 +373,12 @@
                         <outlet property="eventTitleLabel" destination="r8s-Tj-lGb" id="SNl-B8-MUJ"/>
                         <outlet property="eventVenueLabel" destination="a7w-ON-ZCP" id="7RU-cE-0et"/>
                         <outlet property="scrollViewContainer" destination="vjq-Mx-hbm" id="rGs-E4-q6c"/>
+                        <outlet property="segmentController" destination="xPj-vk-fxM" id="NzU-dz-8Vc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pAi-kJ-5w8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1817" y="249"/>
+            <point key="canvasLocation" x="1864" y="632"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kbc-6j-OPA">
@@ -299,6 +403,6 @@
         <image name="rightArrow" width="50" height="80"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="r5h-wT-pRR"/>
+        <segue reference="LLA-Zh-haS"/>
     </inferredMetricsTieBreakers>
 </document>

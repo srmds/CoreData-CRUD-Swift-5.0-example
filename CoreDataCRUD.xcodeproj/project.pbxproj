@@ -22,6 +22,7 @@
 		C359AAB41B30E5B4005A3203 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAB31B30E5B4005A3203 /* EventTableViewController.swift */; };
 		C359AAB61B30E5C3005A3203 /* EventItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAB51B30E5C3005A3203 /* EventItemViewController.swift */; };
 		C359AACA1B30E91D005A3203 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAC81B30E91D005A3203 /* Event.swift */; };
+		C367B90D1B314BEF00EC211A /* BatchActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C367B90C1B314BEF00EC211A /* BatchActionsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		C359AAB31B30E5B4005A3203 /* EventTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
 		C359AAB51B30E5C3005A3203 /* EventItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventItemViewController.swift; sourceTree = "<group>"; };
 		C359AAC81B30E91D005A3203 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		C367B90C1B314BEF00EC211A /* BatchActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchActionsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 				C359AAB11B30E5A5005A3203 /* EventTableViewCell.swift */,
 				C359AAB31B30E5B4005A3203 /* EventTableViewController.swift */,
 				C359AAB51B30E5C3005A3203 /* EventItemViewController.swift */,
+				C367B90C1B314BEF00EC211A /* BatchActionsViewController.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				C359AAB21B30E5A5005A3203 /* EventTableViewCell.swift in Sources */,
 				C359AAB41B30E5B4005A3203 /* EventTableViewController.swift in Sources */,
 				C359AA7C1B30E51E005A3203 /* CoreDataCRUD.xcdatamodeld in Sources */,
+				C367B90D1B314BEF00EC211A /* BatchActionsViewController.swift in Sources */,
 				C359AACA1B30E91D005A3203 /* Event.swift in Sources */,
 				C359AAB01B30E589005A3203 /* EventAPI.swift in Sources */,
 				C359AAAC1B30E56C005A3203 /* PersistenceManager.swift in Sources */,
