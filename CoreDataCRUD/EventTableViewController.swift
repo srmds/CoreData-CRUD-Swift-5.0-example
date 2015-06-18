@@ -171,7 +171,6 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     func updateEventTableData(notification: NSNotification) {
-        print("Reading in data...")
         refreshTableData()
         self.activityIndicator.hidden = true
         self.activityIndicator.stopAnimating()

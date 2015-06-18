@@ -133,12 +133,11 @@ class PersistenceManager {
         fetchRequest.sortDescriptors = sortDescriptors
         
         //Execute Fetch request
-        var fetchedResults: Array<Event>
+        var fetchedResults = Array<Event>()
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
         } catch let fetchError as NSError {
             print("retrieveItemsSortedByDate error: \(fetchError.localizedDescription)")
-            fetchedResults = Array<Event>()
         }
         
         return fetchedResults
@@ -173,12 +172,11 @@ class PersistenceManager {
         fetchRequest.predicate = findByDateRangePredicate
 
         //Execute Fetch request
-        var fetchedResults: Array<Event>
+        var fetchedResults = Array<Event>()
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
         } catch let fetchError as NSError {
             print("retrieveItemsSortedByDateInDateRange error: \(fetchError.localizedDescription)")
-            fetchedResults = Array<Event>()
         }
         
         return fetchedResults
@@ -212,7 +210,7 @@ class PersistenceManager {
         let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
         
         // Execute the fetch request
-        let fetchedResults: Array<Event>
+        var fetchedResults = Array<Event>()
         var success:Bool
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
@@ -320,36 +318,4 @@ class PersistenceManager {
         return success
     }
     
-    
-    /**
-    Returns a String representation of retrieved event items in passed list.
-    
-    :param: List of Event items
-    :returns: String representation of passed in list
-    */
-    func printEventList(eventList: Array<Event>) -> String {
-        
-        var outputStr = "<("
-        var counter = 0
-        
-        for event: Event in eventList {
-            counter++
-            
-            outputStr += "\n{\n"
-            for attribute in Constants.EventAttributes.getAll {
-                if(event.valueForKey(attribute.rawValue) != nil) {
-                    outputStr +=
-                    "\(attribute.rawValue): \(event.valueForKey(attribute.rawValue))"
-                }
-            }
-            
-            if counter < eventList.count{
-                outputStr += "\n}, "
-            } else {
-                outputStr += "\n}"
-            }
-        }
-        
-        return outputStr + ")>\n"
-    }
 }

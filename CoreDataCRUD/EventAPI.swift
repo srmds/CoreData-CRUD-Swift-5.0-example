@@ -152,14 +152,4 @@ class EventAPI {
     func deleteItem(eventItem: Event)  -> Bool {
         return persistenceManager.deleteItem(eventItem)
     }
-    
-    /**
-    Returns a String representation of retrieved event items in passed list.
-    
-    :param: - List of Event items
-    :returns: - String representation of passed in list
-    */
-    func printList(eventList: Array<Event>) -> String {
-        return persistenceManager.printEventList(eventList)
-    }
 }
