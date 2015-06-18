@@ -35,8 +35,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkn-tR-7Hj">
-                                        <rect key="frame" x="42" y="60" width="111" height="30"/>
-                                        <state key="normal" title="Create test data"/>
+                                        <rect key="frame" x="18" y="60" width="160" height="30"/>
+                                        <state key="normal" title="Create (more) test data"/>
                                         <connections>
                                             <action selector="restoreEventsButtonTapped:" destination="rAO-6M-dNk" eventType="touchUpInside" id="U5U-DE-u9K"/>
                                         </connections>
@@ -64,6 +64,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <activityIndicatorView key="tableFooterView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="z1E-2Q-0XG">
+                            <rect key="frame" x="0.0" y="287" width="600" height="37"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="color" red="0.001386002052091051" green="0.42254890037929926" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </activityIndicatorView>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="eventItemCell" editingAccessoryType="disclosureIndicator" rowHeight="201" id="yv0-0c-YHI" customClass="EventTableViewCell" customModule="CoreDataCRUD" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="86" width="600" height="201"/>
@@ -157,6 +162,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="z1E-2Q-0XG" id="a4j-5r-Ugb"/>
                         <outlet property="searchDisplayController" destination="3aP-vo-06F" id="FjO-Wc-f7b"/>
                     </connections>
                 </tableViewController>
@@ -220,7 +226,7 @@
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>

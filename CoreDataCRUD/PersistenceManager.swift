@@ -53,8 +53,8 @@ class PersistenceManager {
         do {
             try context.save()
             success = true
-        } catch let fetchError as NSError {
-            print("saveNewItem error: \(fetchError.localizedDescription)")
+        } catch let saveError as NSError {
+            print("saveNewItem error: \(saveError.localizedDescription)")
             success = false
         }
         
@@ -73,7 +73,7 @@ class PersistenceManager {
         // Create request on Event entity
         let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
         
-        //Execute Fetch request returns result as array.
+        //Execute Fetch request
         var fetchedResults:Array<Event> = Array<Event>()
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
@@ -102,7 +102,7 @@ class PersistenceManager {
         NSPredicate(format: "\(Constants.EventAttributes.eventId.rawValue) = %@", eventId)
         fetchRequest.predicate = findByIdPredicate
         
-        //Execute Fetch request returns result as array or
+        //Execute Fetch request
         var fetchedResults: Array<Event>
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
@@ -126,13 +126,13 @@ class PersistenceManager {
         // Create request on Event entity
         let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
         
-        //Create sort descriptor to sort retrieved Events by Date, descending
+        //Create sort descriptor to sort retrieved Events by Date, ascending
         let sortDescriptor = NSSortDescriptor(key: Constants.EventAttributes.date.rawValue,
-            ascending: false)
+            ascending: true)
         let sortDescriptors = [sortDescriptor]
         fetchRequest.sortDescriptors = sortDescriptors
         
-        //Execute Fetch request returns result as array or
+        //Execute Fetch request
         var fetchedResults: Array<Event>
         do {
             fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
@@ -142,6 +142,57 @@ class PersistenceManager {
         }
         
         return fetchedResults
+    }
+
+    /**
+    Retrieves all event items stored in the persistence layer
+    and sort it by Date within a given range of (default) current date and 
+    (default)7 days from current date (is overridable, parameters are optional).
+    
+    :returns: Array<Event> with found events in datastore based on
+    sort descriptor, in this case Date an dgiven date range.
+    */
+
+    func retrieveItemsSortedByDateInDateRange(startDate: NSDate = NSDate(),
+        endDate: NSDate = NSCalendar.currentCalendar()
+            .dateByAddingUnit(
+                .Day,value: 7,
+                toDate: NSDate(),
+                options: NSCalendarOptions(rawValue: 0))!) -> Array<Event> {
+                                                    
+        // Create request on Event entity
+        let fetchRequest = NSFetchRequest(entityName: Constants.CoreDataEntities.EventEntiy)
+
+        //Create sort descriptor to sort retrieved Events by Date, ascending
+        let sortDescriptor = NSSortDescriptor(key: Constants.EventAttributes.date.rawValue,
+            ascending: true)
+        let sortDescriptors = [sortDescriptor]
+        fetchRequest.sortDescriptors = sortDescriptors
+
+        let findByDateRangePredicate = NSPredicate(format: "(date >= %@) AND (date <= %@)", startDate, endDate)
+        fetchRequest.predicate = findByDateRangePredicate
+
+        //Execute Fetch request
+        var fetchedResults: Array<Event>
+        do {
+            fetchedResults = try context.executeFetchRequest(fetchRequest) as! [Event]
+        } catch let fetchError as NSError {
+            print("retrieveItemsSortedByDateInDateRange error: \(fetchError.localizedDescription)")
+            fetchedResults = Array<Event>()
+        }
+        
+        return fetchedResults
+    }
+    
+    /**
+    Get a date as formatted String
+    */
+    private func getFormattedDate(date: NSDate) -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        let DateInFormat = dateFormatter.stringFromDate(date)
+        
+        return DateInFormat
     }
     
     // MARK: Update
@@ -178,8 +229,8 @@ class PersistenceManager {
                 (event as Event).attendees = anonymisedList
             }
             success = true
-        } catch let fetchError as NSError {
-            print("updateAllEventAttendees error: \(fetchError.localizedDescription)")
+        } catch let updateError as NSError {
+            print("updateAllEventAttendees error: \(updateError.localizedDescription)")
             success = false
         }
         
@@ -207,8 +258,8 @@ class PersistenceManager {
         do {
             try context.save()
             success = true
-        } catch let fetchError as NSError {
-            print("updateEventItemDetails error: \(fetchError.localizedDescription)")
+        } catch let updateError as NSError {
+            print("updateEventItemDetails error: \(updateError.localizedDescription)")
             success = false
         }
         
@@ -237,8 +288,8 @@ class PersistenceManager {
             //Persist deletion to datastore
             try context.save()
             success = true
-        } catch let fetchError as NSError {
-            print("retrieveItemsSortedByDate error: \(fetchError.localizedDescription)")
+        } catch let deleteError as NSError {
+            print("retrieveItemsSortedByDate error: \(deleteError.localizedDescription)")
             success = false
         }
         
@@ -261,8 +312,8 @@ class PersistenceManager {
             //Persist deletion to datastore
             try context.save()
             success = true
-        } catch let fetchError as NSError {
-            print("retrieveItemsSortedByDate error: \(fetchError.localizedDescription)")
+        } catch let deleteError as NSError {
+            print("retrieveItemsSortedByDate error: \(deleteError.localizedDescription)")
             success = false
         }
         

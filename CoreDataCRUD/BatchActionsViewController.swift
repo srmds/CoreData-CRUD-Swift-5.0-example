@@ -9,13 +9,15 @@ import UIKit
 class BatchActionsViewController: UIViewController {
 
     private var eventAPI: EventAPI!
-
+    private var replicator: LocalReplicator!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(animated: Bool) {
         self.eventAPI = EventAPI.sharedInstance
+        self.replicator = LocalReplicator.sharedInstance
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,12 +30,16 @@ class BatchActionsViewController: UIViewController {
     }
     
     @IBAction func deleteAllEventsButtonTapped(sender: AnyObject) {
-        eventAPI.deleteAll()
+        if eventAPI.deleteAll() {
+            NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
+        }
+        
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
 
     @IBAction func restoreEventsButtonTapped(sender: AnyObject) {
-        eventAPI.createAndPersistTestData()
-          self.navigationController?.popToRootViewControllerAnimated(true)
+        replicator.pull()
+        NSNotificationCenter.defaultCenter().postNotificationName("setStateLoading", object: nil)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
 }

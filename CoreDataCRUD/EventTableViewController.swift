@@ -14,15 +14,20 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     private var resultSearchController:UISearchController!
     private var eventAPI: EventAPI!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initResultSearchController()
     }
     
     override func viewWillAppear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateEventTableData:", name: "updateEventTableData", object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setStateLoading:", name: "setStateLoading", object: nil)
         self.eventAPI = EventAPI.sharedInstance
         self.tableView.setContentOffset(CGPointMake(0, 44),animated: true)
-        self.eventList = eventAPI.getAll()
+        self.eventList = eventAPI.getSortedByDateInRange()
         self.title = String(format: "Upcoming events (%i)",eventList.count)
         refreshTableData()
     }
@@ -55,7 +60,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         
         eventCell.eventDateLabel.text = getFormattedDate(eventItem.date)
         eventCell.eventTitleLabel.text = eventItem.title
-        eventCell.eventLocationLabel.text = "\(eventItem.venue) - \(eventItem.city)"
+        eventCell.eventLocationLabel.text = "\(eventItem.venue) - \(eventItem.city) - \(eventItem.country)"
         eventCell.eventImageView.image = getEventImage(indexPath)
         
         return eventCell
@@ -155,7 +160,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         predicates.append(NSPredicate(format: "\(Constants.EventAttributes.title.rawValue) contains[c] %@", searchTerm.lowercaseString))
         predicates.append(NSPredicate(format: "\(Constants.EventAttributes.venue.rawValue) contains[c] %@", searchTerm.lowercaseString))
         predicates.append(NSPredicate(format: "\(Constants.EventAttributes.city.rawValue)  contains[c] %@", searchTerm.lowercaseString))
-        
+
         //TODO add datePredicate
         
         //Create compounded OR perdicate
@@ -165,13 +170,27 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         filteredEventList =  eventList.filter {compoundPredicate.evaluateWithObject($0)}
     }
     
+    func updateEventTableData(notification: NSNotification) {
+        print("Reading in data...")
+        refreshTableData()
+        self.activityIndicator.hidden = true
+        self.activityIndicator.stopAnimating()
+    }
+    
+    func setStateLoading(notification: NSNotification) {
+        self.activityIndicator.hidden = false
+        self.activityIndicator.startAnimating()
+    }
+    
+    
     /**
-    use GCD to get updates for the data, make asynchronous call
+    Refresh table data
     */
     private func refreshTableData(){
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.eventList.removeAll(keepCapacity: false)
+            self.eventList = self.eventAPI.getSortedByDateInRange()
             self.tableView.reloadData()
-        })
+            self.title = String(format: "Upcoming events (%i)",self.eventList.count)
     }
     
     /**

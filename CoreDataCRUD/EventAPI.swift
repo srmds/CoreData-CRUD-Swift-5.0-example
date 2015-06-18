@@ -14,7 +14,6 @@ with the retrieval and storage layer.
 */
 class EventAPI {
     
-    
     //Manager that does the actual CRUD on the persistence layer
     private let persistenceManager: PersistenceManager
     
@@ -33,121 +32,8 @@ class EventAPI {
                 AppDelegate).managedObjectContext)
     }
     
+    
     // MARK: Create
-    
-    /**
-    Creates test data by creating new Event objects and assigning
-    property values and calling the managed object layer to persist
-    to the datastore.
-    */
-    func createAndPersistTestData() -> Bool {
-        
-        //Create some Date offsets to be able to sort on
-        let today = NSDate()
-        let tomorrow: NSDate = NSCalendar.currentCalendar().dateByAddingUnit(
-            .Day,
-            value: 1,
-            toDate: today,
-            options: NSCalendarOptions(rawValue: 0))!
-        
-        let relativetime: NSDate = NSCalendar.currentCalendar().dateByAddingUnit(
-            .Day,
-            value: 22,
-            toDate: today,
-            options: NSCalendarOptions(rawValue: 0))!
-        
-        //Create a Dictionary, key - values with event details
-        let eventDetailsItem1 = [
-            "\(Constants.EventAttributes.eventId.rawValue)": NSUUID().UUIDString,
-            "\(Constants.EventAttributes.title.rawValue)": "Galaxy gathering of the coolest",
-            "\(Constants.EventAttributes.date.rawValue)":  today,
-            "\(Constants.EventAttributes.venue.rawValue)": "The Milkyway",
-            "\(Constants.EventAttributes.city.rawValue)": "Nebula Town",
-            "\(Constants.EventAttributes.country.rawValue)" : "Blackhole",
-            "\(Constants.EventAttributes.attendees.rawValue)": getSemiRandomGeneratedAttendeesList(),
-            "\(Constants.EventAttributes.fb_url.rawValue)": "https://www.facebook.com/events/111789708883460/",
-            "\(Constants.EventAttributes.ticket_url.rawValue)": "http://en.wikipedia.org/wiki/Pi"
-        ]
-        
-        let eventDetailsItem2 = [
-            "\(Constants.EventAttributes.eventId.rawValue)": NSUUID().UUIDString,
-            "\(Constants.EventAttributes.title.rawValue)": "King Shiloh Soundsystem",
-            "\(Constants.EventAttributes.date.rawValue)":  tomorrow,
-            "\(Constants.EventAttributes.venue.rawValue)": "Tivoli Vredenburg",
-            "\(Constants.EventAttributes.city.rawValue)" :"Utrecht",
-            "\(Constants.EventAttributes.country.rawValue)": "Netherlands",
-            "\(Constants.EventAttributes.attendees.rawValue)":getSemiRandomGeneratedAttendeesList(),
-            "\(Constants.EventAttributes.fb_url.rawValue)": "https://www.facebook.com/events/1558804814366111/",
-            "\(Constants.EventAttributes.ticket_url.rawValue)": "https://www.facebook.com/LooneyTunes"
-        ]
-        
-        let eventDetailsItem3 = [
-            "\(Constants.EventAttributes.eventId.rawValue)": NSUUID().UUIDString,
-            "\(Constants.EventAttributes.title.rawValue)": "Festifest 2015",
-            "\(Constants.EventAttributes.date.rawValue)":  relativetime,
-            "\(Constants.EventAttributes.venue.rawValue)": "NDSM-werf",
-            "\(Constants.EventAttributes.city.rawValue)" :"Amsterdam",
-            "\(Constants.EventAttributes.country.rawValue)": "Netherlands",
-            "\(Constants.EventAttributes.attendees.rawValue)":getSemiRandomGeneratedAttendeesList(),
-            "\(Constants.EventAttributes.fb_url.rawValue)": "https://www.facebook.com/events/340083322848962/",
-            "\(Constants.EventAttributes.ticket_url.rawValue)": "https://shop.ticketscript.com/channel/web2/start-order/rid/BL84CC4C/language/en"
-        ]
-        
-        //Create and store eventItems
-        var success:Bool
-        
-        success = saveEvent(eventDetailsItem1)
-        //print("Test object 1 creation succeeded: \(success)\n\n")
-        
-        success = saveEvent(eventDetailsItem2)
-        //print("Test object 2 creation succeeded: \(success)\n\n")
-        
-        success = saveEvent(eventDetailsItem3)
-        //print("Test object 3 creation succeeded: \(success)\n\n")
-        
-        return success
-    }
-    
-    
-    /**
-    Generate (pseudo)random attendeeslist of (pseudo)random size and (pseudo)random attendees.
-    
-    :see: https://en.wikipedia.org/wiki/Hardware_random_number_generator 
-          for true randomness ;)
-
-    :returns: (pseudo)random generated attendeeslist
-    */
-    private func getSemiRandomGeneratedAttendeesList() -> Array<String> {
-        let optionalAttendees = [
-            "Yoda",
-            "HAL 9000",
-            "Gizmo",
-            "Optimus Prime",
-            "Marvin the Paranoid Android",
-            "ET",
-            "Bender",
-            "Narcissus",
-            "Frodo",
-            "Esscher",
-            "Lothar Collatz",
-            "Foo",
-            "Bar",
-            "Tweety"
-        ]
-        
-        var attendeesList = [String]()
-        let listSize:Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: optionalAttendees.count)))
-        
-        for _ in 0...listSize {
-            let itemIndex:Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: listSize)))
-            let item:String = optionalAttendees[itemIndex]
-            if !attendeesList.contains(item) {
-                attendeesList.append(item)
-            }
-        }
-       
-        return attendeesList
-    }
     
     /**
     Creates a new Managed object and persists to datastore.
@@ -159,8 +45,9 @@ class EventAPI {
         return  persistenceManager.saveNewItem(eventDetails)
     }
     
-    // MARK: Read
     
+    // MARK: Read
+
     /**
     Retrieves all event items stored in the persistence layer.
     
@@ -191,8 +78,37 @@ class EventAPI {
         return persistenceManager.retrieveItemsSortedByDate()
     }
     
-    // MARK: Update
+    /**
+    Retrieves all event items stored in the persistence layer
+    and sort it by Date within a give range.
     
+    :returns:  - Array<Event> with found events in datastore based on
+    sort descriptor, in this case Date.
+    */
+    func getSortedByDateInRange() -> Array<Event> {
+        
+        //Create custom start and end date range, this lets us override default function date parameters
+        //for retrieveItemsSortedByDateInDateRange(startDate:currentDate(default), endDate:currentDate + 7 Days (default))
+        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        
+        let componentsStart = NSDateComponents()
+        componentsStart.year = 2015
+        componentsStart.month = 1
+        componentsStart.day = 1
+
+        let componentsEnd = NSDateComponents()
+        componentsEnd.year = 2016
+        componentsEnd.month = 1
+        componentsEnd.day = 1
+
+        let startDate = calendar!.dateFromComponents(componentsStart)!
+        let endDate = calendar!.dateFromComponents(componentsEnd)!
+        
+        return persistenceManager.retrieveItemsSortedByDateInDateRange(startDate, endDate: endDate)
+    }
+    
+    
+    // MARK: Update
     
     /**
     Update all events (batch update) attendees list.

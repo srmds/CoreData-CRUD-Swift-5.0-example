@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C32607AF1B321D6E00B588FC /* LocalReplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32607AE1B321D6E00B588FC /* LocalReplicator.swift */; };
 		C359AA741B30E51E005A3203 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AA731B30E51E005A3203 /* AppDelegate.swift */; };
 		C359AA791B30E51E005A3203 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C359AA771B30E51E005A3203 /* Main.storyboard */; };
 		C359AA7C1B30E51E005A3203 /* CoreDataCRUD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C359AA7A1B30E51E005A3203 /* CoreDataCRUD.xcdatamodeld */; };
@@ -23,6 +24,8 @@
 		C359AAB61B30E5C3005A3203 /* EventItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAB51B30E5C3005A3203 /* EventItemViewController.swift */; };
 		C359AACA1B30E91D005A3203 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAC81B30E91D005A3203 /* Event.swift */; };
 		C367B90D1B314BEF00EC211A /* BatchActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C367B90C1B314BEF00EC211A /* BatchActionsViewController.swift */; };
+		C38092091B3200FB00661EDF /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = C38092061B31FEA200661EDF /* events.json */; };
+		C3A84F0E1B331CA0000052F9 /* ReplicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A84F0D1B331CA0000052F9 /* ReplicatorProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C32607AE1B321D6E00B588FC /* LocalReplicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalReplicator.swift; sourceTree = "<group>"; };
 		C359AA701B30E51E005A3203 /* CoreDataCRUD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataCRUD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C359AA731B30E51E005A3203 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C359AA781B30E51E005A3203 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -65,6 +69,8 @@
 		C359AAB51B30E5C3005A3203 /* EventItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventItemViewController.swift; sourceTree = "<group>"; };
 		C359AAC81B30E91D005A3203 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		C367B90C1B314BEF00EC211A /* BatchActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchActionsViewController.swift; sourceTree = "<group>"; };
+		C38092061B31FEA200661EDF /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
+		C3A84F0D1B331CA0000052F9 /* ReplicatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplicatorProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,10 +121,12 @@
 		C359AA721B30E51E005A3203 /* CoreDataCRUD */ = {
 			isa = PBXGroup;
 			children = (
-				C359AAA41B30E52A005A3203 /* Utils */,
-				C359AAA51B30E534005A3203 /* EntityAPI */,
 				C359AAA61B30E53C005A3203 /* Models */,
+				C359AAA51B30E534005A3203 /* EntityAPI */,
 				C359AAA71B30E542005A3203 /* ViewControllers */,
+				C3A84F0F1B331E6E000052F9 /* Replicators */,
+				C359AAA41B30E52A005A3203 /* Utils */,
+				C38092081B32000F00661EDF /* Resources */,
 				C359AA731B30E51E005A3203 /* AppDelegate.swift */,
 				C359AA771B30E51E005A3203 /* Main.storyboard */,
 				C359AA7D1B30E51E005A3203 /* Assets.xcassets */,
@@ -192,6 +200,23 @@
 			name = Events;
 			sourceTree = "<group>";
 		};
+		C38092081B32000F00661EDF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C38092061B31FEA200661EDF /* events.json */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		C3A84F0F1B331E6E000052F9 /* Replicators */ = {
+			isa = PBXGroup;
+			children = (
+				C32607AE1B321D6E00B588FC /* LocalReplicator.swift */,
+				C3A84F0D1B331CA0000052F9 /* ReplicatorProtocol.swift */,
+			);
+			name = Replicators;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -254,6 +279,9 @@
 		C359AA681B30E51E005A3203 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "io pandacode";
 				TargetAttributes = {
@@ -295,6 +323,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C38092091B3200FB00661EDF /* events.json in Resources */,
 				C359AA811B30E51E005A3203 /* LaunchScreen.storyboard in Resources */,
 				C359AA7E1B30E51E005A3203 /* Assets.xcassets in Resources */,
 				C359AA791B30E51E005A3203 /* Main.storyboard in Resources */,
@@ -322,6 +351,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3A84F0E1B331CA0000052F9 /* ReplicatorProtocol.swift in Sources */,
+				C32607AF1B321D6E00B588FC /* LocalReplicator.swift in Sources */,
 				C359AAB21B30E5A5005A3203 /* EventTableViewCell.swift in Sources */,
 				C359AAB41B30E5B4005A3203 /* EventTableViewController.swift in Sources */,
 				C359AA7C1B30E51E005A3203 /* CoreDataCRUD.xcdatamodeld in Sources */,

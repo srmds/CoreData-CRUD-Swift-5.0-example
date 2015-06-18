@@ -20,6 +20,7 @@ struct Constants {
     struct CoreDataEntities {
         static let EventEntiy = "Event"
     }
+    
     struct UserDefaults {
         static let RunCount = "runCount"
     }
@@ -53,5 +54,5 @@ struct Constants {
     struct EventCovers {
         static let getAll = ["eventImageSecond"]
     }
-    
+        
 }
