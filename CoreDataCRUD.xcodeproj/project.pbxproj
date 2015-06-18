@@ -15,7 +15,6 @@
 		C359AA811B30E51E005A3203 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C359AA7F1B30E51E005A3203 /* LaunchScreen.storyboard */; };
 		C359AA8C1B30E51E005A3203 /* CoreDataCRUDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AA8B1B30E51E005A3203 /* CoreDataCRUDTests.swift */; };
 		C359AA971B30E51E005A3203 /* CoreDataCRUDUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AA961B30E51E005A3203 /* CoreDataCRUDUITests.swift */; };
-		C359AAAA1B30E561005A3203 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAA91B30E561005A3203 /* HTTPClient.swift */; };
 		C359AAAC1B30E56C005A3203 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAAB1B30E56C005A3203 /* PersistenceManager.swift */; };
 		C359AAAE1B30E57F005A3203 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAAD1B30E57F005A3203 /* Constants.swift */; };
 		C359AAB01B30E589005A3203 /* EventAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAAF1B30E589005A3203 /* EventAPI.swift */; };
@@ -60,7 +59,6 @@
 		C359AA921B30E51E005A3203 /* CoreDataCRUDUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreDataCRUDUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C359AA961B30E51E005A3203 /* CoreDataCRUDUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataCRUDUITests.swift; sourceTree = "<group>"; };
 		C359AA981B30E51E005A3203 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C359AAA91B30E561005A3203 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		C359AAAB1B30E56C005A3203 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		C359AAAD1B30E57F005A3203 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C359AAAF1B30E589005A3203 /* EventAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventAPI.swift; sourceTree = "<group>"; };
@@ -158,7 +156,6 @@
 		C359AAA41B30E52A005A3203 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				C359AAA91B30E561005A3203 /* HTTPClient.swift */,
 				C359AAAD1B30E57F005A3203 /* Constants.swift */,
 			);
 			name = Utils;
@@ -360,7 +357,6 @@
 				C359AACA1B30E91D005A3203 /* Event.swift in Sources */,
 				C359AAB01B30E589005A3203 /* EventAPI.swift in Sources */,
 				C359AAAC1B30E56C005A3203 /* PersistenceManager.swift in Sources */,
-				C359AAAA1B30E561005A3203 /* HTTPClient.swift in Sources */,
 				C359AA741B30E51E005A3203 /* AppDelegate.swift in Sources */,
 				C359AAB61B30E5C3005A3203 /* EventItemViewController.swift in Sources */,
 				C359AAAE1B30E57F005A3203 /* Constants.swift in Sources */,
