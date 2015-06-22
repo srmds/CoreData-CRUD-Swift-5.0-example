@@ -63,13 +63,8 @@ class LocalReplicator : ReplicatorProtocol {
         do {
             let jsonData = NSData(contentsOfFile: currPath!)!
 
-            //let paths:NSArray = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-            //let destPath: AnyObject! = (paths.count > 0) ? paths.objectAtIndex(0) : nil
-            //try filemgr.copyItemAtPath(currPath!, toPath: destPath as! String)
-            
-            if filemgr.fileExistsAtPath(currPath!) {
-                
-                
+                if filemgr.fileExistsAtPath(currPath!) {
+                    
                     jsonResult = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers)
                     
                     if let eventList = jsonResult  {
