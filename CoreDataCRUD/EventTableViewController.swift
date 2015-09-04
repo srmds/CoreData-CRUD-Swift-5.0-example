@@ -163,8 +163,8 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
 
         //TODO add datePredicate
         
-        //Create compounded OR perdicate
-        let compoundPredicate = NSCompoundPredicate.orPredicateWithSubpredicates(predicates)
+        //Create compound predicate with OR predicates
+        let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         
         //Filter results with compound predicate by closing over the inline variable
         filteredEventList =  eventList.filter {compoundPredicate.evaluateWithObject($0)}
