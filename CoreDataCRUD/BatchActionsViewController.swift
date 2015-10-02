@@ -25,20 +25,17 @@ class BatchActionsViewController: UIViewController {
     }
     
     @IBAction func anonimizeListButtonTapped(sender: AnyObject) {
-        eventAPI.updateAllEventAttendees()
+        eventAPI.anonimizeAttendeesList()
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     @IBAction func deleteAllEventsButtonTapped(sender: AnyObject) {
-        if eventAPI.deleteAll() {
-            NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
-        }
-        
+        eventAPI.deleteAllEvents()       
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
 
     @IBAction func restoreEventsButtonTapped(sender: AnyObject) {
-        replicator.pull()
+        replicator.fetchData()
         NSNotificationCenter.defaultCenter().postNotificationName("setStateLoading", object: nil)
         self.navigationController?.popToRootViewControllerAnimated(true)
     }

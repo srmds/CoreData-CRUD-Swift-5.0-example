@@ -6,6 +6,9 @@
 
 import UIKit
 
+/**
+Custom Event cell
+*/
 class EventTableViewCell: UITableViewCell {
     
     @IBOutlet weak var eventImageView: UIImageView!
