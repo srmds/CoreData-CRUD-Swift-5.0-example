@@ -4,12 +4,22 @@
 //  Written by Steven R.
 //
 
+
 import Foundation
 
+//Methods that must be implemented by every class that extends it.
+protocol ReplicatorProtocol {
+    func fetchData()
+    func processData(jsonResult: AnyObject?)
+}
+
+/**
+    Local Replicator handles reading and parsing JSON data from a local file and calls the Core Data Stack,
+    (via EventAPI to actually create Core Data Entities and persist to SQLite Datastore)
+*/
 class LocalReplicator : ReplicatorProtocol {
     
     private var eventAPI: EventAPI!
-    private var dataSource = "events"
 
     //Utilize Singleton pattern by instanciating Replicator only once.
     class var sharedInstance: LocalReplicator {
@@ -25,127 +35,76 @@ class LocalReplicator : ReplicatorProtocol {
     }
     
     /** 
-        Pull event data from a given resource
+        Pull event data from a given resource, posts a notification to update 
+        datasource of a given/listening ViewController/UITableView
     */
-    func pull() -> Bool {
-        var success:Bool = false
-        
+    func fetchData() {
+        //Read JSON file in seperate thread
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-            success = self.processData()
+            // read JSON file, parse JSON data
+            self.processData(self.readFile())
             
-            if (success) {
-                dispatch_async(dispatch_get_main_queue()) {
-                    success = true
-                    NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
-                }
-            } else {
-                dispatch_async(dispatch_get_main_queue()) {
-                    success = false
-                    NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
-                }
+            // Post notification to update datasource of a given ViewController/UITableView
+            dispatch_async(dispatch_get_main_queue()) {
+                NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
             }
         })
+    }
+    
+    /**
+        Read JSON data from a local file in the Resources dir.
+    
+        - Returns: AnyObject / Dictionary<String,AnyObject> The contents of the JSON file.
+    */
+    func readFile() -> AnyObject {
+        let dataSourceFilename:String = "events"
+        let dataSourceFilenameExtension:String = "json"
+        let filemgr = NSFileManager.defaultManager()
+        let currPath = NSBundle.mainBundle().pathForResource(dataSourceFilename, ofType: dataSourceFilenameExtension)
+        var jsonResult:AnyObject! = nil
         
-        return success
+        do {
+            let jsonData = NSData(contentsOfFile: currPath!)!
+            
+            if filemgr.fileExistsAtPath(currPath!) {
+                jsonResult = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers)
+            } else {
+                print("\(dataSourceFilename).\(dataSourceFilenameExtension)) does not exist, therefore cannot read JSON data.")
+            }
+        } catch let fetchError as NSError {
+            print("read file error: \(fetchError.localizedDescription)")
+        }
+        
+        return jsonResult
     }
     
     /**
         Process data from a given resource Event objects and assigning
-        property values and calling the managed object layer to persist
+        (additional) property values and calling the Event API to persist Events
         to the datastore.
+    
+        - Parameters jsonResult: The JSON content to be parsed and stored to Datastore.
     */
-    internal func processData() -> Bool {
-        let filemgr = NSFileManager.defaultManager()
-        let currPath = NSBundle.mainBundle().pathForResource(dataSource, ofType: "json")
-        var jsonResult:AnyObject! = nil
-        var success:Bool = false
+    func processData(jsonResult:AnyObject?) {
+        var retrievedEvents = [Dictionary<String,AnyObject>]()
+        
+        if let eventList = jsonResult  {
+            for index in 0..<eventList.count {
+                var eventItem:Dictionary<String, AnyObject> = eventList[index] as! Dictionary<String, AnyObject>
+                
+                //Create additional event item properties:
+                
+                //Generate event UUID
+                eventItem[EventAttributes.eventId.rawValue] = NSUUID().UUIDString
+                
+                //Generate semi random generated attendeeslist
+                eventItem[EventAttributes.attendees.rawValue] = AttendeesGenerator.getSemiRandomGeneratedAttendeesList()
 
-        do {
-            let jsonData = NSData(contentsOfFile: currPath!)!
-
-                if filemgr.fileExistsAtPath(currPath!) {
-                    
-                    jsonResult = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers)
-                    
-                    if let eventList = jsonResult  {
-                        
-                        for index in 0...eventList.count - 1 {
-                            
-                            var eventItem:Dictionary<String, NSObject> = eventList[index] as! Dictionary<String, NSObject>
-                            
-                            //Create additional event item properties
-                            eventItem[Constants.EventAttributes.date.rawValue] = parseDate(eventItem[Constants.EventAttributes.date.rawValue] as! String)
-                            eventItem[Constants.EventAttributes.eventId.rawValue] = NSUUID().UUIDString
-                            eventItem[Constants.EventAttributes.fb_url.rawValue] = "https://www.facebook.com/events/00000000"
-                            eventItem[Constants.EventAttributes.ticket_url.rawValue] = "https://shop.eventtickets.com/00000"
-                            eventItem[Constants.EventAttributes.attendees.rawValue] = getSemiRandomGeneratedAttendeesList()
-                            
-                            eventAPI.saveEvent(eventItem)
-                        }
-                        
-                        success = true
-                    } else {
-                        success = false
-                    }
-            }
-        } catch let fetchError as NSError {
-            print("pull error: \(fetchError.localizedDescription)")
-            success = false
-        }
-        
-        return success
-    }
-    
-    // MARK: Utility methods
-    
-    /**
-    Get a date as formatted String
-    */
-    private func parseDate(dateStr: String) -> NSDate {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        
-        return dateFormatter.dateFromString(dateStr)!
-    }
-    
-    /**
-    Generate (pseudo)random attendeeslist of (pseudo)random size and (pseudo)random attendees.
-    
-    :see: https://en.wikipedia.org/wiki/Hardware_random_number_generator
-    for true randomness ;)
-    
-    :returns: (pseudo)random generated attendeeslist
-    */
-    private func getSemiRandomGeneratedAttendeesList() -> Array<String> {
-        let optionalAttendees = [
-            "Yoda",
-            "HAL 9000",
-            "Gizmo",
-            "Optimus Prime",
-            "Marvin the Paranoid Android",
-            "ET",
-            "Bender",
-            "Narcissus",
-            "Frodo",
-            "Esscher",
-            "Lothar Collatz",
-            "Foo",
-            "Bar",
-            "Tweety"
-        ]
-        
-        var attendeesList = [String]()
-        let listSize:Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: optionalAttendees.count)))
-        
-        for _ in 0...listSize {
-            let itemIndex:Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: listSize)))
-            let item:String = optionalAttendees[itemIndex]
-            if !attendeesList.contains(item) {
-                attendeesList.append(item)
+                retrievedEvents.append(eventItem)
             }
         }
         
-        return attendeesList
-    }    
-    
+        //Call Event API to persist Event list to Datastore
+        eventAPI.saveEventsList(retrievedEvents)
+    }
 }
