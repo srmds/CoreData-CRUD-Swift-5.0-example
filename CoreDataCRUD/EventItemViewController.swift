@@ -10,7 +10,6 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     
     //placeholder for event endpoint
     private var eventAPI: EventAPI!
-    private let attendeesTableCellIdentifier = "attendeesItemCell"
 
     //Reference to selected event to pass to details view
     var selectedEventItem:Event!
@@ -41,6 +40,14 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.setup()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    private func setup() {
         self.eventAPI = EventAPI.sharedInstance
         
         attendeesTableView.delegate = self
@@ -51,10 +58,6 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     // MARK Actions
     
     /**
@@ -62,9 +65,9 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     populated dictionary from field values.
     */
     @IBAction func eventSaveButtonTapped(sender: UIBarButtonItem) {
-        if(selectedEventItem != nil){                                                   //existing event
+        if(selectedEventItem != nil){ //existing event
             eventAPI.updateEvent(selectedEventItem, newEventItemDetails:getFieldValues())
-        } else {                                                                        //new event
+        } else { //new event
             //Input details
             var newDetails = getFieldValues()
             
@@ -83,7 +86,7 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     Set all fields text to a predefined default value.
     */
     @IBAction func clearButtonTapped(sender: AnyObject) {
-        let defaultValue = "Live long and prosper 🖖🏾" // need change to empty String ;p
+        let defaultValue = "Live long and prosper 🖖🏾" // need to change to empty String ;p
         eventTitleLabel.text = defaultValue
         eventVenueLabel.text = defaultValue
         eventCityLabel.text = defaultValue
@@ -191,9 +194,8 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let attendeeCell =
-        tableView.dequeueReusableCellWithIdentifier(attendeesTableCellIdentifier, forIndexPath: indexPath)
-        
+        let attendeesTableCellIdentifier = "attendeesItemCell"
+        let attendeeCell = tableView.dequeueReusableCellWithIdentifier(attendeesTableCellIdentifier, forIndexPath: indexPath)
         attendeeCell.textLabel!.text = selectedEventItem.attendees[indexPath.row] as? String
         
         return attendeeCell

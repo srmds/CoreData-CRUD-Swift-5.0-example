@@ -10,6 +10,10 @@
 		C32607AF1B321D6E00B588FC /* LocalReplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32607AE1B321D6E00B588FC /* LocalReplicator.swift */; };
 		C32C107E1BBDB05D00973151 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32C107D1BBDB05D00973151 /* DateFormatter.swift */; settings = {ASSET_TAGS = (); }; };
 		C32C10801BBDB11E00973151 /* AttendeesGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32C107F1BBDB11E00973151 /* AttendeesGenerator.swift */; settings = {ASSET_TAGS = (); }; };
+		C32DC5411BC08E3E001D5784 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5401BC08E3E001D5784 /* HTTPClient.swift */; settings = {ASSET_TAGS = (); }; };
+		C32DC5431BC08E4B001D5784 /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5421BC08E4B001D5784 /* HTTPStatusCode.swift */; settings = {ASSET_TAGS = (); }; };
+		C32DC5471BC091A4001D5784 /* RemoteReplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5461BC091A4001D5784 /* RemoteReplicator.swift */; settings = {ASSET_TAGS = (); }; };
+		C32DC5491BC091BE001D5784 /* ReplicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5481BC091BE001D5784 /* ReplicatorProtocol.swift */; settings = {ASSET_TAGS = (); }; };
 		C33A6D891B3339E200B4B274 /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = C33A6D881B3339E200B4B274 /* events.json */; };
 		C33D90561BBF3D0B008BA22B /* EntityTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33D90551BBF3D0B008BA22B /* EntityTypes.swift */; settings = {ASSET_TAGS = (); }; };
 		C359AA741B30E51E005A3203 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AA731B30E51E005A3203 /* AppDelegate.swift */; };
@@ -52,6 +56,10 @@
 		C32607AE1B321D6E00B588FC /* LocalReplicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalReplicator.swift; sourceTree = "<group>"; };
 		C32C107D1BBDB05D00973151 /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		C32C107F1BBDB11E00973151 /* AttendeesGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendeesGenerator.swift; sourceTree = "<group>"; };
+		C32DC5401BC08E3E001D5784 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		C32DC5421BC08E4B001D5784 /* HTTPStatusCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCode.swift; sourceTree = "<group>"; };
+		C32DC5461BC091A4001D5784 /* RemoteReplicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteReplicator.swift; sourceTree = "<group>"; };
+		C32DC5481BC091BE001D5784 /* ReplicatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplicatorProtocol.swift; sourceTree = "<group>"; };
 		C33A6D881B3339E200B4B274 /* events.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = events.json; sourceTree = "<group>"; };
 		C33D90551BBF3D0B008BA22B /* EntityTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityTypes.swift; sourceTree = "<group>"; };
 		C359AA701B30E51E005A3203 /* CoreDataCRUD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreDataCRUD.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +112,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C32DC53F1BC08E27001D5784 /* HTTPClient */ = {
+			isa = PBXGroup;
+			children = (
+				C32DC5401BC08E3E001D5784 /* HTTPClient.swift */,
+				C32DC5421BC08E4B001D5784 /* HTTPStatusCode.swift */,
+			);
+			name = HTTPClient;
+			sourceTree = "<group>";
+		};
 		C359AA671B30E51E005A3203 = {
 			isa = PBXGroup;
 			children = (
@@ -131,8 +148,9 @@
 				C3CB0A891BBC88C3006A1911 /* CoreData */,
 				C3A84F0F1B331E6E000052F9 /* Replicator */,
 				C3CB0A941BBC8CB2006A1911 /* API */,
-				C359AAA71B30E542005A3203 /* ViewControllers */,
+				C32DC53F1BC08E27001D5784 /* HTTPClient */,
 				C359AAA41B30E52A005A3203 /* Utils */,
+				C359AAA71B30E542005A3203 /* ViewControllers */,
 				C38092081B32000F00661EDF /* Resources */,
 				C359AA731B30E51E005A3203 /* AppDelegate.swift */,
 				C359AA771B30E51E005A3203 /* Main.storyboard */,
@@ -211,7 +229,9 @@
 		C3A84F0F1B331E6E000052F9 /* Replicator */ = {
 			isa = PBXGroup;
 			children = (
+				C32DC5481BC091BE001D5784 /* ReplicatorProtocol.swift */,
 				C32607AE1B321D6E00B588FC /* LocalReplicator.swift */,
+				C32DC5461BC091A4001D5784 /* RemoteReplicator.swift */,
 			);
 			name = Replicator;
 			sourceTree = "<group>";
@@ -219,9 +239,9 @@
 		C3CB0A891BBC88C3006A1911 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				C3CB0A8E1BBC89C7006A1911 /* PersistenceManager.swift */,
 				C3CB0A8A1BBC88E9006A1911 /* ContextManager.swift */,
 				C3CB0A8C1BBC88F7006A1911 /* DatastoreCoordinator.swift */,
-				C3CB0A8E1BBC89C7006A1911 /* PersistenceManager.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -371,16 +391,20 @@
 			files = (
 				C32607AF1B321D6E00B588FC /* LocalReplicator.swift in Sources */,
 				C3CB0A8B1BBC88E9006A1911 /* ContextManager.swift in Sources */,
+				C32DC5411BC08E3E001D5784 /* HTTPClient.swift in Sources */,
 				C359AAB21B30E5A5005A3203 /* EventTableViewCell.swift in Sources */,
 				C3CB0A931BBC8C71006A1911 /* StringExtension.swift in Sources */,
 				C3CB0A8D1BBC88F7006A1911 /* DatastoreCoordinator.swift in Sources */,
+				C32DC5431BC08E4B001D5784 /* HTTPStatusCode.swift in Sources */,
 				C359AAB41B30E5B4005A3203 /* EventTableViewController.swift in Sources */,
 				C32C107E1BBDB05D00973151 /* DateFormatter.swift in Sources */,
 				C359AA7C1B30E51E005A3203 /* CoreDataCRUD.xcdatamodeld in Sources */,
+				C32DC5491BC091BE001D5784 /* ReplicatorProtocol.swift in Sources */,
 				C32C10801BBDB11E00973151 /* AttendeesGenerator.swift in Sources */,
 				C367B90D1B314BEF00EC211A /* BatchActionsViewController.swift in Sources */,
 				C3CB0A8F1BBC89C7006A1911 /* PersistenceManager.swift in Sources */,
 				C359AACA1B30E91D005A3203 /* Event.swift in Sources */,
+				C32DC5471BC091A4001D5784 /* RemoteReplicator.swift in Sources */,
 				C359AAAC1B30E56C005A3203 /* EventAPI.swift in Sources */,
 				C359AA741B30E51E005A3203 /* AppDelegate.swift in Sources */,
 				C33D90561BBF3D0B008BA22B /* EntityTypes.swift in Sources */,
