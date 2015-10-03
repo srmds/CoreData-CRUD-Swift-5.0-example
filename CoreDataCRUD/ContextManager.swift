@@ -22,6 +22,7 @@ class ContextManager: NSObject {
         super.init()
     }
     
+    // Create master context reference, with PrivateQueueConcurrency Type.
     lazy var masterManagedObjectContextInstance: NSManagedObjectContext = {
         var masterManagedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         masterManagedObjectContext.persistentStoreCoordinator = self.datastore.persistentStoreCoordinator
@@ -29,6 +30,7 @@ class ContextManager: NSObject {
         return masterManagedObjectContext
     }()
     
+    //Create main context reference, with MainQueueuConcurrency Type.
     lazy var mainManagedObjectContextInstance: NSManagedObjectContext = {
         var mainManagedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
         mainManagedObjectContext.persistentStoreCoordinator = self.datastore.persistentStoreCoordinator
@@ -38,6 +40,11 @@ class ContextManager: NSObject {
     
     // MARK: - Core Data Saving support
     
+    /**
+        Saves changes from the Main Context to the Master Managed Object Context.
+    
+        - Returns: Void
+    */
     func saveContext() {
         defer {
             do {
@@ -54,6 +61,11 @@ class ContextManager: NSObject {
         }
     }
     
+    /**
+        Merge Changes on the Main Context to the Master Context.
+    
+        - Returns: Void
+    */
     private func mergeChangesFromMainContext() {
         dispatch_async(dispatch_get_main_queue(),{
             do {
