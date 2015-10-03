@@ -13,7 +13,10 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     private var selectedEventItem : Event!
     private var resultSearchController:UISearchController!
     private var eventAPI: EventAPI!
-    
+    private let eventTableCellIdentifier = "eventItemCell"
+    private let showEventItemSegueIdentifier = "showEventItemSegue"
+    private let editEventItemSegueIdentifier = "editEventItemSegue"
+
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -22,14 +25,13 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     override func viewWillAppear(animated: Bool) {
+        //Register for notifications
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateEventTableData:", name: "updateEventTableData", object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setStateLoading:", name: "setStateLoading", object: nil)
+        
         self.eventAPI = EventAPI.sharedInstance
-        self.tableView.setContentOffset(CGPointMake(0, 44),animated: true)
-        self.eventList = eventAPI.getSortedByDateInRange()
+        self.eventList = self.eventAPI.getEventsInDateRange()
         self.title = String(format: "Upcoming events (%i)",eventList.count)
-        refreshTableData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,7 +50,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let eventCell =
-        tableView.dequeueReusableCellWithIdentifier(Constants.CellIds.EventTableCell, forIndexPath: indexPath) as! EventTableViewCell
+        tableView.dequeueReusableCellWithIdentifier(eventTableCellIdentifier, forIndexPath: indexPath) as! EventTableViewCell
         
         let eventItem:Event!
         
@@ -58,7 +60,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
             eventItem = eventList[indexPath.row]
         }
         
-        eventCell.eventDateLabel.text = getFormattedDate(eventItem.date)
+        eventCell.eventDateLabel.text = DateFormatter.getStringFromDate(eventItem.date, dateFormat: "dd-MM\nyyyy")
         eventCell.eventTitleLabel.text = eventItem.title
         eventCell.eventLocationLabel.text = "\(eventItem.venue) - \(eventItem.city) - \(eventItem.country)"
         eventCell.eventImageView.image = getEventImage(indexPath)
@@ -73,7 +75,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         
         let destination = segue.destinationViewController as? EventItemViewController
         
-        if segue.identifier == Constants.SegueIds.showEventItem {
+        if segue.identifier == showEventItemSegueIdentifier {
             /*
             Two options to pass selected Event to destination:
             
@@ -93,14 +95,12 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
                 selectedEventItem = eventList[self.tableView.indexPathForSelectedRow!.row] as Event
             }
             
-            destination!.selectedEventItem = eventAPI.getById(selectedEventItem.eventId)[0] //option 2
+            destination!.selectedEventItem = eventAPI.getEventById(selectedEventItem.eventId)[0] //option 2
             
             destination!.title = "Edit event"
-        } else if segue.identifier == Constants.SegueIds.editEventItem {
+        } else if segue.identifier == editEventItemSegueIdentifier {
             destination!.title = "Add event"
         }
-        
-        
     }
     
     // MARK: - Table edit mode
@@ -112,7 +112,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             //Delete item from datastore
-            eventAPI.deleteItem(eventList[indexPath.row])
+            eventAPI.deleteEvent(eventList[indexPath.row])
             //Delete item from tableview datascource
             eventList.removeAtIndex(indexPath.row)
             // Delete the row from the data source
@@ -157,9 +157,9 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         //Create a collection of predicates,
         //search items by: title OR venue OR city
         var predicates = [NSPredicate]()
-        predicates.append(NSPredicate(format: "\(Constants.EventAttributes.title.rawValue) contains[c] %@", searchTerm.lowercaseString))
-        predicates.append(NSPredicate(format: "\(Constants.EventAttributes.venue.rawValue) contains[c] %@", searchTerm.lowercaseString))
-        predicates.append(NSPredicate(format: "\(Constants.EventAttributes.city.rawValue)  contains[c] %@", searchTerm.lowercaseString))
+        predicates.append(NSPredicate(format: "\(EventAttributes.title.rawValue) contains[c] %@", searchTerm.lowercaseString))
+        predicates.append(NSPredicate(format: "\(EventAttributes.venue.rawValue) contains[c] %@", searchTerm.lowercaseString))
+        predicates.append(NSPredicate(format: "\(EventAttributes.city.rawValue)  contains[c] %@", searchTerm.lowercaseString))
 
         //TODO add datePredicate
         
@@ -181,26 +181,14 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         self.activityIndicator.startAnimating()
     }
     
-    
     /**
     Refresh table data
     */
     private func refreshTableData(){
-            self.eventList.removeAll(keepCapacity: false)
-            self.eventList = self.eventAPI.getSortedByDateInRange()
-            self.tableView.reloadData()
-            self.title = String(format: "Upcoming events (%i)",self.eventList.count)
-    }
-    
-    /**
-    Get a date as formatted String
-    */
-    private func getFormattedDate(date: NSDate) -> String {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM\nyyyy"
-        let DateInFormat = dateFormatter.stringFromDate(date)
-        
-        return DateInFormat
+        self.eventList.removeAll(keepCapacity: false)
+        self.eventList = self.eventAPI.getEventsInDateRange()
+        self.tableView.reloadData()
+        self.title = String(format: "Upcoming events (%i)",self.eventList.count)
     }
     
     /**
@@ -213,9 +201,6 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         //Use indexPath as reference to cell to be updated.
         
         //For now load from image assets locally.
-        return UIImage(named: Constants.EventCovers.getAll[0])!
+        return UIImage(named: "eventImageSecond")!
     }
-    
 }
-
-

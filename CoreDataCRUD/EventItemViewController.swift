@@ -10,9 +10,10 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     
     //placeholder for event endpoint
     private var eventAPI: EventAPI!
-    
+    private let attendeesTableCellIdentifier = "attendeesItemCell"
+
     //Reference to selected event to pass to details view
-    internal var selectedEventItem:Event!
+    var selectedEventItem:Event!
    
     @IBOutlet weak var eventTitleLabel: UITextField!{ didSet { eventTitleLabel.delegate = self } }
     @IBOutlet weak var eventVenueLabel: UITextField!{ didSet { eventVenueLabel.delegate = self } }
@@ -24,6 +25,16 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     @IBOutlet weak var scrollViewContainer: UIScrollView!
     @IBOutlet weak var segmentController: UISegmentedControl!
     @IBOutlet weak var attendeesTableView: UITableView!
+    
+    private let idNamespace  = EventAttributes.eventId.rawValue
+    private let titleNamespace  = EventAttributes.title.rawValue
+    private let dateNamespace  = EventAttributes.date.rawValue
+    private let venueNamespace  = EventAttributes.venue.rawValue
+    private let cityNamespace  = EventAttributes.city.rawValue
+    private let countryNamespace  = EventAttributes.country.rawValue
+    private let fbURLNamespace  = EventAttributes.fb_url.rawValue
+    private let ticketURLNamespace  = EventAttributes.ticket_url.rawValue
+    private let attendeesNamespace  = EventAttributes.attendees.rawValue
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,16 +63,16 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     */
     @IBAction func eventSaveButtonTapped(sender: UIBarButtonItem) {
         if(selectedEventItem != nil){                                                   //existing event
-            eventAPI.updateEvent(selectedEventItem, updateDetails:getFieldValues())
+            eventAPI.updateEvent(selectedEventItem, newEventItemDetails:getFieldValues())
         } else {                                                                        //new event
             //Input details
             var newDetails = getFieldValues()
             
             //Generate UUID, add it to dictionary
-            newDetails[Constants.EventAttributes.eventId.rawValue] =  NSUUID().UUIDString
+            newDetails[idNamespace] =  NSUUID().UUIDString
             
             //Set initial list to empty list
-            newDetails[Constants.EventAttributes.attendees.rawValue] = []
+            newDetails[attendeesNamespace] = []
             
             eventAPI.saveEvent(newDetails)
         }
@@ -87,7 +98,7 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     */
     @IBAction func deleteEventButtonTapped(sender: UIButton) {
         if(selectedEventItem != nil){
-            eventAPI.deleteItem(selectedEventItem)
+            eventAPI.deleteEvent(selectedEventItem)
         }
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
@@ -127,14 +138,14 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     private func getFieldValues() -> Dictionary<String, NSObject> {
         
         var fieldDetails = [String: NSObject]()
-        fieldDetails[Constants.EventAttributes.title.rawValue] = eventTitleLabel.text
-        fieldDetails[Constants.EventAttributes.date.rawValue] = NSDate()
-        fieldDetails[Constants.EventAttributes.venue.rawValue] = eventVenueLabel.text
-        fieldDetails[Constants.EventAttributes.city.rawValue] = eventCityLabel.text
-        fieldDetails[Constants.EventAttributes.country.rawValue] = eventCountryLabel.text
-        fieldDetails[Constants.EventAttributes.fb_url.rawValue] = eventFBURLLabel.text
-        fieldDetails[Constants.EventAttributes.ticket_url.rawValue] = eventTicketURL.text
-        fieldDetails[Constants.EventAttributes.date.rawValue] = eventDatePicker.date
+        fieldDetails[titleNamespace] = eventTitleLabel.text
+        fieldDetails[dateNamespace] = NSDate()
+        fieldDetails[venueNamespace] = eventVenueLabel.text
+        fieldDetails[cityNamespace] = eventCityLabel.text
+        fieldDetails[countryNamespace] = eventCountryLabel.text
+        fieldDetails[fbURLNamespace] = eventFBURLLabel.text
+        fieldDetails[ticketURLNamespace] = eventTicketURL.text
+        fieldDetails[dateNamespace] = eventDatePicker.date
         
         return fieldDetails
     }
@@ -181,7 +192,7 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let attendeeCell =
-        tableView.dequeueReusableCellWithIdentifier(Constants.CellIds.AttendeesTableCell, forIndexPath: indexPath)
+        tableView.dequeueReusableCellWithIdentifier(attendeesTableCellIdentifier, forIndexPath: indexPath)
         
         attendeeCell.textLabel!.text = selectedEventItem.attendees[indexPath.row] as? String
         
