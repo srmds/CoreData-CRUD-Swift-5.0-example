@@ -4,18 +4,11 @@
 //  Written by Steven R.
 //
 
-
 import Foundation
-
-//Methods that must be implemented by every class that extends it.
-protocol ReplicatorProtocol {
-    func fetchData()
-    func processData(jsonResult: AnyObject?)
-}
 
 /**
     Local Replicator handles reading and parsing JSON data from a local file and calls the Core Data Stack,
-    (via EventAPI to actually create Core Data Entities and persist to SQLite Datastore)
+    (via EventAPI) to actually create Core Data Entities and persist to SQLite Datastore.
 */
 class LocalReplicator : ReplicatorProtocol {
     
@@ -37,6 +30,8 @@ class LocalReplicator : ReplicatorProtocol {
     /** 
         Pull event data from a given resource, posts a notification to update 
         datasource of a given/listening ViewController/UITableView
+    
+        - Returns: Void
     */
     func fetchData() {
         //Read JSON file in seperate thread
@@ -54,7 +49,7 @@ class LocalReplicator : ReplicatorProtocol {
     /**
         Read JSON data from a local file in the Resources dir.
     
-        - Returns: AnyObject / Dictionary<String,AnyObject> The contents of the JSON file.
+        - Returns: AnyObject The contents of the JSON file.
     */
     func readFile() -> AnyObject {
         let dataSourceFilename:String = "events"
@@ -83,7 +78,8 @@ class LocalReplicator : ReplicatorProtocol {
         (additional) property values and calling the Event API to persist Events
         to the datastore.
     
-        - Parameters jsonResult: The JSON content to be parsed and stored to Datastore.
+        - Parameter jsonResult: The JSON content to be parsed and stored to Datastore.
+        - Returns: Void
     */
     func processData(jsonResult:AnyObject?) {
         var retrievedEvents = [Dictionary<String,AnyObject>]()
