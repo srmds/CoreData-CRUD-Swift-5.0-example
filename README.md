@@ -49,9 +49,9 @@ The [Event](https://github.com/srmds/CoreData-CRUD-Swift-iOS-example/blob/master
 	    @NSManaged var eventId: String
 	}
 
-The AnyObject type in this example are [non-standard persistent attributes](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreData/Articles/cdNSAttributes.html) that are not support directly in Core Data. The AnyObject, as the name suggests, can therefore be for example an: `Array` or `NSURL`, or any other object type.
+The AnyObject type in this example are [non-standard persistent attributes](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreData/LifeofaManagedObject.html) that are not support directly in Core Data. The AnyObject, as the name suggests, can therefore be for example an: `Array` or `NSURL`, or any other object type.
 
-### [Core Data API](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreData/Articles/cdBasics.html#//apple_ref/doc/uid/TP40001650-TP1)
+### [Core Data API](https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/CoreData/index.html#//apple_ref/doc/uid/TP40001075-CH2-SW1)
 
 This application utilizes the Core Data stack concurrently
 to locally persist data. Below an overview of how the Core Data stack is implemented and utilized within the application.
@@ -64,6 +64,8 @@ You can see that there are three layers used, this is to provide true concurrenc
 
 The `minions* workers` are the workers in the `EventAPI` that save each `parsed` and prepared `NSManagedObject` within it's own Thread. Eventually when all NSManagedObjects are stored within the thread confined context, the `EventAPI` calls the `MainContext` via the `PersistenceManager`, which in turn will call `ContextManager` and cause the `minions` to merge / synchronize with the MainContext and finally with the `Master application context`, which finally calls the `DataStore Coordinator` to actually store the NSManagedObjects to the datastore.
 
+More info on [concurrency](https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/CoreData/Concurrency.html#//apple_ref/doc/uid/TP40001075-CH24-SW1)
+
 #### Event API
 
 The [Event API](https://github.com/srmds/CoreData-CRUD-Swift-2.0-example/blob/master/CoreDataCRUD/EventAPI.swift)
@@ -75,7 +77,7 @@ Then click on `^ 6`, thus `control + 6`, this will open up an overview of severa
 *No copyright infringement intended.
 
 ### More info
-More Core Data basics can be found [here](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreData/Articles/cdBasics.html#//apple_ref/doc/uid/TP40001650-TP1)
+More Core Data basics can be found [here](https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/CoreData/Concurrency.html#//apple_ref/doc/uid/TP40001075-CH24-SW1)
 
 
 ## TODO
