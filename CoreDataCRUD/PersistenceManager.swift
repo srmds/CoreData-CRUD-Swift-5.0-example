@@ -44,7 +44,8 @@ class PersistenceManager: NSObject {
     /**
         Save the current work/changes done on the worker contexts (the minion workers).
         
-        - Parameters workerContext: NSManagedObjectContext The Minion worker Context that has to be saved.
+        - Parameter workerContext: NSManagedObjectContext The Minion worker Context that has to be saved.
+        - Returns: Void
     */
     func saveWorkerContext(workerContext: NSManagedObjectContext){
         //Persist new Event to datastore (via Managed Object Context Layer).
@@ -57,6 +58,8 @@ class PersistenceManager: NSObject {
     
     /**
         Save and merge the current work/changes done on the minion workers with Main context.
+    
+        - Returns: Void
     */
     func mergeWithMainContext(){
         do {
