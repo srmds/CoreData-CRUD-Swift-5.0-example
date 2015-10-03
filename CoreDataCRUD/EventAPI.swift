@@ -66,6 +66,9 @@ class EventAPI {
         
         //Save and merge changes from Minion workers with Main context
         self.persistenceManager.mergeWithMainContext()
+        
+        //Post notification to update datasource of a given Viewcontroller/UITableView
+        self.postUpdateNotification()
     }
     
     /**
@@ -114,7 +117,7 @@ class EventAPI {
             
             //Post notification to update datasource of a given Viewcontroller/UITableView
             dispatch_async(dispatch_get_main_queue()) {
-                NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
+                self.postUpdateNotification()
             }
         })
     }
@@ -281,6 +284,8 @@ class EventAPI {
         //Persist new Event to datastore (via Managed Object Context Layer).
         self.persistenceManager.saveWorkerContext(minionManagedObjectContextWorker)
         self.persistenceManager.mergeWithMainContext()
+        
+        self.postUpdateNotification()
     }
     
     // MARK: Delete
@@ -296,7 +301,7 @@ class EventAPI {
             self.mainContextInstance.deleteObject(item)
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
+        self.postUpdateNotification()
     }
     
     /**
@@ -305,6 +310,14 @@ class EventAPI {
     func deleteEvent(eventItem: Event) {
         //Delete event item from persistance layer
         self.mainContextInstance.deleteObject(eventItem)
+        self.postUpdateNotification()
+    }
+    
+    /**
+    Post update notification to let the registered listeners refresh it's datasource.
+    */
+    private func postUpdateNotification(){
+        NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
     }
 
 }
