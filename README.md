@@ -11,6 +11,8 @@ This app demonstrates Core Data and persistent storage, by reading Event data fr
 * [Xcode 7.0+](https://developer.apple.com/xcode/downloads/)
 * [iOS9](https://developer.apple.com/xcode/downloads/)
 
+Tested with iPhone 6.
+
 ## The objective
 
 for this project is to learn (for now mostly myself ;D ) to:
@@ -72,7 +74,7 @@ Then click on `^ 6`, thus `control + 6`, this will open up an overview of severa
 
 *No copyright infringement intended.
 
-### More info 
+### More info
 More Core Data basics can be found [here](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreData/Articles/cdBasics.html#//apple_ref/doc/uid/TP40001650-TP1)
 
 
