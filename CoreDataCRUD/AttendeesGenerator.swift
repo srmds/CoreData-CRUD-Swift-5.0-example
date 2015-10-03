@@ -11,12 +11,12 @@ import Foundation
 class AttendeesGenerator {
 
     /**
-    Generate (pseudo)random attendeeslist of (pseudo)random size and (pseudo)random attendees.
+    Generate (pseudo) random attendeeslist of (pseudo) random size and (pseudo) random attendees.
     
-    :see: https://en.wikipedia.org/wiki/Hardware_random_number_generator
-    for true randomness ;)
+    - See: https://en.wikipedia.org/wiki/Hardware_random_number_generator
+            for true randomness ;)
     
-    :returns: (pseudo)random generated attendeeslist
+    - Returns: Array<String> A (pseudo) random generated attendeeslist
     */
     class func getSemiRandomGeneratedAttendeesList() -> Array<String> {
         let optionalAttendees = [
