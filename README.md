@@ -2,7 +2,7 @@
 
 Swift 2.0 - A (very simple) example project that exposes the usage of CoreData to create entities and to persist to a SQLite Datastore.
 
-This app demonstrates Core Data and persistent storage, by reading Event data from a [JSON file /  response](https://github.com/srmds/CoreData-CRUD-Swift-2.0-example/blob/master/CoreDataCRUD/events.json), creates and stores those Events in a SQLite datastore. It is possible to do single and batch updates, deletions and retrieving, filtering on stored Events.
+This app demonstrates Core Data and persistent storage, by reading Event data from a [JSON file /  response](https://github.com/srmds/CoreData-CRUD-Swift-2.0-example/blob/master/CoreDataCRUD/events.json), creates and stores those Events in a SQLite datastore. It is possible to do single and batch updates, deletions, retrieving and filtering on stored Events.
 
 ![screenshotOverview](http://i.imgur.com/V0OUsC3.jpg)
 
@@ -56,13 +56,13 @@ The AnyObject type in this example are [non-standard persistent attributes](http
 This application utilizes the Core Data stack concurrently
 to locally persist data. Below an overview of how the Core Data stack is implemented and utilized within the application.
 
-![CoreData Thread confinement](http://i.imgur.com/RxHbRbD.jpg)
+![CoreData Thread confinement](http://i.imgur.com/vm74cWf.jpg)
 
 #### Thread confinement
 
 You can see that there are three layers used, this is to provide true concurrency and also utilize thread confinement.
 
-The `minions* workers` are the workers in the `EventAPI` that save each `parsed` and prepared `NSManagedObject` within it's own Thread. Eventually when all NSManagedObjects are stored within the thread confined context, the `EventAPI` calls the `MainContext` via the `PersistenceManager`, which will cause the `minions` to merge / synchronize with the MainContext and finally with the `Master application context`, which will call the `DataStore Coordinator` to actually store the NSManagedObjects to the datastore.
+The `minions* workers` are the workers in the `EventAPI` that save each `parsed` and prepared `NSManagedObject` within it's own Thread. Eventually when all NSManagedObjects are stored within the thread confined context, the `EventAPI` calls the `MainContext` via the `PersistenceManager`, which in turn will call `ContextManager` and cause the `minions` to merge / synchronize with the MainContext and finally with the `Master application context`, which finally calls the `DataStore Coordinator` to actually store the NSManagedObjects to the datastore.
 
 #### Event API
 
