@@ -93,7 +93,7 @@ class RemoteReplicator : ReplicatorProtocol {
                 //Create additional event item properties:
                 
                 //Prefix title with remote(ly) retrieved label
-                eventItem[EventAttributes.title.rawValue] = "[REMOTE] \(eventItem[EventAttributes.title.rawValue])"
+                eventItem[EventAttributes.title.rawValue] = "[REMOTE] \(eventItem[EventAttributes.title.rawValue]!)"
 
                 //Generate event UUID
                 eventItem[EventAttributes.eventId.rawValue] = NSUUID().UUIDString

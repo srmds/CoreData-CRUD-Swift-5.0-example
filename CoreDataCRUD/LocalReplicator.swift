@@ -91,7 +91,7 @@ class LocalReplicator : ReplicatorProtocol {
                 //Create additional event item properties:
                 
                 //Prefix title with local(ly) retrieved label
-                eventItem[EventAttributes.title.rawValue] = "[LOCAL] \(eventItem[EventAttributes.title.rawValue])"
+                eventItem[EventAttributes.title.rawValue] = "[LOCAL] \(eventItem[EventAttributes.title.rawValue]!)"
                 
                 //Generate event UUID
                 eventItem[EventAttributes.eventId.rawValue] = NSUUID().UUIDString
