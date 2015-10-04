@@ -84,7 +84,7 @@ class RemoteReplicator : ReplicatorProtocol {
             print("pull error: \(fetchError.localizedDescription)")
         }
 
-        var retrievedEvents = jsonResult as! [Dictionary<String,AnyObject>]
+        var retrievedEvents:[Dictionary<String,AnyObject>] = []
         
         if let eventList = jsonResult  {
             for index in 0..<eventList.count {
