@@ -23,7 +23,7 @@ class DateFormatter {
     */
     class func getDateFromString(dateString:String, dateFormat:String = "dd-MM-yyyy") -> NSDate {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.dateFormat = dateFormat
         
         return dateFormatter.dateFromString(dateString)!
     }
