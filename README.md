@@ -4,7 +4,7 @@ Swift 2.0 - A (very simple) example project that exposes the usage of CoreData t
 
 This app demonstrates Core Data and persistent storage, by reading Event data from a [JSON file /  response](https://github.com/srmds/CoreData-CRUD-Swift-2.0-example/blob/master/CoreDataCRUD/events.json), creates and stores those Events in a SQLite datastore. It is possible to do single and batch updates, deletions, retrieving and filtering on stored Events.
 
-![screenshotOverview](http://i.imgur.com/V0OUsC3.jpg)
+![screenshotOverview](http://i.imgur.com/YZxz2Km.jpg)
 
 ## Prerequisites
 
