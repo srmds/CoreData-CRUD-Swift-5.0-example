@@ -30,8 +30,6 @@ any progress on my part will be reflected in this project as updates to it.
 
 Do you have questions or want to help? Enhancements and/or fixes and suggestions are welcome! Just drop a line via gitter of create issues and/or pull requests.
 
-![](http://i.imgur.com/IItWYVW.png)
-
 ## Model
 
 A model represents the entity that can be used to store in the datastore.
@@ -72,7 +70,9 @@ The [Event API](https://github.com/srmds/CoreData-CRUD-Swift-2.0-example/blob/ma
 is the interface where a view controller directly communicates to. The Event API exposes several endpoints to a View controller to create, read, update, delete Events.
 
 Open up Xcode, and open the project, and open the `EventAPI.swift` file.
-Then click on `^ 6`, thus `control + 6`, this will open up an overview of several CRUD methods used, and click on the method of interest, to see it's implementation.
+Then click on `^6`, thus `control + 6`, this will open up an overview of several CRUD methods used, and click on the method of interest, to see it's implementation.
+
+![](http://i.imgur.com/IItWYVW.png)
 
 *No copyright infringement intended.
 
