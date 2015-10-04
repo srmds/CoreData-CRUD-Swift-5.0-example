@@ -6,6 +6,9 @@
 
 import UIKit
 
+/**
+    Batch Actions View Controller, contains the replication and batch operation actions.
+*/
 class BatchActionsViewController: UIViewController {
 
     private var eventAPI: EventAPI!

@@ -6,6 +6,9 @@
 
 import UIKit
 
+/**
+    EventItem View Controller, contains detailed view of a selected Event.
+*/
 class EventItemViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
     
     //placeholder for event endpoint
@@ -61,8 +64,8 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     // MARK Actions
     
     /**
-    Call endpoint save event handler, pass this event together with
-    populated dictionary from field values.
+        Call endpoint save event handler, pass this event together with
+        populated dictionary from field values.
     */
     @IBAction func eventSaveButtonTapped(sender: UIBarButtonItem) {
         if(selectedEventItem != nil){ //existing event
@@ -83,7 +86,7 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     }
     
     /**
-    Set all fields text to a predefined default value.
+        Set all fields text to a predefined default value.
     */
     @IBAction func clearButtonTapped(sender: AnyObject) {
         let defaultValue = "Live long and prosper 🖖🏾" // need to change to empty String ;p
@@ -97,7 +100,7 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     }
     
     /**
-    Delete event item from datastore.
+        Delete event item from datastore.
     */
     @IBAction func deleteEventButtonTapped(sender: UIButton) {
         if(selectedEventItem != nil){
@@ -123,7 +126,7 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     // MARK Utility methods
     
     /**
-    Set field values for passed on event item.
+        Set field values for passed on event item.
     */
     private func setFieldValues(){
         eventTitleLabel.text = selectedEventItem.title
@@ -136,7 +139,7 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     }
     
     /**
-    Populates all fields in to dictionary
+        Populates all fields in to dictionary
     */
     private func getFieldValues() -> Dictionary<String, NSObject> {
         

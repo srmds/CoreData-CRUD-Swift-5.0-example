@@ -13,8 +13,8 @@ class AttendeesGenerator {
     /**
     Generate (pseudo) random attendeeslist of (pseudo) random size and (pseudo) random attendees.
     
-    - See: https://en.wikipedia.org/wiki/Hardware_random_number_generator
-            for true randomness ;)
+    For true randomness see:
+    - Link: https://en.wikipedia.org/wiki/Hardware_random_number_generator
     
     - Returns: Array<String> A (pseudo) random generated attendeeslist
     */

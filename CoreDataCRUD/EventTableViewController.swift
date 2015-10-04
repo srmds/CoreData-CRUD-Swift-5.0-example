@@ -6,6 +6,9 @@
 
 import UIKit
 
+/**
+    The EventTable ViewController that retrieves and displays events.
+*/
 class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     
     private var eventList:Array<Event> = []
@@ -124,7 +127,10 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     // MARK: - Search
     
     /**
-    Calls the filter function to filter results by searchbar input
+        Calls the filter function to filter results by searchbar input
+        
+        - Parameter searchController: passed Controller to get text from
+        - Returns: Void
     */
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         filterEventListContent(searchController.searchBar.text!)
@@ -134,7 +140,9 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     // MARK - Utility functions
     
     /**
-    Create a searchbar, bind it to tableview header
+        Create a searchbar, bind it to tableview header
+    
+        - Returns: Void
     */
     private func initResultSearchController() {
         resultSearchController = UISearchController(searchResultsController: nil)
@@ -146,9 +154,10 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     /**
-    Create filter predicates to filter events on title, venue, city, data
+        Create filter predicates to filter events on title, venue, city, data
     
-    :params: term to search
+        - Parameter searchTerm: String to search.
+        - Returns: Void
     */
     private func filterEventListContent(searchTerm: String) {
         //Clean up filtered list
@@ -161,7 +170,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         predicates.append(NSPredicate(format: "\(EventAttributes.venue.rawValue) contains[c] %@", searchTerm.lowercaseString))
         predicates.append(NSPredicate(format: "\(EventAttributes.city.rawValue)  contains[c] %@", searchTerm.lowercaseString))
 
-        //TODO add datePredicate
+        //TODO add datePredicate to filter on
         
         //Create compound predicate with OR predicates
         let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
@@ -182,7 +191,9 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     /**
-    Refresh table data
+        Refresh table data
+        
+        - Returns: Void
     */
     private func refreshTableData(){
         self.eventList.removeAll(keepCapacity: false)
@@ -192,7 +203,9 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     /**
-    Retrieve image from remote or cache.
+        Retrieve image from remote or cache.
+    
+        - Returns: Void
     */
     private func getEventImage(indexPath: NSIndexPath) -> UIImage {
         //TODO

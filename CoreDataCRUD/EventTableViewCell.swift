@@ -7,7 +7,7 @@
 import UIKit
 
 /**
-Custom Event cell
+    Custom Event cell
 */
 class EventTableViewCell: UITableViewCell {
     

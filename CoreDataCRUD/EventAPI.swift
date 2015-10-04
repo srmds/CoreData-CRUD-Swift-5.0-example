@@ -39,7 +39,8 @@ class EventAPI {
         Create a single Event item, and persist it to Datastore via Worker(minion),
         that synchronizes with Main context.
     
-        - Parameters eventDetails: <Dictionary<String, AnyObject> A single Event item to be persisted to the Datastore.
+        - Parameter eventDetails: <Dictionary<String, AnyObject> A single Event item to be persisted to the Datastore.
+        - Returns: Void
     */
     func saveEvent(eventDetails: Dictionary<String, AnyObject>) {
         
@@ -75,7 +76,8 @@ class EventAPI {
         Create new Events from a given list, and persist it to Datastore via Worker(minion),
         that synchronizes with Main context.
     
-        - Parameters eventsList: Array<AnyObject> Contains events to be persisted to the Datastore.
+        - Parameter eventsList: Array<AnyObject> Contains events to be persisted to the Datastore.
+        - Returns: Void
     */
     func saveEventsList(eventsList:Array<AnyObject>){
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { () -> Void in
@@ -128,8 +130,8 @@ class EventAPI {
         Retrieves all event items stored in the persistence layer, default (overridable)
         parameters:
         
-        - Parameters sortedByDate: Bool flag to add sort rule: by Date
-        - Parameters sortAscending: Bool flag to set rule on sorting: Ascending / Descending date.
+        - Parameter sortedByDate: Bool flag to add sort rule: by Date
+        - Parameter sortAscending: Bool flag to set rule on sorting: Ascending / Descending date.
     
         - Returns: Array<Event> with found events in datastore
     */
@@ -162,9 +164,8 @@ class EventAPI {
     /**
         Retrieve an Event, found by it's stored UUID.
     
-        - Parameters eventId: UUID of Event item to retrieve
-        
-        - Returns: Found Event item or nil if event is not found
+        - Parameter eventId: UUID of Event item to retrieve
+        - Returns: Array of Found Event items, or empty Array
     */
     func getEventById(eventId: NSString) -> Array<Event> {
         var fetchedResults:Array<Event> = Array<Event>()
@@ -190,12 +191,16 @@ class EventAPI {
 
     
     /**
-    Retrieves all event items stored in the persistence layer
-    and sort it by Date within a given range of (default) current date and
-    (default)7 days from current date (is overridable, parameters are optional).
-    
-    - Returns: Array<Event> with found events in datastore based on
-               sort descriptor, in this case Date an dgiven date range.
+        Retrieves all event items stored in the persistence layer
+        and sort it by Date within a given range of (default) current date and
+        (default)7 days from current date (is overridable, parameters are optional).
+        
+        - Parameter sortByDate: Bool default and overridable is set to True
+        - Parameter sortAscending: Bool default and overridable is set to True
+        - Parameter startDate: NSDate default and overridable is set to previous year
+        - Parameter endDate: NSDate default and overridable is set to 1 week from current date
+        - Returns: Array<Event> with found events in datastore based on
+                   sort descriptor, in this case Date an dgiven date range.
     */
     
     func getEventsInDateRange(sortByDate:Bool = true, sortAscending:Bool = true,
@@ -233,10 +238,12 @@ class EventAPI {
     // MARK: Update
     
     /**
-    Update all events (batch update) attendees list.
-    
-    Since privacy is always a concern to take into account,
-    anonymise the attendees list for every event.
+        Update all events (batch update) attendees list.
+        
+        Since privacy is always a concern to take into account,
+        anonymise the attendees list for every event.
+        
+        - Returns: Void
     */
     func anonimizeAttendeesList()  {
         // Create a fetch request for the entity Person
@@ -264,9 +271,13 @@ class EventAPI {
     }
     
     /**
-    Update event item for specific keys.
+        Update event item for specific keys.
+        
+        - Parameter eventItemToUpdate: Event the passed event to update it's member fields
+        - Parameter newEventItemDetails: Dictionary<String,AnyObject> the details to be updated
+        - Returns: Void
     */
-    func updateEvent(eventItemToUpdate: Event, newEventItemDetails: Dictionary<String, NSObject>){
+    func updateEvent(eventItemToUpdate: Event, newEventItemDetails: Dictionary<String, AnyObject>){
         
         let minionManagedObjectContextWorker:NSManagedObjectContext =
         NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
@@ -291,7 +302,9 @@ class EventAPI {
     // MARK: Delete
     
     /**
-    Delete all Event items from persistence layer.
+        Delete all Event items from persistence layer.
+   
+        - Returns: Void
     */
     func deleteAllEvents() {
         let retrievedItems = getAllEvents()
@@ -305,7 +318,10 @@ class EventAPI {
     }
     
     /**
-    Delete a single Event item from persistence layer.
+        Delete a single Event item from persistence layer.
+        
+        - Parameter eventItem: Event to be deleted
+        - Returns: Void
     */
     func deleteEvent(eventItem: Event) {
         //Delete event item from persistance layer
@@ -314,7 +330,9 @@ class EventAPI {
     }
     
     /**
-    Post update notification to let the registered listeners refresh it's datasource.
+        Post update notification to let the registered listeners refresh it's datasource.
+    
+        - Returns: Void
     */
     private func postUpdateNotification(){
         NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)

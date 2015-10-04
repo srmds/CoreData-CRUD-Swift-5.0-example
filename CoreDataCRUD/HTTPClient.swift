@@ -36,7 +36,7 @@ class HTTPClient {
     /**
         Set URL Query parameters.
         
-        - Parameters params: Dictionary<String,AnyObject> parameters to set to build Query String.
+        - Parameter params: Dictionary<String,AnyObject> parameters to set to build Query String.
         - Returns: String build Query String.
     */
     func queryBuilder(params: Dictionary<String,AnyObject>) -> String {
