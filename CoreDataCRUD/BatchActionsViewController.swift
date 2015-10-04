@@ -9,15 +9,17 @@ import UIKit
 class BatchActionsViewController: UIViewController {
 
     private var eventAPI: EventAPI!
-    private var replicator: LocalReplicator!
-    
+    private var localReplicator: LocalReplicator!
+    private var remoteReplicator: RemoteReplicator!
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(animated: Bool) {
         self.eventAPI = EventAPI.sharedInstance
-        self.replicator = LocalReplicator.sharedInstance
+        self.localReplicator = LocalReplicator.sharedInstance
+        self.remoteReplicator = RemoteReplicator.sharedInstance
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,8 +37,14 @@ class BatchActionsViewController: UIViewController {
     }
 
     @IBAction func restoreEventsButtonTapped(sender: AnyObject) {
-        replicator.fetchData()
+        localReplicator.fetchData()
         NSNotificationCenter.defaultCenter().postNotificationName("setStateLoading", object: nil)
         self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    @IBAction func replicateRemoteDataButtonTapped(sender: AnyObject) {
+        remoteReplicator.fetchData()
+        NSNotificationCenter.defaultCenter().postNotificationName("setStateLoading", object: nil)
+        self.navigationController?.popToRootViewControllerAnimated(true)
+
     }
 }

@@ -16,6 +16,7 @@ import Foundation
 class RemoteReplicator : ReplicatorProtocol {
     
     private var eventAPI: EventAPI!
+    private var httpClient:HTTPClient!
     
     //Utilize Singleton pattern by instanciating Replicator only once.
     class var sharedInstance: RemoteReplicator {
@@ -28,25 +29,40 @@ class RemoteReplicator : ReplicatorProtocol {
     
     init() {
         self.eventAPI = EventAPI.sharedInstance
+        self.httpClient = HTTPClient()
     }
     
     /**
-        Pull event data from a given resource, posts a notification to update
+        Pull event data from a given Remote resource, posts a notification to update
         datasource of a given/listening ViewController/UITableView.
         
         - Returns: Void
     */
     func fetchData() {
-        //Read JSON file in seperate thread
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-            // read JSON file, parse JSON data
-            self.processData(nil)
-            
-            // Post notification to update datasource of a given ViewController/UITableView
-            dispatch_async(dispatch_get_main_queue()) {
-                NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
+        
+        //Remote resource
+        let request:NSURLRequest = NSURLRequest(URL: NSURL(string: "https://www.dropbox.com/s/mq5o0f4fiyl0hwc/remote_events.json?dl=1")!)
+        
+        httpClient.doGet(request) { (data, error, httpStatusCode) -> Void in
+            if httpStatusCode!.rawValue != HTTPStatusCode.OK.rawValue {
+                print("\(httpStatusCode!.rawValue) \(httpStatusCode)")
+                if data == nil {
+                    print("data is nil")
+                }
             }
-        })
+            else {
+                //Read JSON response in seperate thread
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                    // read JSON file, parse JSON data
+                    self.processData(data!)
+                    
+                    // Post notification to update datasource of a given ViewController/UITableView
+                    dispatch_async(dispatch_get_main_queue()) {
+                        NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
+                    }
+                })
+            }
+        }
     }
     
     /**
@@ -57,8 +73,18 @@ class RemoteReplicator : ReplicatorProtocol {
         - Parameter jsonResult: The JSON content to be parsed and stored to Datastore.
         - Returns: Void
     */
-    func processData(jsonResult:AnyObject?) {
-        var retrievedEvents = [Dictionary<String,AnyObject>]()
+    func processData(jsonResponse:AnyObject?) {
+        
+        let jsonData:NSData = jsonResponse as! NSData
+        var jsonResult:AnyObject!
+        
+        do {
+            jsonResult = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers)
+        } catch let fetchError as NSError {
+            print("pull error: \(fetchError.localizedDescription)")
+        }
+
+        var retrievedEvents = jsonResult as! [Dictionary<String,AnyObject>]
         
         if let eventList = jsonResult  {
             for index in 0..<eventList.count {
@@ -66,6 +92,9 @@ class RemoteReplicator : ReplicatorProtocol {
                 
                 //Create additional event item properties:
                 
+                //Prefix title with remote(ly) retrieved label
+                eventItem[EventAttributes.title.rawValue] = "[REMOTE] \(eventItem[EventAttributes.title.rawValue])"
+
                 //Generate event UUID
                 eventItem[EventAttributes.eventId.rawValue] = NSUUID().UUIDString
                 

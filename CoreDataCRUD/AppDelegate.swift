@@ -14,14 +14,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     private var eventAPI: EventAPI!
-    private var replicator: LocalReplicator!
+    private var localReplicator: LocalReplicator!
     private let runCountNamespace = "runCount"
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
         self.enableDebugMode(true)
         self.eventAPI = EventAPI.sharedInstance
-        self.replicator = LocalReplicator.sharedInstance
+        self.localReplicator = LocalReplicator.sharedInstance
         self.handleRunCount()
 
         return true
@@ -63,8 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Store a finger to runCount, not that complex, nothing to worry about.
         if var runCount:Int = defaults.integerForKey(runCountNamespace) {
             if(runCount == 0){
-                print("First time app run, therefore importing event data...")
-                replicator.fetchData()
+                print("First time app run, therefore importing event data from local source...")
+                localReplicator.fetchData()
             }
             
             runCount += 1
