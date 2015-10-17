@@ -41,21 +41,17 @@ class HTTPClient {
     */
     func queryBuilder(params: Dictionary<String,AnyObject>) -> String {
         
-        var queryString:String = ""
-        var counter = 0
-        
+        var queryString:String = "?"
+
+        // Note that the append method utilized here, is a custom String extension,
+        // see utils/StringExtension.swift.
         for (key, value) in params {
-            if counter != 0 {
-                if params.count > 1{
-                    queryString.append("&")
-                }
-            } else {
-                queryString.append("?")
+            
+            if params.count > 1 {
+                queryString.append("&")
             }
             
-   
             queryString.append("\(key)=\(value)")
-            ++counter
         }
         
         return queryString
