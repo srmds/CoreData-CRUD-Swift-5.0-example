@@ -47,11 +47,12 @@ class HTTPClient {
         // see utils/StringExtension.swift.
         for (key, value) in params {
             
+            queryString.append("\(key)=\(value)")
+
             if params.count > 1 {
                 queryString.append("&")
             }
             
-            queryString.append("\(key)=\(value)")
         }
         
         return queryString
