@@ -43,6 +43,8 @@ class HTTPClient {
         
         var queryString:String = "?"
 
+        // Note that the append method utilized here, is a custom String extension,
+        // see utils/StringExtension.swift.
         for (key, value) in params {
             
             if params.count > 1 {
