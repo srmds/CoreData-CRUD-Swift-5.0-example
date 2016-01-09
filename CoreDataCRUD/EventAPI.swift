@@ -313,7 +313,8 @@ class EventAPI {
         for item in retrievedItems {
             self.mainContextInstance.deleteObject(item)
         }
-        
+        self.persistenceManager.mergeWithMainContext()
+
         self.postUpdateNotification()
     }
     
