@@ -55,7 +55,7 @@ class HTTPClient {
                 queryString.append("&")
             }
             
-            ++counter
+            counter += 1
         }
         
         return queryString
