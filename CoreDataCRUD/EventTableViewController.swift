@@ -29,8 +29,8 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     
     override func viewWillAppear(animated: Bool) {
         //Register for notifications
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateEventTableData:", name: "updateEventTableData", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setStateLoading:", name: "setStateLoading", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventTableViewController.updateEventTableData(_:)), name: "updateEventTableData", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventTableViewController.setStateLoading(_:)), name: "setStateLoading", object: nil)
         
         self.eventAPI = EventAPI.sharedInstance
         self.eventList = self.eventAPI.getEventsInDateRange()

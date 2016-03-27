@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		C32607AF1B321D6E00B588FC /* LocalReplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32607AE1B321D6E00B588FC /* LocalReplicator.swift */; };
-		C32C107E1BBDB05D00973151 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32C107D1BBDB05D00973151 /* DateFormatter.swift */; settings = {ASSET_TAGS = (); }; };
-		C32C10801BBDB11E00973151 /* AttendeesGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32C107F1BBDB11E00973151 /* AttendeesGenerator.swift */; settings = {ASSET_TAGS = (); }; };
-		C32DC5411BC08E3E001D5784 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5401BC08E3E001D5784 /* HTTPClient.swift */; settings = {ASSET_TAGS = (); }; };
-		C32DC5431BC08E4B001D5784 /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5421BC08E4B001D5784 /* HTTPStatusCode.swift */; settings = {ASSET_TAGS = (); }; };
-		C32DC5471BC091A4001D5784 /* RemoteReplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5461BC091A4001D5784 /* RemoteReplicator.swift */; settings = {ASSET_TAGS = (); }; };
-		C32DC5491BC091BE001D5784 /* ReplicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5481BC091BE001D5784 /* ReplicatorProtocol.swift */; settings = {ASSET_TAGS = (); }; };
+		C32C107E1BBDB05D00973151 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32C107D1BBDB05D00973151 /* DateFormatter.swift */; };
+		C32C10801BBDB11E00973151 /* AttendeesGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32C107F1BBDB11E00973151 /* AttendeesGenerator.swift */; };
+		C32DC5411BC08E3E001D5784 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5401BC08E3E001D5784 /* HTTPClient.swift */; };
+		C32DC5431BC08E4B001D5784 /* HTTPStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5421BC08E4B001D5784 /* HTTPStatusCode.swift */; };
+		C32DC5471BC091A4001D5784 /* RemoteReplicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5461BC091A4001D5784 /* RemoteReplicator.swift */; };
+		C32DC5491BC091BE001D5784 /* ReplicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32DC5481BC091BE001D5784 /* ReplicatorProtocol.swift */; };
 		C33A6D891B3339E200B4B274 /* events.json in Resources */ = {isa = PBXBuildFile; fileRef = C33A6D881B3339E200B4B274 /* events.json */; };
-		C33D90561BBF3D0B008BA22B /* EntityTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33D90551BBF3D0B008BA22B /* EntityTypes.swift */; settings = {ASSET_TAGS = (); }; };
+		C33D90561BBF3D0B008BA22B /* EntityTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33D90551BBF3D0B008BA22B /* EntityTypes.swift */; };
 		C359AA741B30E51E005A3203 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AA731B30E51E005A3203 /* AppDelegate.swift */; };
 		C359AA791B30E51E005A3203 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C359AA771B30E51E005A3203 /* Main.storyboard */; };
 		C359AA7C1B30E51E005A3203 /* CoreDataCRUD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C359AA7A1B30E51E005A3203 /* CoreDataCRUD.xcdatamodeld */; };
@@ -29,10 +29,10 @@
 		C359AAB61B30E5C3005A3203 /* EventItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAB51B30E5C3005A3203 /* EventItemViewController.swift */; };
 		C359AACA1B30E91D005A3203 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAC81B30E91D005A3203 /* Event.swift */; };
 		C367B90D1B314BEF00EC211A /* BatchActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C367B90C1B314BEF00EC211A /* BatchActionsViewController.swift */; };
-		C3CB0A8B1BBC88E9006A1911 /* ContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB0A8A1BBC88E9006A1911 /* ContextManager.swift */; settings = {ASSET_TAGS = (); }; };
-		C3CB0A8D1BBC88F7006A1911 /* DatastoreCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB0A8C1BBC88F7006A1911 /* DatastoreCoordinator.swift */; settings = {ASSET_TAGS = (); }; };
-		C3CB0A8F1BBC89C7006A1911 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB0A8E1BBC89C7006A1911 /* PersistenceManager.swift */; settings = {ASSET_TAGS = (); }; };
-		C3CB0A931BBC8C71006A1911 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB0A921BBC8C71006A1911 /* StringExtension.swift */; settings = {ASSET_TAGS = (); }; };
+		C3CB0A8B1BBC88E9006A1911 /* ContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB0A8A1BBC88E9006A1911 /* ContextManager.swift */; };
+		C3CB0A8D1BBC88F7006A1911 /* DatastoreCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB0A8C1BBC88F7006A1911 /* DatastoreCoordinator.swift */; };
+		C3CB0A8F1BBC89C7006A1911 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB0A8E1BBC89C7006A1911 /* PersistenceManager.swift */; };
+		C3CB0A931BBC8C71006A1911 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB0A921BBC8C71006A1911 /* StringExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -499,7 +499,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -538,7 +538,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -553,6 +553,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = CoreDataCRUD/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.CoreDataCRUD";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -567,6 +568,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = CoreDataCRUD/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.CoreDataCRUD";
 				PRODUCT_NAME = "$(TARGET_NAME)";
