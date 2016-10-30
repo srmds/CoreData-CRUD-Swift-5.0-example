@@ -15,8 +15,8 @@ import Foundation
 
 class RemoteReplicator : ReplicatorProtocol {
     
-    private var eventAPI: EventAPI!
-    private var httpClient:HTTPClient!
+    fileprivate var eventAPI: EventAPI!
+    fileprivate var httpClient:HTTPClient!
     
     //Utilize Singleton pattern by instanciating Replicator only once.
     class var sharedInstance: RemoteReplicator {
@@ -41,10 +41,10 @@ class RemoteReplicator : ReplicatorProtocol {
     func fetchData() {
         
         //Remote resource
-        let request:NSURLRequest = NSURLRequest(URL: NSURL(string: "https://www.dropbox.com/s/mq5o0f4fiyl0hwc/remote_events.json?dl=1")!)
+        let request:URLRequest = URLRequest(url: URL(string: "https://www.dropbox.com/s/mq5o0f4fiyl0hwc/remote_events.json?dl=1")!)
         
         httpClient.doGet(request) { (data, error, httpStatusCode) -> Void in
-            if httpStatusCode!.rawValue != HTTPStatusCode.OK.rawValue {
+            if httpStatusCode!.rawValue != HTTPStatusCode.ok.rawValue {
                 print("\(httpStatusCode!.rawValue) \(httpStatusCode)")
                 if data == nil {
                     print("data is nil")
@@ -52,15 +52,15 @@ class RemoteReplicator : ReplicatorProtocol {
             }
             else {
                 //Read JSON response in seperate thread
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                DispatchQueue.global().async {
                     // read JSON file, parse JSON data
-                    self.processData(data!)
+                    self.processData(data! as AnyObject?)
                     
                     // Post notification to update datasource of a given ViewController/UITableView
-                    dispatch_async(dispatch_get_main_queue()) {
-                        NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateEventTableData"), object: nil)
                     }
-                })
+                }
             }
         }
     }
@@ -73,13 +73,14 @@ class RemoteReplicator : ReplicatorProtocol {
         - Parameter jsonResult: The JSON content to be parsed and stored to Datastore.
         - Returns: Void
     */
-    func processData(jsonResponse:AnyObject?) {
+    func processData(_ jsonResponse:AnyObject?) {
         
-        let jsonData:NSData = jsonResponse as! NSData
+        let jsonData:Data = jsonResponse as! Data
         var jsonResult:AnyObject!
         
         do {
-            jsonResult = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers)
+            jsonResult = try JSONSerialization.data(withJSONObject: jsonData, options: []) as AnyObject!
+
         } catch let fetchError as NSError {
             print("pull error: \(fetchError.localizedDescription)")
         }
@@ -94,18 +95,19 @@ class RemoteReplicator : ReplicatorProtocol {
                 
                 //Prefix title with remote(ly) retrieved label
                 eventItem[EventAttributes.title.rawValue] = "[REMOTE] \(eventItem[EventAttributes.title.rawValue]!)"
-
+ as AnyObject?
+                
                 //Generate event UUID
-                eventItem[EventAttributes.eventId.rawValue] = NSUUID().UUIDString
+                eventItem[EventAttributes.eventId.rawValue] = UUID().uuidString as AnyObject?
                 
                 //Generate semi random generated attendeeslist
-                eventItem[EventAttributes.attendees.rawValue] = AttendeesGenerator.getSemiRandomGeneratedAttendeesList()
+                eventItem[EventAttributes.attendees.rawValue] = AttendeesGenerator.getSemiRandomGeneratedAttendeesList() as AnyObject?
                 
                 retrievedEvents.append(eventItem)
             }
         }
         
         //Call Event API to persist Event list to Datastore
-        eventAPI.saveEventsList(retrievedEvents)
+        eventAPI.saveEventsList(retrievedEvents as Array<AnyObject>)
     }
 }

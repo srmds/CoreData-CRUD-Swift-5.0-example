@@ -12,7 +12,7 @@ import Foundation
 */
 class LocalReplicator : ReplicatorProtocol {
     
-    private var eventAPI: EventAPI!
+    fileprivate var eventAPI: EventAPI!
 
     //Utilize Singleton pattern by instanciating Replicator only once.
     class var sharedInstance: LocalReplicator {
@@ -35,15 +35,16 @@ class LocalReplicator : ReplicatorProtocol {
     */
     func fetchData() {
         //Read JSON file in seperate thread
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+        DispatchQueue.global(qos: .background).async {
             // read JSON file, parse JSON data
-            self.processData(self.readFile())
+            self.processData(self.readFile() as AnyObject?)
             
             // Post notification to update datasource of a given ViewController/UITableView
-            dispatch_async(dispatch_get_main_queue()) {
-                NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "updateEventTableData"), object: nil)
             }
-        })
+
+        }
     }
     
     /**
@@ -51,18 +52,19 @@ class LocalReplicator : ReplicatorProtocol {
     
         - Returns: AnyObject The contents of the JSON file.
     */
-    func readFile() -> AnyObject {
+    func readFile() -> Any {
         let dataSourceFilename:String = "events"
         let dataSourceFilenameExtension:String = "json"
-        let filemgr = NSFileManager.defaultManager()
-        let currPath = NSBundle.mainBundle().pathForResource(dataSourceFilename, ofType: dataSourceFilenameExtension)
-        var jsonResult:AnyObject! = nil
+        let filemgr = FileManager.default
+        let currPath = Bundle.main.path(forResource: dataSourceFilename, ofType: dataSourceFilenameExtension)
+        var jsonResult:Any! = nil
         
         do {
-            let jsonData = NSData(contentsOfFile: currPath!)!
+            let jsonData:Any = try! Data(contentsOf: URL(fileURLWithPath: currPath!))
             
-            if filemgr.fileExistsAtPath(currPath!) {
-                jsonResult = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers)
+            if filemgr.fileExists(atPath: currPath!) {
+                
+                jsonResult = try JSONSerialization.data(withJSONObject: jsonData, options: [])
             } else {
                 print("\(dataSourceFilename).\(dataSourceFilenameExtension)) does not exist, therefore cannot read JSON data.")
             }
@@ -81,7 +83,7 @@ class LocalReplicator : ReplicatorProtocol {
         - Parameter jsonResult: The JSON content to be parsed and stored to Datastore.
         - Returns: Void
     */
-    func processData(jsonResult:AnyObject?) {
+    func processData(_ jsonResult:AnyObject?) {
         var retrievedEvents = [Dictionary<String,AnyObject>]()
         
         if let eventList = jsonResult  {
@@ -91,19 +93,19 @@ class LocalReplicator : ReplicatorProtocol {
                 //Create additional event item properties:
                 
                 //Prefix title with local(ly) retrieved label
-                eventItem[EventAttributes.title.rawValue] = "[LOCAL] \(eventItem[EventAttributes.title.rawValue]!)"
+                eventItem[EventAttributes.title.rawValue] = "[LOCAL] \(eventItem[EventAttributes.title.rawValue]!)"  as AnyObject?
                 
                 //Generate event UUID
-                eventItem[EventAttributes.eventId.rawValue] = NSUUID().UUIDString
+                eventItem[EventAttributes.eventId.rawValue] = UUID().uuidString as AnyObject?
                 
                 //Generate semi random generated attendeeslist
-                eventItem[EventAttributes.attendees.rawValue] = AttendeesGenerator.getSemiRandomGeneratedAttendeesList()
+                eventItem[EventAttributes.attendees.rawValue] = AttendeesGenerator.getSemiRandomGeneratedAttendeesList() as AnyObject?
 
                 retrievedEvents.append(eventItem)
             }
         }
         
         //Call Event API to persist Event list to Datastore
-        eventAPI.saveEventsList(retrievedEvents)
+        eventAPI.saveEventsList(retrievedEvents as Array<AnyObject>)
     }
 }

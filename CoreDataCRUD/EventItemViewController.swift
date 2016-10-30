@@ -12,7 +12,7 @@ import UIKit
 class EventItemViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
     
     //placeholder for event endpoint
-    private var eventAPI: EventAPI!
+    fileprivate var eventAPI: EventAPI!
 
     //Reference to selected event to pass to details view
     var selectedEventItem:Event!
@@ -28,21 +28,21 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     @IBOutlet weak var segmentController: UISegmentedControl!
     @IBOutlet weak var attendeesTableView: UITableView!
     
-    private let idNamespace  = EventAttributes.eventId.rawValue
-    private let titleNamespace  = EventAttributes.title.rawValue
-    private let dateNamespace  = EventAttributes.date.rawValue
-    private let venueNamespace  = EventAttributes.venue.rawValue
-    private let cityNamespace  = EventAttributes.city.rawValue
-    private let countryNamespace  = EventAttributes.country.rawValue
-    private let fbURLNamespace  = EventAttributes.fb_url.rawValue
-    private let ticketURLNamespace  = EventAttributes.ticket_url.rawValue
-    private let attendeesNamespace  = EventAttributes.attendees.rawValue
+    fileprivate let idNamespace  = EventAttributes.eventId.rawValue
+    fileprivate let titleNamespace  = EventAttributes.title.rawValue
+    fileprivate let dateNamespace  = EventAttributes.date.rawValue
+    fileprivate let venueNamespace  = EventAttributes.venue.rawValue
+    fileprivate let cityNamespace  = EventAttributes.city.rawValue
+    fileprivate let countryNamespace  = EventAttributes.country.rawValue
+    fileprivate let fbURLNamespace  = EventAttributes.fb_url.rawValue
+    fileprivate let ticketURLNamespace  = EventAttributes.ticket_url.rawValue
+    fileprivate let attendeesNamespace  = EventAttributes.attendees.rawValue
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.setup()
     }
     
@@ -50,7 +50,7 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
         super.didReceiveMemoryWarning()
     }
     
-    private func setup() {
+    fileprivate func setup() {
         self.eventAPI = EventAPI.sharedInstance
         
         attendeesTableView.delegate = self
@@ -67,7 +67,7 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
         Call endpoint save event handler, pass this event together with
         populated dictionary from field values.
     */
-    @IBAction func eventSaveButtonTapped(sender: UIBarButtonItem) {
+    @IBAction func eventSaveButtonTapped(_ sender: UIBarButtonItem) {
         if(selectedEventItem != nil){ //existing event
             eventAPI.updateEvent(selectedEventItem, newEventItemDetails:getFieldValues())
         } else { //new event
@@ -75,20 +75,20 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
             var newDetails = getFieldValues()
             
             //Generate UUID, add it to dictionary
-            newDetails[idNamespace] =  NSUUID().UUIDString
+            newDetails[idNamespace] =  UUID().uuidString as NSObject?
             
             //Set initial list to empty list
-            newDetails[attendeesNamespace] = []
+            newDetails[attendeesNamespace] =  [AnyObject]() as NSObject?
             
             eventAPI.saveEvent(newDetails)
         }
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     /**
         Set all fields text to a predefined default value.
     */
-    @IBAction func clearButtonTapped(sender: AnyObject) {
+    @IBAction func clearButtonTapped(_ sender: AnyObject) {
         let defaultValue = "Live long and prosper 🖖🏾" // need to change to empty String ;p
         eventTitleLabel.text = defaultValue
         eventVenueLabel.text = defaultValue
@@ -96,30 +96,30 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
         eventCountryLabel.text = defaultValue
         eventFBURLLabel.text = defaultValue
         eventTicketURL.text = defaultValue
-        eventDatePicker.date = NSDate()
+        eventDatePicker.date = Date()
     }
     
     /**
         Delete event item from datastore.
     */
-    @IBAction func deleteEventButtonTapped(sender: UIButton) {
+    @IBAction func deleteEventButtonTapped(_ sender: UIButton) {
         if(selectedEventItem != nil){
             eventAPI.deleteEvent(selectedEventItem)
         }
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     // MARK: Textfield delegates
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        scrollViewContainer.setContentOffset(CGPointZero, animated: true)
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        scrollViewContainer.setContentOffset(CGPoint.zero, animated: true)
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         scrollViewContainer.setContentOffset(CGPoint(x: scrollViewContainer.frame.origin.x, y: textField.frame.origin.y - 8), animated: true)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
     }
     
@@ -128,40 +128,40 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     /**
         Set field values for passed on event item.
     */
-    private func setFieldValues(){
+    fileprivate func setFieldValues(){
         eventTitleLabel.text = selectedEventItem.title
         eventVenueLabel.text = selectedEventItem.venue
         eventCityLabel.text = selectedEventItem.city
         eventCountryLabel.text = selectedEventItem.country
         eventFBURLLabel.text = selectedEventItem.fb_url as? String
         eventTicketURL.text = selectedEventItem.ticket_url as? String
-        eventDatePicker.date = selectedEventItem.date
+        eventDatePicker.date = selectedEventItem.date as Date
     }
     
     /**
         Populates all fields in to dictionary
     */
-    private func getFieldValues() -> Dictionary<String, NSObject> {
+    fileprivate func getFieldValues() -> Dictionary<String, NSObject> {
         
         var fieldDetails = [String: NSObject]()
-        fieldDetails[titleNamespace] = eventTitleLabel.text
-        fieldDetails[dateNamespace] = NSDate()
-        fieldDetails[venueNamespace] = eventVenueLabel.text
-        fieldDetails[cityNamespace] = eventCityLabel.text
-        fieldDetails[countryNamespace] = eventCountryLabel.text
-        fieldDetails[fbURLNamespace] = eventFBURLLabel.text
-        fieldDetails[ticketURLNamespace] = eventTicketURL.text
-        fieldDetails[dateNamespace] = eventDatePicker.date
+        fieldDetails[titleNamespace] = eventTitleLabel.text as NSObject?
+        fieldDetails[dateNamespace] = Date() as NSObject?
+        fieldDetails[venueNamespace] = eventVenueLabel.text as NSObject?
+        fieldDetails[cityNamespace] = eventCityLabel.text as NSObject?
+        fieldDetails[countryNamespace] = eventCountryLabel.text as NSObject?
+        fieldDetails[fbURLNamespace] = eventFBURLLabel.text as NSObject?
+        fieldDetails[ticketURLNamespace] = eventTicketURL.text as NSObject?
+        fieldDetails[dateNamespace] = eventDatePicker.date as NSObject?
         
         return fieldDetails
     }
     
     
-    @IBAction func switchSegmentTapped(sender: AnyObject) {
+    @IBAction func switchSegmentTapped(_ sender: AnyObject) {
         
         if segmentController.selectedSegmentIndex == 0 {
-            attendeesTableView.hidden = true
-            scrollViewContainer.hidden = false
+            attendeesTableView.isHidden = true
+            scrollViewContainer.isHidden = false
             
             if selectedEventItem != nil {
                 self.title = "Edit event"
@@ -171,8 +171,8 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
         }
         
         if segmentController.selectedSegmentIndex == 1 {
-            scrollViewContainer.hidden = true
-            attendeesTableView.hidden = false
+            scrollViewContainer.isHidden = true
+            attendeesTableView.isHidden = false
             
             if selectedEventItem != nil {
                 self.title = String(format: "Attendees (%i)", selectedEventItem.attendees.count)
@@ -184,7 +184,7 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     
     // MARK: Attendees TableView Delegates
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count:Int
     
         if selectedEventItem != nil {
@@ -196,10 +196,10 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
         return count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let attendeesTableCellIdentifier = "attendeesItemCell"
-        let attendeeCell = tableView.dequeueReusableCellWithIdentifier(attendeesTableCellIdentifier, forIndexPath: indexPath)
-        attendeeCell.textLabel!.text = selectedEventItem.attendees[indexPath.row] as? String
+        let attendeeCell = tableView.dequeueReusableCell(withIdentifier: attendeesTableCellIdentifier, for: indexPath)
+       attendeeCell.textLabel!.text = "ad"; //selectedEventItem.getAttendees[indexPath.row] as? String
         
         return attendeeCell
     }

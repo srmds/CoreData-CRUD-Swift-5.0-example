@@ -46,7 +46,7 @@ class Event: NSManagedObject {
     @NSManaged var country: String
     @NSManaged var venue: String
     @NSManaged var eventId: String
-    @NSManaged var date: NSDate
+    @NSManaged var date: Date
     @NSManaged var fb_url: AnyObject
     @NSManaged var ticket_url: AnyObject
     @NSManaged var title: String

@@ -11,15 +11,16 @@ import UIKit
 */
 class BatchActionsViewController: UIViewController {
 
-    private var eventAPI: EventAPI!
-    private var localReplicator: LocalReplicator!
-    private var remoteReplicator: RemoteReplicator!
+    @IBOutlet weak var dfdfgd: UIButton!
+    fileprivate var eventAPI: EventAPI!
+    fileprivate var localReplicator: LocalReplicator!
+    fileprivate var remoteReplicator: RemoteReplicator!
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.eventAPI = EventAPI.sharedInstance
         self.localReplicator = LocalReplicator.sharedInstance
         self.remoteReplicator = RemoteReplicator.sharedInstance
@@ -29,25 +30,25 @@ class BatchActionsViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func anonimizeListButtonTapped(sender: AnyObject) {
+    @IBAction func anonimizeListButtonTapped(_ sender: AnyObject) {
         eventAPI.anonimizeAttendeesList()
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
-    @IBAction func deleteAllEventsButtonTapped(sender: AnyObject) {
+    @IBAction func deleteAllEventsButtonTapped(_ sender: AnyObject) {
         eventAPI.deleteAllEvents()       
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.popToRootViewController(animated: true)
     }
 
-    @IBAction func restoreEventsButtonTapped(sender: AnyObject) {
+    @IBAction func restoreEventsButtonTapped(_ sender: AnyObject) {
         localReplicator.fetchData()
-        NSNotificationCenter.defaultCenter().postNotificationName("setStateLoading", object: nil)
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "setStateLoading"), object: nil)
+        self.navigationController?.popToRootViewController(animated: true)
     }
-    @IBAction func replicateRemoteDataButtonTapped(sender: AnyObject) {
+    @IBAction func replicateRemoteDataButtonTapped(_ sender: AnyObject) {
         remoteReplicator.fetchData()
-        NSNotificationCenter.defaultCenter().postNotificationName("setStateLoading", object: nil)
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "setStateLoading"), object: nil)
+        self.navigationController?.popToRootViewController(animated: true)
 
     }
 }

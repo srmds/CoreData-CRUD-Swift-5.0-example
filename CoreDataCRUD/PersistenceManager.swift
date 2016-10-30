@@ -14,8 +14,8 @@ import CoreData
 */
 class PersistenceManager: NSObject {
     
-    private var appDelegate:AppDelegate
-    private var mainContextInstance:NSManagedObjectContext
+    fileprivate var appDelegate:AppDelegate
+    fileprivate var mainContextInstance:NSManagedObjectContext
     
     //Utilize Singleton pattern by instanciating PersistenceManager only once.
     class var sharedInstance: PersistenceManager {
@@ -47,7 +47,7 @@ class PersistenceManager: NSObject {
         - Parameter workerContext: NSManagedObjectContext The Minion worker Context that has to be saved.
         - Returns: Void
     */
-    func saveWorkerContext(workerContext: NSManagedObjectContext){
+    func saveWorkerContext(_ workerContext: NSManagedObjectContext){
         //Persist new Event to datastore (via Managed Object Context Layer).
         do {
             try workerContext.save()

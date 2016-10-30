@@ -11,14 +11,14 @@ import UIKit
 */
 class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     
-    private var eventList:Array<Event> = []
-    private var filteredEventList:Array<Event> = []
-    private var selectedEventItem : Event!
-    private var resultSearchController:UISearchController!
-    private var eventAPI: EventAPI!
-    private let eventTableCellIdentifier = "eventItemCell"
-    private let showEventItemSegueIdentifier = "showEventItemSegue"
-    private let editEventItemSegueIdentifier = "editEventItemSegue"
+    fileprivate var eventList:Array<Event> = []
+    fileprivate var filteredEventList:Array<Event> = []
+    fileprivate var selectedEventItem : Event!
+    fileprivate var resultSearchController:UISearchController!
+    fileprivate var eventAPI: EventAPI!
+    fileprivate let eventTableCellIdentifier = "eventItemCell"
+    fileprivate let showEventItemSegueIdentifier = "showEventItemSegue"
+    fileprivate let editEventItemSegueIdentifier = "editEventItemSegue"
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -27,10 +27,10 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         initResultSearchController()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         //Register for notifications
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventTableViewController.updateEventTableData(_:)), name: "updateEventTableData", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EventTableViewController.setStateLoading(_:)), name: "setStateLoading", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(EventTableViewController.updateEventTableData(_:)), name: NSNotification.Name(rawValue: "updateEventTableData"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(EventTableViewController.setStateLoading(_:)), name: NSNotification.Name(rawValue: "setStateLoading"), object: nil)
         
         self.eventAPI = EventAPI.sharedInstance
         self.eventList = self.eventAPI.getEventsInDateRange()
@@ -43,24 +43,24 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     
     // MARK: - Table view data source
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if resultSearchController.active {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if resultSearchController.isActive {
             return self.filteredEventList.count
         }
         
         return eventList.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let eventCell =
-        tableView.dequeueReusableCellWithIdentifier(eventTableCellIdentifier, forIndexPath: indexPath) as! EventTableViewCell
+        tableView.dequeueReusableCell(withIdentifier: eventTableCellIdentifier, for: indexPath) as! EventTableViewCell
         
         let eventItem:Event!
         
-        if resultSearchController.active {
-            eventItem = filteredEventList[indexPath.row]
+        if resultSearchController.isActive {
+            eventItem = filteredEventList[(indexPath as NSIndexPath).row]
         } else {
-            eventItem = eventList[indexPath.row]
+            eventItem = eventList[(indexPath as NSIndexPath).row]
         }
         
         eventCell.eventDateLabel.text = DateFormatter.getStringFromDate(eventItem.date, dateFormat: "dd-MM\nyyyy")
@@ -73,10 +73,10 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     
     // MARK: - Navigation
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         
-        let destination = segue.destinationViewController as? EventItemViewController
+        let destination = segue.destination as? EventItemViewController
         
         if segue.identifier == showEventItemSegueIdentifier {
             /*
@@ -91,14 +91,14 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
             
             let selectedEventItem: Event!
             
-            if resultSearchController.active {
-                selectedEventItem = filteredEventList[self.tableView.indexPathForSelectedRow!.row] as Event
-                resultSearchController.active = false
+            if resultSearchController.isActive {
+                selectedEventItem = filteredEventList[(self.tableView.indexPathForSelectedRow! as NSIndexPath).row] as Event
+                resultSearchController.isActive = false
             } else {
-                selectedEventItem = eventList[self.tableView.indexPathForSelectedRow!.row] as Event
+                selectedEventItem = eventList[(self.tableView.indexPathForSelectedRow! as NSIndexPath).row] as Event
             }
             
-            destination!.selectedEventItem = eventAPI.getEventById(selectedEventItem.eventId)[0] //option 2
+            destination!.selectedEventItem = eventAPI.getEventById(selectedEventItem.eventId as NSString)[0] //option 2
             
             destination!.title = "Edit event"
         } else if segue.identifier == editEventItemSegueIdentifier {
@@ -108,18 +108,18 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     
     // MARK: - Table edit mode
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
             //Delete item from datastore
-            eventAPI.deleteEvent(eventList[indexPath.row])
+            eventAPI.deleteEvent(eventList[(indexPath as NSIndexPath).row])
             //Delete item from tableview datascource
-            eventList.removeAtIndex(indexPath.row)
+            eventList.remove(at: (indexPath as NSIndexPath).row)
             // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            tableView.deleteRows(at: [indexPath], with: .fade)
             self.title = String(format: "Upcoming events (%i)",eventList.count)
         }
     }
@@ -132,7 +132,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         - Parameter searchController: passed Controller to get text from
         - Returns: Void
     */
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         filterEventListContent(searchController.searchBar.text!)
         refreshTableData()
     }
@@ -144,7 +144,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     
         - Returns: Void
     */
-    private func initResultSearchController() {
+    fileprivate func initResultSearchController() {
         resultSearchController = UISearchController(searchResultsController: nil)
         resultSearchController.searchResultsUpdater = self
         resultSearchController.dimsBackgroundDuringPresentation = false
@@ -159,16 +159,16 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         - Parameter searchTerm: String to search.
         - Returns: Void
     */
-    private func filterEventListContent(searchTerm: String) {
+    fileprivate func filterEventListContent(_ searchTerm: String) {
         //Clean up filtered list
-        filteredEventList.removeAll(keepCapacity: false)
+        filteredEventList.removeAll(keepingCapacity: false)
         
         //Create a collection of predicates,
         //search items by: title OR venue OR city
         var predicates = [NSPredicate]()
-        predicates.append(NSPredicate(format: "\(EventAttributes.title.rawValue) contains[c] %@", searchTerm.lowercaseString))
-        predicates.append(NSPredicate(format: "\(EventAttributes.venue.rawValue) contains[c] %@", searchTerm.lowercaseString))
-        predicates.append(NSPredicate(format: "\(EventAttributes.city.rawValue)  contains[c] %@", searchTerm.lowercaseString))
+        predicates.append(NSPredicate(format: "\(EventAttributes.title.rawValue) contains[c] %@", searchTerm.lowercased()))
+        predicates.append(NSPredicate(format: "\(EventAttributes.venue.rawValue) contains[c] %@", searchTerm.lowercased()))
+        predicates.append(NSPredicate(format: "\(EventAttributes.city.rawValue)  contains[c] %@", searchTerm.lowercased()))
 
         //TODO add datePredicate to filter on
         
@@ -176,17 +176,17 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         
         //Filter results with compound predicate by closing over the inline variable
-        filteredEventList =  eventList.filter {compoundPredicate.evaluateWithObject($0)}
+        filteredEventList =  eventList.filter {compoundPredicate.evaluate(with: $0)}
     }
     
-    func updateEventTableData(notification: NSNotification) {
+    func updateEventTableData(_ notification: Notification) {
         refreshTableData()
-        self.activityIndicator.hidden = true
+        self.activityIndicator.isHidden = true
         self.activityIndicator.stopAnimating()
     }
     
-    func setStateLoading(notification: NSNotification) {
-        self.activityIndicator.hidden = false
+    func setStateLoading(_ notification: Notification) {
+        self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
     }
     
@@ -195,8 +195,8 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         
         - Returns: Void
     */
-    private func refreshTableData(){
-        self.eventList.removeAll(keepCapacity: false)
+    fileprivate func refreshTableData(){
+        self.eventList.removeAll(keepingCapacity: false)
         self.eventList = self.eventAPI.getEventsInDateRange()
         self.tableView.reloadData()
         self.title = String(format: "Upcoming events (%i)",self.eventList.count)
@@ -207,7 +207,7 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
     
         - Returns: Void
     */
-    private func getEventImage(indexPath: NSIndexPath) -> UIImage {
+    fileprivate func getEventImage(_ indexPath: IndexPath) -> UIImage {
         //TODO
         
         //Check if local image is cached, if not use GCD to download and display it.

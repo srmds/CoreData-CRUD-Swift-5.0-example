@@ -13,11 +13,11 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    private var eventAPI: EventAPI!
-    private var localReplicator: LocalReplicator!
-    private let runCountNamespace = "runCount"
+    fileprivate var eventAPI: EventAPI!
+    fileprivate var localReplicator: LocalReplicator!
+    fileprivate let runCountNamespace = "runCount"
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         self.enableDebugMode(true)
         self.eventAPI = EventAPI.sharedInstance
@@ -27,18 +27,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {}
+    func applicationWillResignActive(_ application: UIApplication) {}
 
-    func applicationDidEnterBackground(application: UIApplication) {}
+    func applicationDidEnterBackground(_ application: UIApplication) {}
 
-    func applicationWillEnterForeground(application: UIApplication) {}
+    func applicationWillEnterForeground(_ application: UIApplication) {}
 
-    func applicationDidBecomeActive(application: UIApplication) {}
+    func applicationDidBecomeActive(_ application: UIApplication) {}
 
-    func applicationWillTerminate(application: UIApplication) {}
+    func applicationWillTerminate(_ application: UIApplication) {}
 
     func sharedInstance() -> AppDelegate {
-        return UIApplication.sharedApplication().delegate as! AppDelegate
+        return UIApplication.shared.delegate as! AppDelegate
     }
     
     lazy var datastoreCoordinator: DatastoreCoordinator = {
@@ -49,26 +49,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return ContextManager()
     }()
     
-    private func enableDebugMode(shouldLog:Bool) {
+    fileprivate func enableDebugMode(_ shouldLog:Bool) {
         if shouldLog {
             //Debug - location of sqlite db file
-            let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+            let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
             print("Debug - location of sqlite db file:\n\(paths[0])\n")
         }
     }
     
-    private func handleRunCount(){
-        let defaults = NSUserDefaults.standardUserDefaults()
+    fileprivate func handleRunCount(){
+        let defaults = UserDefaults.standard
         
         //Store a finger to runCount, not that complex, nothing to worry about.
-        if var runCount:Int = defaults.integerForKey(runCountNamespace) {
+        if var runCount:Int = defaults.integer(forKey: runCountNamespace) {
             if(runCount == 0){
                 print("First time app run, therefore importing event data from local source...")
                 localReplicator.fetchData()
             }
             
             runCount += 1
-            defaults.setObject(runCount, forKey:runCountNamespace)
+            defaults.set(runCount, forKey:runCountNamespace)
             print("current runCount: \(runCount)")
         }
     }

@@ -15,7 +15,7 @@ extension String {
         - Parameter str: The string to append to current String
         - Returns: Void
     */
-    mutating func append(str: String) {
+    mutating func append(_ str: String) {
         self = self + str
     }
     
@@ -25,8 +25,8 @@ extension String {
         - Returns: String the URLEncoded String
     */
     mutating func URLEncodedString() -> String? {
-        let customAllowedSet =  NSCharacterSet.URLQueryAllowedCharacterSet()
-        let escapedString = self.stringByAddingPercentEncodingWithAllowedCharacters(customAllowedSet)
+        let customAllowedSet =  CharacterSet.urlQueryAllowed
+        let escapedString = self.addingPercentEncoding(withAllowedCharacters: customAllowedSet)
         
         return escapedString
     }

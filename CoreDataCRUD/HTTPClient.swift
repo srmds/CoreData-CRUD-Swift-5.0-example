@@ -13,15 +13,15 @@ import Foundation
 */
 class HTTPClient {
     
-    private var urlSession:NSURLSession!
-    private var sessionConfiguration:NSURLSessionConfiguration!
+    fileprivate var urlSession:URLSession!
+    fileprivate var sessionConfiguration:URLSessionConfiguration!
     
     /**
         Configure NSURL Session.
     */
     init(){
-        sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        urlSession = NSURLSession(configuration: sessionConfiguration)
+        sessionConfiguration = URLSessionConfiguration.default
+        urlSession = URLSession(configuration: sessionConfiguration)
     }
     
     /**
@@ -29,8 +29,8 @@ class HTTPClient {
         
         - Parameter headers: Dictionary<String, AnyObject> headers to set on the HTTP request.
     */
-    func setAdditionalHeaders(headers: Dictionary<String, AnyObject>){
-        sessionConfiguration.HTTPAdditionalHeaders = headers
+    func setAdditionalHeaders(_ headers: Dictionary<String, AnyObject>){
+        sessionConfiguration.httpAdditionalHeaders = headers
     }
     
     /**
@@ -39,7 +39,7 @@ class HTTPClient {
         - Parameter params: Dictionary<String,AnyObject> parameters to set to build Query String.
         - Returns: String build Query String.
     */
-    func queryBuilder(params: Dictionary<String,AnyObject>) -> String {
+    func queryBuilder(_ params: Dictionary<String,AnyObject>) -> String {
         
         var queryString:String = "?"
         var counter = 0
@@ -68,26 +68,26 @@ class HTTPClient {
         - Parameter callback: The callback handler that will contain the response and http status code.
         - Returns: Void
     */
-    func doGet(request: NSURLRequest!, callback:(data: NSData?, error: NSError?, httpStatusCode: HTTPStatusCode?) -> Void) {
-        let task = urlSession.dataTaskWithRequest(request){
+    func doGet(_ request: URLRequest!, callback:@escaping (_ data: Data?, _ error: NSError?, _ httpStatusCode: HTTPStatusCode?) -> Void) {
+        let task = urlSession.dataTask(with: request, completionHandler: {
             (data, response, error) -> Void in
             if let responseError = error {
-                callback(data: nil, error: responseError,httpStatusCode: nil)
+                callback(nil, responseError as NSError?,nil)
             }
-            else if let httpResponse = response as? NSHTTPURLResponse {
+            else if let httpResponse = response as? HTTPURLResponse {
                 
                 let httpStatus = self.getHTTPStatusCode(httpResponse)
                 print("HTTP Status Code: \(httpStatus.rawValue) \(httpStatus)")
                 
                 if httpStatus.rawValue != 200 {
                     let statusError = NSError(domain:"com.io-pandacode.CoreDataCRUD", code:httpStatus.rawValue, userInfo:[NSLocalizedDescriptionKey : "HTTP status code: \(httpStatus.rawValue) - \(httpStatus)"])
-                    callback(data: nil, error: statusError, httpStatusCode: httpStatus)
+                    callback(nil, statusError, httpStatus)
                 } else {
-                    callback(data: data, error: nil, httpStatusCode: httpStatus)
+                    callback(data, nil, httpStatus)
                 }
                 
             }
-        }
+        })
         
         task.resume()
     }
@@ -98,7 +98,7 @@ class HTTPClient {
         - Parameter httpURLResponse: the reponse that will contain the response code.
         - Returns: HTTPStatusCode status code of HTTP response.
     */
-    func getHTTPStatusCode(httpURLResponse:NSHTTPURLResponse) -> HTTPStatusCode {
+    func getHTTPStatusCode(_ httpURLResponse:HTTPURLResponse) -> HTTPStatusCode {
         var httpStatusCode:HTTPStatusCode!
         
         for status in HTTPStatusCode.getAll {

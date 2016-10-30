@@ -24,7 +24,7 @@ class ContextManager: NSObject {
     
     // Create master context reference, with PrivateQueueConcurrency Type.
     lazy var masterManagedObjectContextInstance: NSManagedObjectContext = {
-        var masterManagedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        var masterManagedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         masterManagedObjectContext.persistentStoreCoordinator = self.datastore.persistentStoreCoordinator
         
         return masterManagedObjectContext
@@ -32,7 +32,7 @@ class ContextManager: NSObject {
     
     //Create main context reference, with MainQueueuConcurrency Type.
     lazy var mainManagedObjectContextInstance: NSManagedObjectContext = {
-        var mainManagedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        var mainManagedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         mainManagedObjectContext.persistentStoreCoordinator = self.datastore.persistentStoreCoordinator
         
         return mainManagedObjectContext
@@ -66,8 +66,8 @@ class ContextManager: NSObject {
     
         - Returns: Void
     */
-    private func mergeChangesFromMainContext() {
-        dispatch_async(dispatch_get_main_queue(),{
+    fileprivate func mergeChangesFromMainContext() {
+        DispatchQueue.main.async(execute: {
             do {
                 try self.mainManagedObjectContextInstance.save()
             }  catch let mocSaveError as NSError {
