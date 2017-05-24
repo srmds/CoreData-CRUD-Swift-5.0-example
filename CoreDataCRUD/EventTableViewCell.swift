@@ -1,7 +1,8 @@
 //
 //  EventTableViewCell.swift
 //  CoreDataCRUD
-//  Written by Steven R.
+//
+//  Copyright © 2016 Jongens van Techniek. All rights reserved.
 //
 
 import UIKit

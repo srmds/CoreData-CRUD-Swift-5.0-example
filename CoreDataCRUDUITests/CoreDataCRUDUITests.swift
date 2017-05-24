@@ -2,8 +2,7 @@
 //  CoreDataCRUDUITests.swift
 //  CoreDataCRUDUITests
 //
-//  Created by c0d3r on 17/06/15.
-//  Copyright © 2015 io pandacode. All rights reserved.
+//  Copyright © 2016 Jongens van Techniek. All rights reserved.
 //
 
 import Foundation
