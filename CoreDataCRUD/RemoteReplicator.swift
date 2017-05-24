@@ -2,8 +2,7 @@
 //  RemoteReplicator.swift
 //  CoreDataCRUD
 //
-//  Created by c0d3r on 04/10/15.
-//  Copyright © 2015 io pandacode. All rights reserved.
+//  Copyright © 2016 Jongens van Techniek. All rights reserved.
 //
 
 import Foundation
@@ -13,25 +12,25 @@ import Foundation
     (via EventAPI) to actually create Core Data Entities and persist to SQLite Datastore.
 */
 
-class RemoteReplicator : ReplicatorProtocol {
-    
-    private var eventAPI: EventAPI!
-    private var httpClient:HTTPClient!
-    
+class RemoteReplicator: ReplicatorProtocol {
+
+    fileprivate var eventAPI: EventAPI!
+    fileprivate var httpClient: HTTPClient!
+
     //Utilize Singleton pattern by instanciating Replicator only once.
     class var sharedInstance: RemoteReplicator {
         struct Singleton {
             static let instance = RemoteReplicator()
         }
-        
+
         return Singleton.instance
     }
-    
+
     init() {
         self.eventAPI = EventAPI.sharedInstance
         self.httpClient = HTTPClient()
     }
-    
+
     /**
         Pull event data from a given Remote resource, posts a notification to update
         datasource of a given/listening ViewController/UITableView.
@@ -39,32 +38,31 @@ class RemoteReplicator : ReplicatorProtocol {
         - Returns: Void
     */
     func fetchData() {
-        
+
         //Remote resource
-        let request:NSURLRequest = NSURLRequest(URL: NSURL(string: "https://www.dropbox.com/s/mq5o0f4fiyl0hwc/remote_events.json?dl=1")!)
-        
-        httpClient.doGet(request) { (data, error, httpStatusCode) -> Void in
-            if httpStatusCode!.rawValue != HTTPStatusCode.OK.rawValue {
-                print("\(httpStatusCode!.rawValue) \(httpStatusCode)")
+        let request: URLRequest = URLRequest(url: URL(string: "https://www.dropbox.com/s/mq5o0f4fiyl0hwc/remote_events.json?dl=1")!)
+
+        httpClient.doGet(request) { (data, _, httpStatusCode) -> Void in
+            if httpStatusCode!.rawValue != HTTPStatusCode.ok.rawValue {
+                print("\(httpStatusCode!.rawValue) \(String(describing: httpStatusCode))")
                 if data == nil {
                     print("data is nil")
                 }
-            }
-            else {
+            } else {
                 //Read JSON response in seperate thread
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                DispatchQueue.global().async {
                     // read JSON file, parse JSON data
-                    self.processData(data!)
-                    
+                    self.processData(data! as AnyObject?)
+
                     // Post notification to update datasource of a given ViewController/UITableView
-                    dispatch_async(dispatch_get_main_queue()) {
-                        NSNotificationCenter.defaultCenter().postNotificationName("updateEventTableData", object: nil)
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: "updateEventTableData"), object: nil)
                     }
-                })
+                }
             }
         }
     }
-    
+
     /**
         Process data from a given resource Event objects and assigning
         (additional) property values and calling the Event API to persist Events
@@ -73,39 +71,39 @@ class RemoteReplicator : ReplicatorProtocol {
         - Parameter jsonResult: The JSON content to be parsed and stored to Datastore.
         - Returns: Void
     */
-    func processData(jsonResponse:AnyObject?) {
-        
-        let jsonData:NSData = jsonResponse as! NSData
-        var jsonResult:AnyObject!
-        
+    internal func processData(_ jsonResponse: AnyObject?) {
+
+        let jsonData: Data = jsonResponse as! Data
+        var jsonResult: AnyObject!
+
         do {
-            jsonResult = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers)
+            jsonResult = try JSONSerialization.jsonObject(with: jsonData) as AnyObject!
         } catch let fetchError as NSError {
             print("pull error: \(fetchError.localizedDescription)")
         }
 
-        var retrievedEvents:[Dictionary<String,AnyObject>] = []
-        
-        if let eventList = jsonResult  {
+        var retrievedEvents: [Dictionary<String, AnyObject>] = []
+
+        if let eventList = jsonResult {
             for index in 0..<eventList.count {
-                var eventItem:Dictionary<String, AnyObject> = eventList[index] as! Dictionary<String, AnyObject>
-                
+                var eventItem: Dictionary<String, AnyObject> = eventList[index] as! Dictionary<String, AnyObject>
+
                 //Create additional event item properties:
-                
+
                 //Prefix title with remote(ly) retrieved label
-                eventItem[EventAttributes.title.rawValue] = "[REMOTE] \(eventItem[EventAttributes.title.rawValue]!)"
+                eventItem[EventAttributes.title.rawValue] = "[REMOTE] \(eventItem[EventAttributes.title.rawValue]!)" as AnyObject?
 
                 //Generate event UUID
-                eventItem[EventAttributes.eventId.rawValue] = NSUUID().UUIDString
-                
+                eventItem[EventAttributes.eventId.rawValue] = UUID().uuidString as AnyObject?
+
                 //Generate semi random generated attendeeslist
-                eventItem[EventAttributes.attendees.rawValue] = AttendeesGenerator.getSemiRandomGeneratedAttendeesList()
-                
+                eventItem[EventAttributes.attendees.rawValue] = AttendeesGenerator.getSemiRandomGeneratedAttendeesList() as AnyObject?
+
                 retrievedEvents.append(eventItem)
             }
         }
-        
+
         //Call Event API to persist Event list to Datastore
-        eventAPI.saveEventsList(retrievedEvents)
+        eventAPI.saveEventsList(retrievedEvents as Array<AnyObject>)
     }
 }

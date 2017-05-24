@@ -29,6 +29,8 @@
 		C359AAB61B30E5C3005A3203 /* EventItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAB51B30E5C3005A3203 /* EventItemViewController.swift */; };
 		C359AACA1B30E91D005A3203 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359AAC81B30E91D005A3203 /* Event.swift */; };
 		C367B90D1B314BEF00EC211A /* BatchActionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C367B90C1B314BEF00EC211A /* BatchActionsViewController.swift */; };
+		C39F95461D3631EC007BADC0 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39F95441D3631EC007BADC0 /* Location+CoreDataProperties.swift */; };
+		C39F95471D3631EC007BADC0 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39F95451D3631EC007BADC0 /* Location.swift */; };
 		C3CB0A8B1BBC88E9006A1911 /* ContextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB0A8A1BBC88E9006A1911 /* ContextManager.swift */; };
 		C3CB0A8D1BBC88F7006A1911 /* DatastoreCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB0A8C1BBC88F7006A1911 /* DatastoreCoordinator.swift */; };
 		C3CB0A8F1BBC89C7006A1911 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CB0A8E1BBC89C7006A1911 /* PersistenceManager.swift */; };
@@ -81,6 +83,8 @@
 		C359AAB51B30E5C3005A3203 /* EventItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventItemViewController.swift; sourceTree = "<group>"; };
 		C359AAC81B30E91D005A3203 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		C367B90C1B314BEF00EC211A /* BatchActionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchActionsViewController.swift; sourceTree = "<group>"; };
+		C39F95441D3631EC007BADC0 /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C39F95451D3631EC007BADC0 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		C3CB0A8A1BBC88E9006A1911 /* ContextManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextManager.swift; sourceTree = "<group>"; };
 		C3CB0A8C1BBC88F7006A1911 /* DatastoreCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatastoreCoordinator.swift; sourceTree = "<group>"; };
 		C3CB0A8E1BBC89C7006A1911 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
@@ -193,6 +197,8 @@
 		C359AAA61B30E53C005A3203 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C39F95441D3631EC007BADC0 /* Location+CoreDataProperties.swift */,
+				C39F95451D3631EC007BADC0 /* Location.swift */,
 				C359AAC81B30E91D005A3203 /* Event.swift */,
 				C33D90551BBF3D0B008BA22B /* EntityTypes.swift */,
 			);
@@ -319,19 +325,22 @@
 				KnownAssetTags = (
 					New,
 				);
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "io pandacode";
 				TargetAttributes = {
 					C359AA6F1B30E51E005A3203 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = XHKG545Y8P;
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 					};
 					C359AA861B30E51E005A3203 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = C359AA6F1B30E51E005A3203;
 					};
 					C359AA911B30E51E005A3203 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = C359AA6F1B30E51E005A3203;
 					};
 				};
@@ -397,9 +406,11 @@
 				C3CB0A8D1BBC88F7006A1911 /* DatastoreCoordinator.swift in Sources */,
 				C32DC5431BC08E4B001D5784 /* HTTPStatusCode.swift in Sources */,
 				C359AAB41B30E5B4005A3203 /* EventTableViewController.swift in Sources */,
+				C39F95461D3631EC007BADC0 /* Location+CoreDataProperties.swift in Sources */,
 				C32C107E1BBDB05D00973151 /* DateFormatter.swift in Sources */,
 				C359AA7C1B30E51E005A3203 /* CoreDataCRUD.xcdatamodeld in Sources */,
 				C32DC5491BC091BE001D5784 /* ReplicatorProtocol.swift in Sources */,
+				C39F95471D3631EC007BADC0 /* Location.swift in Sources */,
 				C32C10801BBDB11E00973151 /* AttendeesGenerator.swift in Sources */,
 				C367B90D1B314BEF00EC211A /* BatchActionsViewController.swift in Sources */,
 				C3CB0A8F1BBC89C7006A1911 /* PersistenceManager.swift in Sources */,
@@ -476,11 +487,13 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -521,11 +534,13 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -541,6 +556,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -550,14 +566,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CoreDataCRUD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.CoreDataCRUD";
+				PRODUCT_BUNDLE_IDENTIFIER = nl.jongensvantechniek.CoreDataCRUD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -565,14 +586,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CoreDataCRUD/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.CoreDataCRUD";
+				PRODUCT_BUNDLE_IDENTIFIER = nl.jongensvantechniek.CoreDataCRUD;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -584,6 +609,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.CoreDataCRUDTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoreDataCRUD.app/CoreDataCRUD";
 			};
 			name = Debug;
@@ -596,6 +622,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.CoreDataCRUDTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CoreDataCRUD.app/CoreDataCRUD";
 			};
 			name = Release;
@@ -607,6 +634,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.CoreDataCRUDUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = CoreDataCRUD;
 				USES_XCTRUNNER = YES;
 			};
@@ -619,6 +647,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.io-pandacode.CoreDataCRUDUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = CoreDataCRUD;
 				USES_XCTRUNNER = YES;
 			};

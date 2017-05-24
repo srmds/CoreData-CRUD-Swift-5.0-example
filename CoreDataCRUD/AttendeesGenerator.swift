@@ -2,8 +2,7 @@
 //  AttendeesGenerator.swift
 //  CoreDataCRUD
 //
-//  Created by c0d3r on 01/10/15.
-//  Copyright © 2015 io pandacode. All rights reserved.
+//  Copyright © 2016 Jongens van Techniek. All rights reserved.
 //
 
 import Foundation
@@ -35,18 +34,18 @@ class AttendeesGenerator {
             "Bar",
             "Tweety"
         ]
-        
+
         var attendeesList = [String]()
-        let listSize:Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: optionalAttendees.count)))
-        
+        let listSize: Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: optionalAttendees.count)))
+
         for _ in 0...listSize {
-            let itemIndex:Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: listSize)))
-            let item:String = optionalAttendees[itemIndex]
+            let itemIndex: Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: listSize)))
+            let item: String = optionalAttendees[itemIndex]
             if !attendeesList.contains(item) {
                 attendeesList.append(item)
             }
         }
-        
+
         return attendeesList
     }
 
