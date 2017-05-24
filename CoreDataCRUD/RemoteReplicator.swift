@@ -45,12 +45,11 @@ class RemoteReplicator : ReplicatorProtocol {
         
         httpClient.doGet(request) { (data, error, httpStatusCode) -> Void in
             if httpStatusCode!.rawValue != HTTPStatusCode.ok.rawValue {
-                print("\(httpStatusCode!.rawValue) \(httpStatusCode)")
+                print("\(httpStatusCode!.rawValue) \(String(describing: httpStatusCode))")
                 if data == nil {
                     print("data is nil")
                 }
-            }
-            else {
+            } else {
                 //Read JSON response in seperate thread
                 DispatchQueue.global().async {
                     // read JSON file, parse JSON data
@@ -73,14 +72,13 @@ class RemoteReplicator : ReplicatorProtocol {
         - Parameter jsonResult: The JSON content to be parsed and stored to Datastore.
         - Returns: Void
     */
-    func processData(_ jsonResponse:AnyObject?) {
+    internal func processData(_ jsonResponse:AnyObject?) {
         
         let jsonData:Data = jsonResponse as! Data
         var jsonResult:AnyObject!
         
         do {
-            jsonResult = try JSONSerialization.data(withJSONObject: jsonData, options: []) as AnyObject!
-
+            jsonResult = try JSONSerialization.jsonObject(with: jsonData) as AnyObject!
         } catch let fetchError as NSError {
             print("pull error: \(fetchError.localizedDescription)")
         }
@@ -94,8 +92,7 @@ class RemoteReplicator : ReplicatorProtocol {
                 //Create additional event item properties:
                 
                 //Prefix title with remote(ly) retrieved label
-                eventItem[EventAttributes.title.rawValue] = "[REMOTE] \(eventItem[EventAttributes.title.rawValue]!)"
- as AnyObject?
+                eventItem[EventAttributes.title.rawValue] = "[REMOTE] \(eventItem[EventAttributes.title.rawValue]!)" as AnyObject?
                 
                 //Generate event UUID
                 eventItem[EventAttributes.eventId.rawValue] = UUID().uuidString as AnyObject?

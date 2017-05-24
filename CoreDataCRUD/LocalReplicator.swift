@@ -60,11 +60,10 @@ class LocalReplicator : ReplicatorProtocol {
         var jsonResult:Any! = nil
         
         do {
-            let jsonData:Any = try! Data(contentsOf: URL(fileURLWithPath: currPath!))
+            let jsonData:Data = try! Data(contentsOf: URL(fileURLWithPath: currPath!))
             
             if filemgr.fileExists(atPath: currPath!) {
-                
-                jsonResult = try JSONSerialization.data(withJSONObject: jsonData, options: [])
+                jsonResult = try JSONSerialization.jsonObject(with: jsonData) as Any!
             } else {
                 print("\(dataSourceFilename).\(dataSourceFilenameExtension)) does not exist, therefore cannot read JSON data.")
             }
