@@ -61,16 +61,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaults = UserDefaults.standard
         
         //Store a finger to runCount, not that complex, nothing to worry about.
-        if var runCount:Int = defaults.integer(forKey: runCountNamespace) {
-            if(runCount == 0){
-                print("First time app run, therefore importing event data from local source...")
-                localReplicator.fetchData()
-            }
-            
-            runCount += 1
-            defaults.set(runCount, forKey:runCountNamespace)
-            print("current runCount: \(runCount)")
+        var runCount:Int = defaults.integer(forKey: runCountNamespace)
+        
+        if(runCount == 0){
+            print("First time app run, therefore importing event data from local source...")
+            localReplicator.fetchData()
         }
+            
+        runCount += 1
+        defaults.set(runCount, forKey:runCountNamespace)
+        print("current runCount: \(runCount)")
     }
 
 }
