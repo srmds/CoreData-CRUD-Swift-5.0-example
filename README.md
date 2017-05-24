@@ -23,11 +23,7 @@ iOS9.3 & iOS10
 
 ## The objective
 
-<<<<<<< HEAD
 for this project is to learn to:
-=======
-for this project is to:
->>>>>>> master
 
 - use Core Data to create Entities and to persist Entities to a SQLite datastore.
 
