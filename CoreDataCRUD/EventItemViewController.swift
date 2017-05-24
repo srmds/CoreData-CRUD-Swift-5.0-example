@@ -199,7 +199,7 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let attendeesTableCellIdentifier = "attendeesItemCell"
         let attendeeCell = tableView.dequeueReusableCell(withIdentifier: attendeesTableCellIdentifier, for: indexPath)
-       attendeeCell.textLabel!.text = "ad"; //selectedEventItem.getAttendees[indexPath.row] as? String
+        attendeeCell.textLabel!.text = selectedEventItem.attendees[indexPath.row] as? String
 
         return attendeeCell
     }
