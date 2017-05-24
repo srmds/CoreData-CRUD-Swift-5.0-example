@@ -73,7 +73,7 @@ More info on [concurrency](https://developer.apple.com/library/prerelease/ios/do
 
 #### Event API
 
-The [Event API](https://github.com/srmds/CoreData-CRUD-Swift-3.1-example/blob/master/CoreDataCRUD/EventAPI.swift)
+The [Event API](https://github.com/jongensvantechniek/CoreData-CRUD-Swift-3.1-example/blob/master/CoreDataCRUD/EventAPI.swift)
 is the interface where a view controller directly communicates to. The Event API exposes several endpoints to a View controller to create, read, update, delete Events.
 
 Open up Xcode, and open the project, and open the `EventAPI.swift` file.
