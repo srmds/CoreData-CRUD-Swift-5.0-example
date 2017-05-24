@@ -5,10 +5,10 @@ import CoreData
     Event API contains the endpoints to Create/Read/Update/Delete Events.
 */
 class EventAPI {
-    
+
     fileprivate let persistenceManager: PersistenceManager!
-    fileprivate var mainContextInstance:NSManagedObjectContext!
-    
+    fileprivate var mainContextInstance: NSManagedObjectContext!
+
     fileprivate let idNamespace = EventAttributes.eventId.rawValue
     fileprivate let fbURLNamespace = EventAttributes.fb_url.rawValue
     fileprivate let ticketURLNamespace = EventAttributes.ticket_url.rawValue
@@ -24,17 +24,17 @@ class EventAPI {
         struct Singleton {
             static let instance = EventAPI()
         }
-        
+
         return Singleton.instance
     }
-    
+
     init() {
         self.persistenceManager = PersistenceManager.sharedInstance
         self.mainContextInstance = persistenceManager.getMainContextInstance()
     }
-    
+
     // MARK: Create
-    
+
     /**
         Create a single Event item, and persist it to Datastore via Worker(minion),
         that synchronizes with Main context.
@@ -43,16 +43,16 @@ class EventAPI {
         - Returns: Void
     */
     func saveEvent(_ eventDetails: Dictionary<String, AnyObject>) {
-        
+
         //Minion Context worker with Private Concurrency type.
-        let minionManagedObjectContextWorker:NSManagedObjectContext =
+        let minionManagedObjectContextWorker: NSManagedObjectContext =
         NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
         minionManagedObjectContextWorker.parent = self.mainContextInstance
-        
+
         //Create new Object of Event entity
         let eventItem = NSEntityDescription.insertNewObject(forEntityName: EntityTypes.Event.rawValue,
             into: minionManagedObjectContextWorker) as! Event
-        
+
         //Assign field values
         for (key, value) in eventDetails {
             for attribute in EventAttributes.getAll {
@@ -61,17 +61,17 @@ class EventAPI {
                 }
             }
         }
-        
+
         //Save current work on Minion workers
         self.persistenceManager.saveWorkerContext(minionManagedObjectContextWorker)
-        
+
         //Save and merge changes from Minion workers with Main context
         self.persistenceManager.mergeWithMainContext()
-        
+
         //Post notification to update datasource of a given Viewcontroller/UITableView
         self.postUpdateNotification()
     }
-    
+
     /**
         Create new Events from a given list, and persist it to Datastore via Worker(minion),
         that synchronizes with Main context.
@@ -79,27 +79,27 @@ class EventAPI {
         - Parameter eventsList: Array<AnyObject> Contains events to be persisted to the Datastore.
         - Returns: Void
     */
-    func saveEventsList(_ eventsList:Array<AnyObject>){
+    func saveEventsList(_ eventsList: Array<AnyObject>) {
         DispatchQueue.global().async {
-            
+
             //Minion Context worker with Private Concurrency type.
-            let minionManagedObjectContextWorker:NSManagedObjectContext =
+            let minionManagedObjectContextWorker: NSManagedObjectContext =
                 NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
             minionManagedObjectContextWorker.parent = self.mainContextInstance
-            
+
             //Create eventEntity, process member field values
             for index in 0..<eventsList.count {
-                var eventItem:Dictionary<String, NSObject> = eventsList[index] as! Dictionary<String, NSObject>
-                
+                var eventItem: Dictionary<String, NSObject> = eventsList[index] as! Dictionary<String, NSObject>
+
                 //Check that an Event to be stored has a date, title and city.
                 if eventItem[self.dateNamespace] as! String != ""
                     && eventItem[self.titleNamespace] as! String != ""
-                    && eventItem[self.cityNamespace] as! String != ""  {
-                    
+                    && eventItem[self.cityNamespace] as! String != "" {
+
                     //Create new Object of Event entity
                     let item = NSEntityDescription.insertNewObject(forEntityName: EntityTypes.Event.rawValue,
                                                                    into: minionManagedObjectContextWorker) as! Event
-                    
+
                     //Add member field values
                     item.setValue(DateFormatter.getDateFromString(eventItem[self.dateNamespace] as! String), forKey: self.dateNamespace)
                     item.setValue(eventItem[self.titleNamespace], forKey: self.titleNamespace)
@@ -110,24 +110,24 @@ class EventAPI {
                     item.setValue(eventItem[self.fbURLNamespace], forKey: self.fbURLNamespace)
                     item.setValue(eventItem[self.ticketURLNamespace], forKey: self.ticketURLNamespace)
                     item.setValue(eventItem[self.attendeesNamespace], forKey: self.attendeesNamespace)
-                    
+
                     //Save current work on Minion workers
                     self.persistenceManager.saveWorkerContext(minionManagedObjectContextWorker)
                 }
             }
-            
+
             //Save and merge changes from Minion workers with Main context
             self.persistenceManager.mergeWithMainContext()
-            
+
             //Post notification to update datasource of a given Viewcontroller/UITableView
             DispatchQueue.main.async {
                 self.postUpdateNotification()
             }
         }
     }
-    
+
     // MARK: Read
-    
+
     /**
         Retrieves all event items stored in the persistence layer, default (overridable)
         parameters:
@@ -137,12 +137,12 @@ class EventAPI {
     
         - Returns: Array<Event> with found events in datastore
     */
-    func getAllEvents(_ sortedByDate:Bool = true, sortAscending:Bool = true) -> Array<Event> {
-        var fetchedResults:Array<Event> = Array<Event>()
+    func getAllEvents(_ sortedByDate: Bool = true, sortAscending: Bool = true) -> Array<Event> {
+        var fetchedResults: Array<Event> = Array<Event>()
 
         // Create request on Event entity
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: EntityTypes.Event.rawValue)
-        
+
         //Create sort descriptor to sort retrieved Events by Date, ascending
         if sortedByDate {
             let sortDescriptor = NSSortDescriptor(key: dateNamespace,
@@ -150,7 +150,7 @@ class EventAPI {
             let sortDescriptors = [sortDescriptor]
             fetchRequest.sortDescriptors = sortDescriptors
         }
-        
+
         //Execute Fetch request
         do {
             fetchedResults = try  self.mainContextInstance.fetch(fetchRequest) as! [Event]
@@ -158,11 +158,10 @@ class EventAPI {
             print("retrieveById error: \(fetchError.localizedDescription)")
             fetchedResults = Array<Event>()
         }
-        
+
         return fetchedResults
     }
-    
-    
+
     /**
         Retrieve an Event, found by it's stored UUID.
     
@@ -170,8 +169,8 @@ class EventAPI {
         - Returns: Array of Found Event items, or empty Array
     */
     func getEventById(_ eventId: NSString) -> Array<Event> {
-        var fetchedResults:Array<Event> = Array<Event>()
-        
+        var fetchedResults: Array<Event> = Array<Event>()
+
         // Create request on Event entity
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: EntityTypes.Event.rawValue)
 
@@ -179,7 +178,7 @@ class EventAPI {
         let findByIdPredicate =
         NSPredicate(format: "\(idNamespace) = %@", eventId)
         fetchRequest.predicate = findByIdPredicate
-        
+
         //Execute Fetch request
         do {
             fetchedResults = try self.mainContextInstance.fetch(fetchRequest) as! [Event]
@@ -187,11 +186,10 @@ class EventAPI {
             print("retrieveById error: \(fetchError.localizedDescription)")
             fetchedResults = Array<Event>()
         }
-        
+
         return fetchedResults
     }
 
-    
     /**
         Retrieves all event items stored in the persistence layer
         and sort it by Date within a given range of (default) current date and
@@ -204,28 +202,28 @@ class EventAPI {
         - Returns: Array<Event> with found events in datastore based on
                    sort descriptor, in this case Date an dgiven date range.
     */
-    
-    func getEventsInDateRange(_ sortByDate:Bool = true, sortAscending:Bool = true,
+
+    func getEventsInDateRange(_ sortByDate: Bool = true, sortAscending: Bool = true,
         startDate: Date = Date(timeInterval:-189216000, since:Date()),
         endDate: Date = (Calendar.current as NSCalendar)
             .date(
-                byAdding: .day,value: 7,
+                byAdding: .day, value: 7,
                 to: Date(),
                 options: NSCalendar.Options(rawValue: 0))!) -> Array<Event> {
-               
+
         // Create request on Event entity
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: EntityTypes.Event.rawValue)
-        
+
         //Create sort descriptor to sort retrieved Events by Date, ascending
         let sortDescriptor = NSSortDescriptor(key: EventAttributes.date.rawValue,
             ascending: sortAscending)
         let sortDescriptors = [sortDescriptor]
         fetchRequest.sortDescriptors = sortDescriptors
-        
+
         //Create predicate to filter by start- / end date
         let findByDateRangePredicate = NSPredicate(format: "(\(dateNamespace) >= %@) AND (\(dateNamespace) <= %@)", startDate as CVarArg, endDate as CVarArg)
         fetchRequest.predicate = findByDateRangePredicate
-        
+
         //Execute Fetch request
         var fetchedResults = Array<Event>()
         do {
@@ -233,12 +231,12 @@ class EventAPI {
         } catch let fetchError as NSError {
             print("retrieveItemsSortedByDateInDateRange error: \(fetchError.localizedDescription)")
         }
-        
+
         return fetchedResults
     }
-    
+
     // MARK: Update
-    
+
     /**
         Update all events (batch update) attendees list.
         
@@ -247,23 +245,23 @@ class EventAPI {
         
         - Returns: Void
     */
-    func anonimizeAttendeesList()  {
+    func anonimizeAttendeesList() {
         // Create a fetch request for the entity Person
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: EntityTypes.Event.rawValue)
-        
+
         // Execute the fetch request
         var fetchedResults = Array<Event>()
         do {
             fetchedResults = try self.mainContextInstance.fetch(fetchRequest) as! [Event]
-            
+
             for event in fetchedResults {
                 //get count of current attendees list
                 let currCount = (event as Event).attendees.count
-                
+
                 //Create an anonymised list of attendees
                 //with count of current attendees list
                 let anonymisedList = [String](repeating: "Anonymous", count: currCount!)
-                
+
                 //Update current attendees list with anonymised list, shallow copy.
                 (event as Event).attendees = anonymisedList as AnyObject
             }
@@ -271,7 +269,7 @@ class EventAPI {
             print("updateAllEventAttendees error: \(updateError.localizedDescription)")
         }
     }
-    
+
     /**
         Update event item for specific keys.
         
@@ -279,9 +277,9 @@ class EventAPI {
         - Parameter newEventItemDetails: Dictionary<String,AnyObject> the details to be updated
         - Returns: Void
     */
-    func updateEvent(_ eventItemToUpdate: Event, newEventItemDetails: Dictionary<String, AnyObject>){
-        
-        let minionManagedObjectContextWorker:NSManagedObjectContext =
+    func updateEvent(_ eventItemToUpdate: Event, newEventItemDetails: Dictionary<String, AnyObject>) {
+
+        let minionManagedObjectContextWorker: NSManagedObjectContext =
         NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
         minionManagedObjectContextWorker.parent = self.mainContextInstance
 
@@ -293,16 +291,16 @@ class EventAPI {
                 }
             }
         }
-        
+
         //Persist new Event to datastore (via Managed Object Context Layer).
         self.persistenceManager.saveWorkerContext(minionManagedObjectContextWorker)
         self.persistenceManager.mergeWithMainContext()
-        
+
         self.postUpdateNotification()
     }
-    
+
     // MARK: Delete
-    
+
     /**
         Delete all Event items from persistence layer.
    
@@ -310,7 +308,7 @@ class EventAPI {
     */
     func deleteAllEvents() {
         let retrievedItems = getAllEvents()
-        
+
         //Delete all event items from persistance layer
         for item in retrievedItems {
             self.mainContextInstance.delete(item)
@@ -319,7 +317,7 @@ class EventAPI {
 
         self.postUpdateNotification()
     }
-    
+
     /**
         Delete a single Event item from persistence layer.
         
@@ -331,13 +329,13 @@ class EventAPI {
         self.mainContextInstance.delete(eventItem)
         self.postUpdateNotification()
     }
-    
+
     /**
         Post update notification to let the registered listeners refresh it's datasource.
     
         - Returns: Void
     */
-    fileprivate func postUpdateNotification(){
+    fileprivate func postUpdateNotification() {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "updateEventTableData"), object: nil)
     }
 

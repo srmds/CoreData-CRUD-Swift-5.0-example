@@ -11,12 +11,12 @@ import Foundation
 /**
 Enum for HTTP response codes.
 */
-enum HTTPStatusCode:Int {
-    
+enum HTTPStatusCode: Int {
+
     //1xx Informationals
     case `continue` = 100
     case switchingProtocols = 101
-    
+
     //2xx Successfuls
     case ok = 200
     case created = 201
@@ -25,7 +25,7 @@ enum HTTPStatusCode:Int {
     case noContent = 204
     case resetContent = 205
     case partialContent = 206
-    
+
     //3xx Redirections
     case multipleChoices = 300
     case movedPermanently = 301
@@ -35,7 +35,7 @@ enum HTTPStatusCode:Int {
     case useProxy = 305
     case unused = 306
     case temporaryRedirect = 307
-    
+
     //4xx Client Errors
     case badRequest = 400
     case unauthorized = 401
@@ -55,7 +55,7 @@ enum HTTPStatusCode:Int {
     case unsupportedMediaType = 415
     case requestedRangeNotSatisfiable = 416
     case expectationFailed = 417
-    
+
     //5xx Server Errors
     case internalServerError = 500
     case notImplemented = 501
@@ -63,7 +63,7 @@ enum HTTPStatusCode:Int {
     case serviceUnavailable = 503
     case gatewayTimeout = 504
     case httpVersionNotSupported = 505
-    
+
     static let getAll = [
         `continue`,
         switchingProtocols,
@@ -107,5 +107,5 @@ enum HTTPStatusCode:Int {
         gatewayTimeout,
         httpVersionNotSupported
     ]
-    
+
 }

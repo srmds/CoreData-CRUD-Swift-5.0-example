@@ -10,7 +10,7 @@ import CoreData
 /**
     Enum for Event Entity member fields
 */
-enum EventAttributes : String {
+enum EventAttributes: String {
     case
     eventId    = "eventId",
     title      = "title",
@@ -21,7 +21,7 @@ enum EventAttributes : String {
     attendees  = "attendees",
     fb_url      = "fb_url",
     ticket_url = "ticket_url"
-    
+
     static let getAll = [
         eventId,
         title,
@@ -51,4 +51,3 @@ class Event: NSManagedObject {
     @NSManaged var ticket_url: AnyObject
     @NSManaged var title: String
 }
-

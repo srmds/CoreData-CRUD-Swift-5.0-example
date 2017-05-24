@@ -18,7 +18,7 @@ extension String {
     mutating func append(_ str: String) {
         self = self + str
     }
-    
+
     /**
         Custom extension method to URL encode a String
         
@@ -27,7 +27,7 @@ extension String {
     mutating func URLEncodedString() -> String? {
         let customAllowedSet =  CharacterSet.urlQueryAllowed
         let escapedString = self.addingPercentEncoding(withAllowedCharacters: customAllowedSet)
-        
+
         return escapedString
     }
 }

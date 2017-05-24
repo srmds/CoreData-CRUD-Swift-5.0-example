@@ -19,7 +19,7 @@ class BatchActionsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         self.eventAPI = EventAPI.sharedInstance
         self.localReplicator = LocalReplicator.sharedInstance
@@ -29,14 +29,14 @@ class BatchActionsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
+
     @IBAction func anonimizeListButtonTapped(_ sender: AnyObject) {
         eventAPI.anonimizeAttendeesList()
         self.navigationController?.popToRootViewController(animated: true)
     }
-    
+
     @IBAction func deleteAllEventsButtonTapped(_ sender: AnyObject) {
-        eventAPI.deleteAllEvents()       
+        eventAPI.deleteAllEvents()
         self.navigationController?.popToRootViewController(animated: true)
     }
 
