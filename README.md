@@ -1,6 +1,6 @@
 # CoreData-CRUD-Swift-iOS-example [![Join the chat at https://gitter.im/srmds/CoreData-CRUD-Swift-iOS-example](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/srmds/CoreData-CRUD-Swift-iOS-example?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[Swift 3.1](https://swift.org/blog/swift-3-1-released/) - A (very simple) example project that exposes the usage of CoreData to create entities and to persist to a SQLite Datastore.
+[Swift 4.0](https://swift.org) - A (very simple) example project that exposes the usage of CoreData to create entities and to persist to a SQLite Datastore.
 
 This app demonstrates Core Data and persistent storage, by reading Event data from both, locally and remotely retrieved [JSON file /  response](https://github.com/jongensvantechniek/CoreData-CRUD-Swift-3.1-example/blob/master/CoreDataCRUD/events.json), creates and stores those Events in a SQLite datastore. It is possible to do single and batch updates, deletions, retrieving and filtering on stored Events.
 
@@ -8,8 +8,8 @@ This app demonstrates Core Data and persistent storage, by reading Event data fr
 
 ## Prerequisites
 
-* [Xcode 8.0+ - Swift 3.1](https://developer.apple.com/xcode/downloads/)
-* [iOS 9.3+ / iOS10](https://developer.apple.com/xcode/downloads/)
+* [Xcode 9.0+ - Swift 4.0](https://developer.apple.com/xcode/downloads/)
+* [iOS 9.3+ / iOS10 / iOS11](https://developer.apple.com/xcode/downloads/)
 
 Tested with iOS:
 
