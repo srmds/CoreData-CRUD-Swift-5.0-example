@@ -30,8 +30,9 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
 
     override func viewWillAppear(_ animated: Bool) {
         //Register for notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(EventTableViewController.updateEventTableData(_:)), name: NSNotification.Name(rawValue: "updateEventTableData"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(EventTableViewController.setStateLoading(_:)), name: NSNotification.Name(rawValue: "setStateLoading"), object: nil)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(self.updateEventTableData), name: .updateEventTableData, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(self.setStateLoading), name: .setStateLoading, object: nil)
 
         self.eventAPI = EventAPI.sharedInstance
         self.eventList = self.eventAPI.getEventsInDateRange()
@@ -67,8 +68,8 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         eventCell.eventDateLabel.text = DateFormatter.getStringFromDate(eventItem.date, dateFormat: "dd-MM\nyyyy")
         eventCell.eventTitleLabel.text = eventItem.title
         eventCell.eventLocationLabel.text = "\(eventItem.venue) - \(eventItem.city) - \(eventItem.country)"
-        eventCell.eventImageView.image = getEventImage(indexPath)
-
+        eventCell.eventImageView.image = self.getEventImage(indexPath)
+        
         return eventCell
     }
 
@@ -179,13 +180,13 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         filteredEventList =  eventList.filter {compoundPredicate.evaluate(with: $0)}
     }
 
-    func updateEventTableData(_ notification: Notification) {
+    @objc func updateEventTableData() {
         refreshTableData()
         self.activityIndicator.isHidden = true
         self.activityIndicator.stopAnimating()
     }
 
-    func setStateLoading(_ notification: Notification) {
+    @objc func setStateLoading() {
         self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
     }
@@ -214,6 +215,11 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         //Use indexPath as reference to cell to be updated.
 
         //For now load from image assets locally.
-        return UIImage(named: "eventImageSecond")!
+        return UIImage(named: "eventImageSecond.jpg")!
     }
+}
+
+extension Notification.Name {
+    static let updateEventTableData = Notification.Name(rawValue: "updateEventTableData")
+    static let setStateLoading = Notification.Name(rawValue: "setStateLoading")
 }

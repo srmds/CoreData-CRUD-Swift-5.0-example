@@ -36,10 +36,11 @@ class AttendeesGenerator {
         ]
 
         var attendeesList = [String]()
-        let listSize: Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: optionalAttendees.count)))
+        //let value = Int64(arc4random()) % Int64(optionalAttendees.count) + Int64(1)
+        let listSize: Int =  3//Int(arc4random_uniform(UInt32(extendingOrTruncating: optionalAttendees.count)))
 
         for _ in 0...listSize {
-            let itemIndex: Int =  Int(arc4random_uniform(UInt32(truncatingBitPattern: listSize)))
+            let itemIndex: Int =  0//Int(arc4random_uniform(UInt32(extendingOrTruncating: listSize)))
             let item: String = optionalAttendees[itemIndex]
             if !attendeesList.contains(item) {
                 attendeesList.append(item)

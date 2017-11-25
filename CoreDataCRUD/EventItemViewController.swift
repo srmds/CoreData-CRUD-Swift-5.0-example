@@ -199,7 +199,8 @@ class EventItemViewController: UIViewController, UITextFieldDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let attendeesTableCellIdentifier = "attendeesItemCell"
         let attendeeCell = tableView.dequeueReusableCell(withIdentifier: attendeesTableCellIdentifier, for: indexPath)
-        attendeeCell.textLabel!.text = selectedEventItem.attendees[indexPath.row] as? String
+        let attendees = selectedEventItem.attendees as! [String]
+        attendeeCell.textLabel!.text = attendees[indexPath.row]
 
         return attendeeCell
     }
