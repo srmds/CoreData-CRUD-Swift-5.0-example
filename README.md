@@ -8,7 +8,7 @@ This app demonstrates Core Data and persistent storage, by reading Event data fr
 
 ## Prerequisites
 
-* [Xcode 9.0+ - Swift 4.0](https://developer.apple.com/xcode/downloads/)
+* [Xcode 9.3+ - Swift 4.1](https://developer.apple.com/xcode/downloads/)
 * [iOS 9.3+ / iOS10 / iOS11](https://developer.apple.com/xcode/downloads/)
 
 Tested with iOS:
