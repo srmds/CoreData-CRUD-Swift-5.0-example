@@ -77,7 +77,7 @@ class RemoteReplicator: ReplicatorProtocol {
         var jsonResult: AnyObject!
 
         do {
-            jsonResult = try JSONSerialization.jsonObject(with: jsonData) as AnyObject!
+            jsonResult = try JSONSerialization.jsonObject(with: jsonData) as AnyObject
         } catch let fetchError as NSError {
             print("pull error: \(fetchError.localizedDescription)")
         }
