@@ -117,10 +117,6 @@ class EventTableViewController: UITableViewController, UISearchResultsUpdating {
         if editingStyle == .delete {
             //Delete item from datastore
             eventAPI.deleteEvent(eventList[(indexPath as NSIndexPath).row])
-            //Delete item from tableview datascource
-            eventList.remove(at: (indexPath as NSIndexPath).row)
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
             self.title = String(format: "Upcoming events (%i)", eventList.count)
         }
     }
