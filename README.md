@@ -34,19 +34,15 @@ for this project is to learn to:
 In order to inspect persisted events you can use for example a SQLite database browser to view persisted entries: https://sqlitebrowser.org
 The path of the SQLite database file will be shown in the Xcode console logger, for example:
 
-```shell
 Debug - Make sure to have a SQLite database viewer installed on MacOS, for example: https://sqlitebrowser.org
 
 Debug - location of SQLite database file:
 
-/Users/<name>/Library/Developer/CoreSimulator/Devices/<devide-uuid>/data/Containers/Data/Application/<application-uuid>/Documents
+`/Users/<name>/Library/Developer/CoreSimulator/Devices/<devide-uuid>/data/Containers/Data/Application/<application-uuid>/Documents`
 
 Debug - Select and copy the above path of the SQLite databasefile, go to MacOS Finder, click:
+`SHIFT + CMD + G` and paste path and click: OK and finally open the SQLite database file with, for example: SQLite browser
 
-SHIFT + CMD + G
-
-and paste path and click: OK and finally open the SQLite database file with, for example: SQLite browser
-```
 Note: this example project is non-exhaustive.
 
 ## Contributions
