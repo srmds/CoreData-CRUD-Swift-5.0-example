@@ -31,17 +31,16 @@ for this project is to learn to:
 - Help others understand and use Core Data with simple, yet concrete examples,
   on the usage of Core Data and persistent store
 
+### location of SQLite database
+
 In order to inspect persisted events you can use for example a SQLite database browser to view persisted entries: https://sqlitebrowser.org
-The path of the SQLite database file will be shown in the Xcode console logger, for example:
 
-Debug - Make sure to have a SQLite database viewer installed on MacOS, for example: https://sqlitebrowser.org
+The actual path of the SQLite database file will be shown in the Xcode console logger. For example:
 
-Debug - location of SQLite database file:
+`/Users/<name>/Library/Developer/CoreSimulator/Devices/<device-uuid>/data/Containers/Data/Application/<application-uuid>/Documents`
 
-`/Users/<name>/Library/Developer/CoreSimulator/Devices/<devide-uuid>/data/Containers/Data/Application/<application-uuid>/Documents`
-
-Debug - Select and copy the above path of the SQLite databasefile, go to MacOS Finder, click:
-`SHIFT + CMD + G` and paste path and click: OK and finally open the SQLite database file with, for example: SQLite browser
+Select and copy the above path of the SQLite databasefile, go to MacOS Finder, click:
+`SHIFT + CMD + G` and paste path and click: `OK` and finally open the SQLite database file with, for example: [SQLite browser](https://sqlitebrowser.org)
 
 Note: this example project is non-exhaustive.
 
