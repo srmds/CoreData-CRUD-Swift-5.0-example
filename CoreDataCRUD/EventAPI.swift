@@ -390,8 +390,11 @@ class EventAPI {
         for item in retrievedItems {
             self.mainContextInstance.delete(item)
         }
+        
+        //Save and merge changes from Minion workers with Main context
         self.persistenceManager.mergeWithMainContext()
-
+        
+        //Post notification to update datasource of a given Viewcontroller/UITableView
         self.postUpdateNotification()
     }
 
@@ -402,8 +405,14 @@ class EventAPI {
         - Returns: Void
     */
     func deleteEvent(_ eventItem: Event) {
+        print(eventItem)
         //Delete event item from persistance layer
         self.mainContextInstance.delete(eventItem)
+        
+        //Save and merge changes from Minion workers with Main context
+        self.persistenceManager.mergeWithMainContext()
+        
+        //Post notification to update datasource of a given Viewcontroller/UITableView
         self.postUpdateNotification()
     }
 
