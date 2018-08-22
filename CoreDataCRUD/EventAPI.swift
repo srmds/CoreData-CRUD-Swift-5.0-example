@@ -40,6 +40,37 @@ class EventAPI {
         self.mainContextInstance = persistenceManager.getMainContextInstance()
     }
 
+    /**
+     Retrieve an Event
+     
+     Scenario:
+     Given that there there is only a single event in the datastore
+     Let say we only created one event in the datastore, then this function will get that single persisted event
+     Thus calling this method multiple times will result in getting always the same event.
+     
+     - Returns: a found Event item, or nil
+     */
+    func getSingleAndOnlyEvent(eventTitle: String) -> Event? {
+        var fetchedResultEvent: Event?
+        
+        // Create request on Event entity
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: EntityTypes.Event.rawValue)
+        
+        //Execute Fetch request
+        do {
+            let fetchedResults = try  self.mainContextInstance.fetch(fetchRequest) as! [Event]
+            fetchRequest.fetchLimit = 1
+            
+            if fetchedResults.count != 0 {
+                fetchedResultEvent =  fetchedResults.first
+            }
+        } catch let fetchError as NSError {
+            print("retrieve single event error: \(fetchError.localizedDescription)")
+        }
+        
+        return fetchedResultEvent
+    }
+    
     // MARK: Create
 
     /**
@@ -75,6 +106,45 @@ class EventAPI {
         //Save and merge changes from Minion workers with Main context
         self.persistenceManager.mergeWithMainContext()
 
+        //Post notification to update datasource of a given Viewcontroller/UITableView
+        self.postUpdateNotification()
+    }
+    
+    /**
+     Create a single Event item, and persist it to Datastore via Worker(minion),
+     that synchronizes with Main context.
+     
+     - Parameter eventDetails: <Dictionary<String, AnyObject> A single Event item to be persisted to the Datastore.
+     - Returns: Void
+     */
+    func saveEvent(_ eventTitle: String?) {
+        
+        //Minion Context worker with Private Concurrency type.
+        let minionManagedObjectContextWorker: NSManagedObjectContext =
+            NSManagedObjectContext.init(concurrencyType: NSManagedObjectContextConcurrencyType.privateQueueConcurrencyType)
+        minionManagedObjectContextWorker.parent = self.mainContextInstance
+        
+        //Create new Object of Event entity
+        let eventItem = NSEntityDescription.insertNewObject(forEntityName: EntityTypes.Event.rawValue,
+                                                            into: minionManagedObjectContextWorker) as! Event
+        if eventTitle == nil {
+            eventItem.title = "mocked event title"
+        } else {
+            eventItem.title = eventTitle!
+            eventItem.city = "The Hague"
+            eventItem.country = "The Netherlands"
+            eventItem.fb_url =  URL(string: "http://example.com") as AnyObject
+            eventItem.ticket_url = URL(string: "http://example.com") as AnyObject
+            eventItem.date = Date()
+            eventItem.eventId = "1234"
+        }
+        
+        //Save current work on Minion workers
+        self.persistenceManager.saveWorkerContext(minionManagedObjectContextWorker)
+        
+        //Save and merge changes from Minion workers with Main context
+        self.persistenceManager.mergeWithMainContext()
+        
         //Post notification to update datasource of a given Viewcontroller/UITableView
         self.postUpdateNotification()
     }
