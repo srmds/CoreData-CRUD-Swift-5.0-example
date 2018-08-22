@@ -12,15 +12,22 @@ This app demonstrates Core Data and persistent storage, by reading Event data fr
 * [iOS 9.3+ / iOS10 / iOS11](https://developer.apple.com/xcode/downloads/)
 * [SQLite browser](https://sqlitebrowser.org)
 
-Tested with iOS:
+### iOS
 
-iOS9.3 & iOS10
+Tested on:
+
+- iOS9.3 
+- iOS10
+- iOS11.4.1
 
 ### iPhone
+
+Tested on:
 
 - iPhone 6
 - iPhone 6s
 - iPhone 7
+- iPhone 8
 
 ## The objective
 
