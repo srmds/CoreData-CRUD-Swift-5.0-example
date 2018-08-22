@@ -10,6 +10,7 @@ This app demonstrates Core Data and persistent storage, by reading Event data fr
 
 * [Xcode 9.3+ - Swift 4.1](https://developer.apple.com/xcode/downloads/)
 * [iOS 9.3+ / iOS10 / iOS11](https://developer.apple.com/xcode/downloads/)
+* [SQLite browser](https://sqlitebrowser.org)
 
 Tested with iOS:
 
@@ -25,13 +26,28 @@ iOS9.3 & iOS10
 
 for this project is to learn to:
 
-- use Core Data to create Entities and to persist Entities to a SQLite datastore.
+- Use Core Data to create Entities and to persist Entities to a SQLite datastore
 
-- help others understand and use Core Data with simple, yet concrete examples, on the usage of Core Data and persistent
-  store.
+- Help others understand and use Core Data with simple, yet concrete examples,
+  on the usage of Core Data and persistent store
 
-Note that this example project is non-exhaustive.
+In order to inspect persisted events you can use for example a SQLite database browser to view persisted entries: https://sqlitebrowser.org
+The path of the SQLite database file will be shown in the Xcode console logger, for example:
 
+```shell
+Debug - Make sure to have a SQLite database viewer installed on MacOS, for example: https://sqlitebrowser.org
+
+Debug - location of SQLite database file:
+
+/Users/<name>/Library/Developer/CoreSimulator/Devices/<devide-uuid>/data/Containers/Data/Application/<application-uuid>/Documents
+
+Debug - Select and copy the above path of the SQLite databasefile, go to MacOS Finder, click:
+
+SHIFT + CMD + G
+
+and paste path and click: OK and finally open the SQLite database file with, for example: SQLite browser
+```
+Note: this example project is non-exhaustive.
 
 ## Contributions
 
@@ -54,7 +70,7 @@ The [Event](https://github.com/srmds/CoreData-CRUD-Swift-iOS-example/blob/master
 	    @NSManaged var eventId: String
 	}
 
-The AnyObject type in this example are [non-standard persistent attributes](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreData/LifeofaManagedObject.html) that are not support directly in Core Data. The AnyObject, as the name suggests, can therefore be for example an: `Array` or `NSURL`, or any other object type.
+The AnyObject type in this example are [non-standard persistent attributes](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreData/LifeofaManagedObject.html) that are not supported directly in Core Data. The AnyObject, as the name suggests, can therefore be for example: an `Array` or `NSURL`, or any other objecttype.
 
 ### [Core Data API](https://developer.apple.com/library/prerelease/ios/documentation/Cocoa/Conceptual/CoreData/index.html#//apple_ref/doc/uid/TP40001075-CH2-SW1)
 
@@ -74,7 +90,7 @@ More info on [concurrency](https://developer.apple.com/library/prerelease/ios/do
 #### Event API
 
 The [Event API](https://github.com/jongensvantechniek/CoreData-CRUD-Swift-3.1-example/blob/master/CoreDataCRUD/EventAPI.swift)
-is the interface where a view controller directly communicates to. The Event API exposes several endpoints to a View controller to create, read, update, delete Events.
+is the interface where a viewcontroller directly communicates to. The Event API exposes several endpoints to a Viewcontroller to Create, Read, Update, Delete Events.
 
 Open up Xcode, and open the project, and open the `EventAPI.swift` file.
 Then click on `^6`, thus `control + 6`, this will open up an overview of several CRUD methods used, and click on the method of interest, to see it's implementation.
