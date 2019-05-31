@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate var localReplicator: LocalReplicator!
     fileprivate let runCountNamespace = "runCount"
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         self.enableDebugMode(true)
         self.eventAPI = EventAPI.sharedInstance
