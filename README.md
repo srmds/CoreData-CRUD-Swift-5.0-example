@@ -1,4 +1,4 @@
-# CoreData-CRUD-Swift-5.0-iOS-example [![Join the chat at https://gitter.im/srmds/CoreData-CRUD-Swift-iOS-example](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/srmds/CoreData-CRUD-Swift-iOS-example?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# CoreData-CRUD-Swift-5.0-iOS-example
 
 [Swift 5.0](https://swift.org) - A (very simple) example project that exposes the usage of CoreData to create entities and to persist to a SQLite Datastore.
 
