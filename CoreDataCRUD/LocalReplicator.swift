@@ -53,12 +53,12 @@ class LocalReplicator: ReplicatorProtocol {
     
         - Returns: AnyObject The contents of the JSON file.
     */
-    func readFile() -> Any {
+    func readFile() -> Any? {
         let dataSourceFilename: String = "events"
         let dataSourceFilenameExtension: String = "json"
         let filemgr = FileManager.default
         let currPath = Bundle.main.path(forResource: dataSourceFilename, ofType: dataSourceFilenameExtension)
-        var jsonResult:Any! = nil
+        var jsonResult:Any? = nil
 
         do {
             let jsonData: Data = try! Data(contentsOf: URL(fileURLWithPath: currPath!))
