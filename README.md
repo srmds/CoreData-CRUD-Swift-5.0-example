@@ -2,7 +2,7 @@
 
 [Swift 5.0](https://swift.org) - A (very simple) example project that exposes the usage of CoreData to create entities and to persist to a SQLite Datastore.
 
-This app demonstrates Core Data and persistent storage, by reading Event data from both, locally and remotely retrieved [JSON file /  response](https://github.com/jongensvantechniek/CoreData-CRUD-Swift-5.0-example/blob/master/CoreDataCRUD/events.json), creates and stores those Events in a SQLite datastore. It is possible to do single and batch updates, deletions, retrieving and filtering on stored Events.
+This app demonstrates Core Data and persistent storage, by reading Event data from both, locally and remotely retrieved [JSON file /  response](https://github.com/srmds/CoreData-CRUD-Swift-5.0-example/blob/master/CoreDataCRUD/events.json), creates and stores those Events in a SQLite datastore. It is possible to do single and batch updates, deletions, retrieving and filtering on stored Events.
 
 *Note*: If you are considering to use Core Data in an app meant for production, it is worth to investigate [Realm](https://realm.io), which is a mobile platform and a replacement for SQLite & Core Data, for both Android & iOS.
 
@@ -60,12 +60,12 @@ Note: this example project is non-exhaustive.
 
 ## Contributions
 
-Do you have questions or want to help? Enhancements and/or fixes and suggestions are welcome! Just drop [create an issue](https://github.com/jongensvantechniek/CoreData-CRUD-Swift-5.0-example/issues) and/or pull requests.
+Do you have questions or want to help? Enhancements and/or fixes and suggestions are welcome! Just drop [create an issue](https://github.com/srmds/CoreData-CRUD-Swift-5.0-example/issues) and/or pull requests.
 
 ## Model
 
 A model represents the entity that can be used to store in the datastore.
-The [Event](https://github.com/jongensvantechniek/CoreData-CRUD-Swift-5.0-example/blob/master/CoreDataCRUD/Event.swift) Entity/ Model has the following model attributes:
+The [Event](https://github.com/srmds/CoreData-CRUD-Swift-5.0-example/blob/master/CoreDataCRUD/Event.swift) Entity/ Model has the following model attributes:
 
 	class Event: NSManagedObject {
 	    @NSManaged var title: String
@@ -98,7 +98,7 @@ More info on [concurrency](https://developer.apple.com/library/prerelease/ios/do
 
 #### Event API
 
-The [Event API](https://github.com/jongensvantechniek/CoreData-CRUD-Swift-3.1-example/blob/master/CoreDataCRUD/EventAPI.swift)
+The [Event API](https://github.com/srmds/CoreData-CRUD-Swift-3.1-example/blob/master/CoreDataCRUD/EventAPI.swift)
 is the interface where a view controller directly communicates to. The Event API exposes several endpoints to a view controller to Create, Read, Update, Delete Events.
 
 Open up Xcode, and open the project, and open the `EventAPI.swift` file.
@@ -113,7 +113,7 @@ More Core Data basics can be found [here](https://developer.apple.com/library/pr
 
 ### The MIT License (MIT)
 
-Copyright (c) 2016 - Jongens van Techniek
+Copyright (c) 2016 - srmds
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
